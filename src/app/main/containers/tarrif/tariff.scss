@@ -3,3 +3,9 @@
         flex-basis: '33.33%';
         flex-shrink: 0
 }
+
+.fa:before{
+        content: "\f044";
+        color: blue;
+        font-size: 20px;
+}

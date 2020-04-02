@@ -36,17 +36,19 @@ class InstalledDevicesTable extends Component {
     createTableData = (data) => {
         let corona_data = data['India'];
         let tableData = {
+            frameworkComponents: {
+                actionButtonRender: ActionButtonRender,
+            },
             columnDefs: [
                 {
                     headerName: "Date", field: "date", rowDrag: true,
-                    checkboxSelection: () => {
-                        console.log("Rinnonh=g")
-                        return true;
-                    }
+                    checkboxSelection: true,
+                    headerCheckboxSelection : true
                 },
                 { headerName: "Confirmed", field: "confirmed" },
                 { headerName: "Death", field: "deaths" },
-                { headerName: "Recovered", field: "recovered" }
+                { headerName: "Recovered", field: "recovered" },
+                { headerName: "Actions", field: "actions", cellRenderer: 'actionButtonRender' }
             ],
             rowData: corona_data && corona_data.length && corona_data.map((item, index) => {
                 return {
@@ -68,7 +70,12 @@ class InstalledDevicesTable extends Component {
         return (
             <div>
                 <AgGridTable
-                    tableData={tableData}
+                    tableData={{
+                        ...tableData,
+                        frameworkComponents: {
+                            actionButtonRender: ActionButtonRender
+                        }
+                    }}
                     resizable={true}
                     filter={true}
                     sortable={true}
@@ -80,3 +87,9 @@ class InstalledDevicesTable extends Component {
 }
 
 export default withStyles(styles, { withTheme: true })(InstalledDevicesTable);
+
+function ActionButtonRender(item) {
+    return <div>
+             <i className="fa fa-edit edit-icon" />
+           </div>
+}

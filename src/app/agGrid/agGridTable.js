@@ -11,13 +11,17 @@ class AgGridTable extends Component {
             defaultColDef: {
                 sortable: this.props.sortable,
                 filter: this.props.filter,
-                resizable: this.props.resizable,
+                resizable: this.props.resizable
             },
             defaultGridOptions: {
                 rowDragManaged: this.props.rowDragManaged,
                 animateRows: true,
-                rowSelection : 'multiple',
-                onSelectionChanged: this.onSelectionChanged
+                rowSelection: 'multiple',
+                onSelectionChanged: this.onSelectionChanged,
+                // enables pagination in the grid
+                pagination: true,
+                // sets 10 rows per page (default is 100)
+                paginationPageSize: 10,
             }
         }
     }
@@ -56,7 +60,7 @@ class AgGridTable extends Component {
                     columnDefs={tableData.columnDefs}
                     rowData={tableData.rowData}
                     //   components={tableData.components}
-                    //   frameworkComponents={tableData.frameworkComponents}
+                      frameworkComponents={tableData.frameworkComponents}
                     rowHeight={rowHeight}
                     defaultColDef={this.state.defaultColDef}
                     onFirstDataRendered={dataRenderWidth ? this.onFirstDataRendered : () => { }}
