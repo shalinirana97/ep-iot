@@ -14,15 +14,15 @@ function DevicesHeader(props) {
             <div className="flex items-center">
 
                 <FuseAnimate animation="transition.expandIn" delay={300}>
-                    <Icon className="text-32 mr-0 sm:mr-12">shopping_basket</Icon>
+                    <Icon className="text-32 mr-0 sm:mr-12">devices</Icon>
                 </FuseAnimate>
 
                 <FuseAnimate animation="transition.slideLeftIn" delay={300}>
-                    <Typography className="hidden sm:flex" variant="h6">Installed Devices</Typography>
+                    <Typography className="hidden sm:flex" variant="h5">Devices</Typography>
                 </FuseAnimate>
             </div>
 
-            <div className="flex flex-1 items-center justify-center pr-0 pl-12 sm:px-12">
+            {/* <div className="flex flex-1 items-center justify-center pr-0 pl-12 sm:px-12">
 
                 <ThemeProvider theme={mainTheme}>
                     <FuseAnimate animation="transition.slideDownIn" delay={300}>
@@ -44,7 +44,7 @@ function DevicesHeader(props) {
                         </Paper>
                     </FuseAnimate>
                 </ThemeProvider>
-            </div>
+            </div> */}
         </div>
     );
 }

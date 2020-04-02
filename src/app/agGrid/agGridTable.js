@@ -34,6 +34,7 @@ class AgGridTable extends Component {
     onSelectionChanged = (params) => {
         // All Seleted Rows Data are here
         const selected_rows = params && params.api && params.api.getSelectedRows();
+        // console.log('selected_rows get one row or selected rows data', selected_rows)
     }
 
     // Function Name : onGridReady

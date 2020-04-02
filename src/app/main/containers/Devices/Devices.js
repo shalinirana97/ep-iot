@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { FusePageSimple, FusePageCarded } from '@fuse';
 import DeviceHeader from './DeviceHeader';
-import InstalledDevicesTable from './DevicesTable'
+import DevicesTable from './DevicesTable'
 
 const styles = theme => ({
     layoutRoot: {}
 });
 
-class InstalledDevicesList extends Component {
+class DevicesList extends Component {
 
     render() {
         const { classes } = this.props;
@@ -20,11 +20,11 @@ class InstalledDevicesList extends Component {
                 header={
                     <DeviceHeader />
                 }
-                contentToolbar={
-                    <div className="px-24"><h4>Content Toolbar</h4></div>
-                }
+                // contentToolbar={
+                //     <div className="px-24"><h4>Content Toolbar</h4></div>
+                // }
                 content={
-                    <InstalledDevicesTable />
+                    <DevicesTable />
                 }
                 innerScroll
             />
@@ -32,4 +32,4 @@ class InstalledDevicesList extends Component {
     }
 }
 
-export default withStyles(styles, { withTheme: true })(InstalledDevicesList);
+export default withStyles(styles, { withTheme: true })(DevicesList);

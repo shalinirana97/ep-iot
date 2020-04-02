@@ -1,5 +1,5 @@
 import {authRoles} from 'app/auth'
-import InstalledDevicesList from './InstalledDevices';
+import DevicesList from './Devices';
 
 export const DeviceListConfig = {
     settings: {
@@ -10,8 +10,8 @@ export const DeviceListConfig = {
     auth: authRoles.superAdmin,
     routes: [
         {
-            path: '/installedDevices',
-            component: InstalledDevicesList
+            path: '/devices',
+            component: DevicesList
         }
     ]
 };

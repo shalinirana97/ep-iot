@@ -6,8 +6,8 @@ import {makeStyles} from '@material-ui/styles';
 const useStyles = makeStyles(theme => ({
     root      : {
         '& .logo-icon'                : {
-            width     : 24,
-            height    : 24,
+            width     : 40,
+            height    : 40,
             transition: theme.transitions.create(['width', 'height'], {
                 duration: theme.transitions.duration.shortest,
                 easing  : theme.transitions.easing.easeInOut
@@ -21,7 +21,7 @@ const useStyles = makeStyles(theme => ({
         }
     },
     reactBadge: {
-        backgroundColor: 'rgba(255,255,255,255)',
+        // backgroundColor: 'rgba(0,0,0,0.6)',
         color          : '#61DAFB'
     }
 }));
@@ -32,14 +32,14 @@ function Logo()
 
     return (
         <div className={clsx(classes.root, "flex items-center")}>
-            <img className="logo-icon" src="assets/images/logos/fuse.svg" alt="logo"/>
-            <Typography className="text-16 ml-12 font-light logo-text" color="textPrimary">FUSE</Typography>
-            <div className={clsx(classes.reactBadge, "react-badge flex items-center ml-12 mr-8 py-4 px-8 rounded")}>
+            <img className="logo-icon" src="assets/images/logos/icon.svg" alt="logo"/>
+            {/* <Typography className="text-16 ml-12 font-light logo-text" color="textPrimary">FUSE</Typography> */}
+            <div className={clsx(classes.reactBadge, "react-badge flex items-center ml-1 mr-8 py-4 mt-2 px-8")}>
                 <img
                     className="react-logo"
-                    src="assets/images/logos/logo.png"
+                    src="assets/images/logos/logo-text.svg"
                     alt="logo"
-                    width="56"
+                    width="80"
                 />
                 {/* <span className="react-text text-12 ml-4">EP-IoT</span> */}
             </div>

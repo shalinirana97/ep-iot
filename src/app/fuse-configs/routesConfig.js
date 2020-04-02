@@ -2,7 +2,7 @@ import React from 'react';
 import {Redirect} from 'react-router-dom';
 import {FuseUtils} from '@fuse';
 import { UserConfig } from 'app/main/containers/users/UserConfig';
-import {DeviceListConfig} from 'app/main/containers/installDevices/DeviceListConfig';
+import {DeviceListConfig} from 'app/main/containers/Devices/DeviceListConfig';
 import {TariffConfig} from 'app/main/containers/tarrif/TariffConfig';
 import {LoginConfig} from 'app/main/containers/login/LoginConfig';
 
@@ -26,7 +26,7 @@ const routes = [
     },
     {
         path: '/',
-        component: () => <Redirect to="/installedDevices" />
+        component: () => <Redirect to="/Devices" />
     },
     {
         path: '/',
