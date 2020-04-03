@@ -6,6 +6,8 @@ import { FuseScrollbars, FuseUtils } from '@fuse';
 import { withRouter } from 'react-router-dom';
 import _ from '@lodash';
 import { Link } from 'react-router-dom';
+import DevicesTableHead from './DevicesTableHead';
+import  { CustomPagination } from "../../components";
 
 const styles = theme => ({
     layoutRoot: {}
@@ -43,17 +45,16 @@ class DevicesTable extends Component {
                 {
                     headerName: "Date Installed", field: "date", rowDrag: true,
                     checkboxSelection: true,
-                    headerCheckboxSelection : true
+                    headerCheckboxSelection: true
                 },
                 { headerName: "Device Id", field: "recovered" },
-                { headerName: "Installation Company", field: "confirmed"},
+                { headerName: "Installation Company", field: "confirmed" },
                 { headerName: "NMI", field: "confirmed" },
                 { headerName: "PostCode", field: "deaths" },
                 { headerName: "Premium Validity", field: "date" },
                 { headerName: "Actions", field: "actions", cellRenderer: 'actionButtonRender' }
             ],
             rowData: corona_data && corona_data.length && corona_data.map((item, index) => {
-                console.log('apidata',item)
                 return {
                     date: item.date,
                     confirmed: item.confirmed || 0,
@@ -66,8 +67,8 @@ class DevicesTable extends Component {
         this.setState({ tableData });
     }
 
-    editFunction (item) {
-     console.log('tableRowData', item)
+    editFunction(item) {
+        console.log('tableRowData', item)
     }
 
 
@@ -91,6 +92,7 @@ class DevicesTable extends Component {
                     rowDragManaged={true}
                     rowHeight={40}
                 />
+                <CustomPagination />
             </div>
         )
     }
@@ -99,10 +101,15 @@ class DevicesTable extends Component {
 export default withStyles(styles, { withTheme: true })(DevicesTable);
 
 function ActionButtonRender(item) {
-    console.log('item',item)
+    console.log('item', item)
     return <div>
+<<<<<<< HEAD
         <Link className="font-medium" to="/devices/details">
             <i className="fa fa-edit edit-icon" onClick={() => item.data.editFunction(item.data)} />
         </Link>
            </div>
+=======
+        <i className="fa fa-edit edit-icon" onClick={() => item.data.editFunction(item.data)} />
+    </div>
+>>>>>>> dev-prashant
 }

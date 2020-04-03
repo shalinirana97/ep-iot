@@ -9257,6 +9257,13 @@ material-table@1.50.0:
     react-beautiful-dnd "11.0.3"
     react-double-scrollbar "0.0.15"
 
+material-ui-flat-pagination@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/material-ui-flat-pagination/-/material-ui-flat-pagination-4.1.0.tgz#e5a4e479c94b40adfd3bf6450e47953e499339b5"
+  integrity sha512-4f+VSB5YUdQro+9O5c5zRAzqAQHTnj2gLzY72pazMcGoawVvW6V7en0SYERptmDB4Daqok0WN+O4S1fdzUDJyg==
+  dependencies:
+    classnames "^2.2.6"
+
 material-ui-popup-state@1.4.1:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/material-ui-popup-state/-/material-ui-popup-state-1.4.1.tgz#e63ea694fb2e91c17ac4571ce5817d884d6240cd"
