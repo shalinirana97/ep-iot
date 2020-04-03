@@ -13,7 +13,7 @@ const styles = theme => ({
 
 
 
-class InstalledDevicesTable extends Component {
+class DevicesTable extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -41,26 +41,35 @@ class InstalledDevicesTable extends Component {
             },
             columnDefs: [
                 {
-                    headerName: "Date", field: "date", rowDrag: true,
+                    headerName: "Date Installed", field: "date", rowDrag: true,
                     checkboxSelection: true,
                     headerCheckboxSelection : true
                 },
-                { headerName: "Confirmed", field: "confirmed" },
-                { headerName: "Death", field: "deaths" },
-                { headerName: "Recovered", field: "recovered" },
+                { headerName: "Device Id", field: "recovered" },
+                { headerName: "Installation Company", field: "confirmed"},
+                { headerName: "NMI", field: "confirmed" },
+                { headerName: "PostCode", field: "deaths" },
+                { headerName: "Premium Validity", field: "date" },
                 { headerName: "Actions", field: "actions", cellRenderer: 'actionButtonRender' }
             ],
             rowData: corona_data && corona_data.length && corona_data.map((item, index) => {
+                console.log('apidata',item)
                 return {
                     date: item.date,
                     confirmed: item.confirmed || 0,
                     deaths: item.deaths || 0,
-                    recovered: item.recovered
+                    recovered: item.recovered,
+                    editFunction: this.editFunction
                 }
             })
         }
         this.setState({ tableData });
     }
+
+    editFunction (item) {
+     console.log('tableRowData', item)
+    }
+
 
     render() {
         const {
@@ -80,16 +89,18 @@ class InstalledDevicesTable extends Component {
                     filter={true}
                     sortable={true}
                     rowDragManaged={true}
+                    rowHeight={40}
                 />
             </div>
         )
     }
 }
 
-export default withStyles(styles, { withTheme: true })(InstalledDevicesTable);
+export default withStyles(styles, { withTheme: true })(DevicesTable);
 
 function ActionButtonRender(item) {
+    console.log('item',item)
     return <div>
-             <i className="fa fa-edit edit-icon" />
+        <i className="fa fa-edit edit-icon" onClick={()=>item.data.editFunction(item.data)} />
            </div>
 }

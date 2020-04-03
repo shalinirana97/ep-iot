@@ -31,7 +31,7 @@ class TariffHeader extends Component {
                     </FuseAnimate>
 
                     <FuseAnimate animation="transition.slideLeftIn" delay={300}>
-                        <Typography className="hidden sm:flex" variant="h5">POST CODES</Typography>
+                        <Typography className="hidden sm:flex" variant="h5">Post Codes</Typography>
                     </FuseAnimate>
                 </div>
             </div>

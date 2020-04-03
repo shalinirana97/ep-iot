@@ -16,11 +16,11 @@ const navigationConfig = [
                 'url'  : '/users'
             }, {
                 'id': 'A2',
-                'title': 'Installed Devices',
+                'title': 'Devices',
                 'type': 'item',
                 'auth': authRoles.admin,
                 'icon': 'devices',
-                'url': '/installedDevices'
+                'url': '/devices'
             }, {
                 'id': 'A3',
                 'title': 'Tariff',
