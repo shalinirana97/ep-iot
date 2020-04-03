@@ -27,9 +27,9 @@ export default class TariffModal extends Component {
     };
 
     handleDataChange(data, key) {
+
         let { terrif_data } = this.state
         terrif_data[key] = data
-
         this.setState({
             terrif_data
         })

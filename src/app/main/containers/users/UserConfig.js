@@ -8,7 +8,7 @@ export const UserConfig = {
     },
     routes  : [
         {
-            path     : '/users',
+            path: '/customers',
             component: UserList
         }
     ]

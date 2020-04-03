@@ -8,20 +8,22 @@ const navigationConfig = [
         'icon'    : 'apps',
         'children': [
             {
-                'id'   : 'A1',
-                'title': 'Users',
-                'type': 'item',
-                'auth': authRoles.superAdmin,
-                'icon' : 'people',
-                'url'  : '/users'
-            }, {
                 'id': 'A2',
                 'title': 'Devices',
                 'type': 'item',
                 'auth': authRoles.admin,
                 'icon': 'devices',
                 'url': '/devices'
-            }, {
+            },
+            {
+                'id': 'A1',
+                'title': 'Customers',
+                'type': 'item',
+                'auth': authRoles.superAdmin,
+                'icon': 'people',
+                'url': '/customers'
+            },  
+            {
                 'id': 'A3',
                 'title': 'Tariff',
                 'type': 'item',

@@ -1,5 +1,6 @@
 import {authRoles} from 'app/auth'
 import DevicesList from './Devices';
+import MainDeviceDetails from './DeviceDetail/index';
 
 export const DeviceListConfig = {
     settings: {
@@ -11,7 +12,13 @@ export const DeviceListConfig = {
     routes: [
         {
             path: '/devices',
+            exact: true,
             component: DevicesList
+        },
+        {
+            path: '/devices/details',
+            exact: true,
+            component: MainDeviceDetails
         }
     ]
 };

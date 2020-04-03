@@ -21,15 +21,23 @@ const routes = [
         component: () => <Redirect to="/login" />
     },
     {
-        path     : '/',
-        component: () => <Redirect to="/users"/>
+        path: '/',
+        exact: true,
+        component: () => <Redirect to="/customers"/>
     },
     {
         path: '/',
-        component: () => <Redirect to="/Devices" />
+        exact: true,
+        component: () => <Redirect to="/devices" />
     },
     {
         path: '/',
+        exact: true,
+        component: () => <Redirect to="/devices/details" />
+    },
+    {
+        path: '/',
+        exact: true,
         component: () => <Redirect to="/tariff" />
     }
 ];

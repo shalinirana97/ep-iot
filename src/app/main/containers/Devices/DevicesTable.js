@@ -5,7 +5,7 @@ import { Table, TableBody, TableCell, TablePagination, TableRow, Checkbox } from
 import { FuseScrollbars, FuseUtils } from '@fuse';
 import { withRouter } from 'react-router-dom';
 import _ from '@lodash';
-import DevicesTableHead from './DevicesTableHead';
+import { Link } from 'react-router-dom';
 
 const styles = theme => ({
     layoutRoot: {}
@@ -101,6 +101,8 @@ export default withStyles(styles, { withTheme: true })(DevicesTable);
 function ActionButtonRender(item) {
     console.log('item',item)
     return <div>
-        <i className="fa fa-edit edit-icon" onClick={()=>item.data.editFunction(item.data)} />
+        <Link className="font-medium" to="/devices/details">
+            <i className="fa fa-edit edit-icon" onClick={() => item.data.editFunction(item.data)} />
+        </Link>
            </div>
 }

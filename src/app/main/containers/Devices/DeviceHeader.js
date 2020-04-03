@@ -18,7 +18,7 @@ function DevicesHeader(props) {
                 </FuseAnimate>
 
                 <FuseAnimate animation="transition.slideLeftIn" delay={300}>
-                    <Typography className="hidden sm:flex" variant="h5">Devices</Typography>
+                    <Typography className="truncate sm:flex" variant="h5">Devices</Typography>
                 </FuseAnimate>
             </div>
 
