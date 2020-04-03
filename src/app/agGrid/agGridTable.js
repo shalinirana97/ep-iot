@@ -2,6 +2,11 @@ import React, { Component } from "react";
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-material.css';
+import CssBaseline from "@material-ui/core/CssBaseline";
+import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
+import Pagination from "material-ui-flat-pagination";
+
+const theme = createMuiTheme();
 
 class AgGridTable extends Component {
     constructor(props) {
@@ -55,18 +60,30 @@ class AgGridTable extends Component {
         const { tableData, rowHeight = 100, dataRenderWidth = true } = this.props;
 
         return (
-            <div className="ag-theme-material jobs-container" style={{ height: '700px', width: '100%' }}>
-                <AgGridReact
-                    columnDefs={tableData.columnDefs}
-                    rowData={tableData.rowData}
-                    //   components={tableData.components}
-                      frameworkComponents={tableData.frameworkComponents}
-                    rowHeight={rowHeight}
-                    defaultColDef={this.state.defaultColDef}
-                    onFirstDataRendered={dataRenderWidth ? this.onFirstDataRendered : () => { }}
-                    gridOptions={this.state.defaultGridOptions}
-                >
-                </AgGridReact>
+            <div>
+                <div className="ag-theme-material jobs-container" style={{ height: '700px', width: '100%' }}>
+                    <AgGridReact
+                        columnDefs={tableData.columnDefs}
+                        rowData={tableData.rowData}
+                        //   components={tableData.components}
+                        frameworkComponents={tableData.frameworkComponents}
+                        rowHeight={rowHeight}
+                        defaultColDef={this.state.defaultColDef}
+                        onFirstDataRendered={dataRenderWidth ? this.onFirstDataRendered : () => { }}
+                        gridOptions={this.state.defaultGridOptions}
+                    >
+                    </AgGridReact>
+                </div>
+
+                <MuiThemeProvider theme={theme}>
+                    <CssBaseline />
+                    <Pagination
+                        limit={10}
+                        offset={0}
+                        total={100}
+                        onClick={(e, offset) => console.log("===", e, offset)}
+                    />
+                </MuiThemeProvider>
             </div>
         );
     }

@@ -28,6 +28,7 @@
         "keycode": "2.2.0",
         "lodash": "4.17.15",
         "material-table": "1.50.0",
+        "material-ui-flat-pagination": "^4.1.0",
         "material-ui-popup-state": "1.4.1",
         "mobile-detect": "1.4.3",
         "moment": "2.24.0",
