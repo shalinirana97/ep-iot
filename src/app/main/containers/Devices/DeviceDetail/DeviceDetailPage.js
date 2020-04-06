@@ -25,7 +25,7 @@ class DeviceDetailPage extends Component {
                             <div className="pb-16 flex items-center">
                                 <Typography className="h2 deviceBorderBtm" color="default">Device Data</Typography>
                             </div>
-                            <Typography className='flex w-full items-center' variant='subtitle1'>
+                            <Typography className='flex w-full items-start' variant='subtitle1'>
                                 <div className='w-128 m-16' >
                                     <InputLabel >Device Type</InputLabel>
                                     <span>Device 1</span>
@@ -51,7 +51,7 @@ class DeviceDetailPage extends Component {
                                     <span>abc123@gmail.com</span>
                                 </div>
                             </Typography>
-                            <Typography className='flex w-full items-center mt-2' variant='subtitle1'>
+                            <Typography className='flex w-full items-start mt-2' variant='subtitle1'>
                                 <div className='w-128 m-16'>
                                     <InputLabel>NMI</InputLabel>
                                     <span>Device 1</span>
@@ -78,11 +78,11 @@ class DeviceDetailPage extends Component {
 
                         {/* ------------------------------------Device Access detail container--------------------------------------------- */}
                         <div className='p-16' >
-                            <div className="pb-16 flex items-center">
+                            <div className="pb-16 flex">
                                 <Typography className="h2 deviceBorderBtm" color="default">Device Access</Typography>
                             </div>
 
-                            <Typography className='w-full items-center' variant='subtitle1'>
+                            <Typography className='w-full' variant='subtitle1'>
                                 <div className='w-auto m-16' >
                                     <span>johndoe@gmail.com</span>
                                 </div>

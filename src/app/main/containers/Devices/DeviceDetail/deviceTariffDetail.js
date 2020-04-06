@@ -98,7 +98,7 @@ class DeviceTariff extends Component {
                     <div className='mb-4 mx-16' style={{ color: '#00A78D' }}>Weekday </div>
                 </Typography>
 
-                <Typography className='w-full flex items-center' variant='subtitle1'>
+                <Typography className='w-full flex items-start' variant='subtitle1'>
                     <div className='mx-16'>
                         <div >Peak </div>
                         <div className=' flex items-center' >
@@ -176,7 +176,7 @@ class DeviceTariff extends Component {
                     <div className='mb-4 mx-16' style={{ color: '#00A78D' }}>Weekend </div>
                 </Typography>
 
-                <Typography className='w-full flex items-center' variant='subtitle1'>
+                <Typography className='w-full flex items-start' variant='subtitle1'>
                     <div className='mx-16'>
                         <div >Peak </div>
                         <div className=' flex items-center' >
