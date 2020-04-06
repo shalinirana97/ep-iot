@@ -16,7 +16,7 @@ export const DeviceListConfig = {
             component: DevicesList
         },
         {
-            path: '/devices/details',
+            path: '/device/details',
             exact: true,
             component: MainDeviceDetails
         }

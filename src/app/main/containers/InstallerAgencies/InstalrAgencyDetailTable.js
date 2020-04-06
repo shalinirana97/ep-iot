@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
+import { connect } from "react-redux";
+import { withRouter } from 'react-router-dom';
 import AgGridTable from "../../../agGrid/agGridTable";
 import { withStyles } from '@material-ui/core/styles';
-import { Table, TableBody, TableCell, TablePagination, TableRow, Checkbox } from '@material-ui/core';
-import { FuseScrollbars, FuseUtils } from '@fuse';
-import { withRouter } from 'react-router-dom';
 import _ from '@lodash';
 import { Link } from 'react-router-dom';
-import  { CustomPagination } from "../../components";
+import { CustomPagination } from "../../components";
 
 const styles = theme => ({
     layoutRoot: {}
@@ -14,7 +13,7 @@ const styles = theme => ({
 
 
 
-class DevicesTable extends Component {
+class InstallerTable extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -25,49 +24,33 @@ class DevicesTable extends Component {
 
 
     componentDidMount = () => {
-        fetch("https://pomber.github.io/covid19/timeseries.json")
-            .then(response => response.json())
-            .then(data => {
-                this.createTableData(data);
-            })
+        this.createTableData();
     }
 
-    // This is for temporary use until we have API
-    // Delete it when we have API's for implementation.
-    createTableData = (data) => {
-        let corona_data = data['India'];
+    createTableData = () => {
+        const { agency_data } = this.props
         let tableData = {
             frameworkComponents: {
                 actionButtonRender: ActionButtonRender,
             },
             columnDefs: [
                 {
-                    headerName: "Date Installed", field: "date", rowDrag: true, color:'#d3d3d3', 
+                    headerName: "Agency Name", field: "name", rowDrag: true,
                     checkboxSelection: true,
                     headerCheckboxSelection: true
                 },
-                { headerName: "Device Id", field: "recovered" },
-                { headerName: "Installation Company", field: "confirmed" },
-                { headerName: "NMI", field: "confirmed" },
-                { headerName: "PostCode", field: "deaths" },
-                { headerName: "Premium Validity", field: "date" },
+                { headerName: "Email ID", field: "email" },
                 { headerName: "Actions", field: "actions", cellRenderer: 'actionButtonRender' }
             ],
-            rowData: corona_data && corona_data.length && corona_data.map((item, index) => {
+            rowData: agency_data && agency_data.length && agency_data.map((item, index) => {
                 return {
-                    date: item.date,
-                    confirmed: item.confirmed || 0,
-                    deaths: item.deaths || 0,
-                    recovered: item.recovered,
+                    name: item.name,
+                    email: item.email || null,
                     editFunction: this.editFunction
                 }
             })
         }
         this.setState({ tableData });
-    }
-
-    editFunction(item) {
-        // console.log('tableRowData', item)
     }
 
 
@@ -97,12 +80,19 @@ class DevicesTable extends Component {
     }
 }
 
-export default withStyles(styles, { withTheme: true })(DevicesTable);
+const mapStateToProps = (state) => {
+    return {
+        agency_data: state.installerAgency.agencyData
+    }
+}
+
+
+export default withStyles(styles, { withTheme: true })(withRouter(connect(mapStateToProps)(InstallerTable)));
 
 function ActionButtonRender(item) {
-    return <div className='icon_font'>
+    return <div>
         <Link className="font-medium" to="/device/details">
-            <i className="fa fa-edit edit-icon" onClick={() => item.data.editFunction(item.data)} />
+            <i className="fa fa-edit edit-icon" onClick={() => console.log('installer edit button clicked')} />
         </Link>
-           </div>
+    </div>
 }

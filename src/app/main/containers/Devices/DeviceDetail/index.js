@@ -32,7 +32,7 @@ class MainDeviceDetails extends Component {
                             <div className="flex items-center">
 
                                 <FuseAnimate animation="transition.expandIn" delay={300}>
-                                    <Icon className="text-20 mr-0 sm:mr-12">details</Icon>
+                                    <Icon className="text-20 mr-0 sm:mr-12">description</Icon>
                                 </FuseAnimate>
 
                                 <FuseAnimate animation="transition.slideLeftIn" delay={300}>

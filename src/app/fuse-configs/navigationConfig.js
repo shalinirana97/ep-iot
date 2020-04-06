@@ -8,7 +8,7 @@ const navigationConfig = [
         'icon'    : 'apps',
         'children': [
             {
-                'id': 'A2',
+                'id': 'A1',
                 'title': 'Devices',
                 'type': 'item',
                 'auth': authRoles.admin,
@@ -16,15 +16,23 @@ const navigationConfig = [
                 'url': '/devices'
             },
             {
-                'id': 'A1',
+                'id': 'A2',
                 'title': 'Customers',
                 'type': 'item',
                 'auth': authRoles.superAdmin,
                 'icon': 'people',
                 'url': '/customers'
-            },  
+            },
             {
                 'id': 'A3',
+                'title': 'Installer Agencies',
+                'type': 'item',
+                'auth': authRoles.admin,
+                'icon': 'settings',
+                'url': '/installer-agencies'
+            },  
+            {
+                'id': 'A4',
                 'title': 'Tariff',
                 'type': 'item',
                 'auth': authRoles.admin,

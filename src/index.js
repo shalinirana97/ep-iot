@@ -8,6 +8,7 @@ import 'typeface-muli';
 import './react-table-defaults';
 import './react-chartjs-2-defaults';
 import './styles/index.css';
+import './styles/custom.scss';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import * as serviceWorker from './serviceWorker';

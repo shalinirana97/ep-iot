@@ -1,0 +1,39 @@
+{ "data" :[
+    { "name":"Dolore Magna", "email":"doloremagna@gmail.com" },
+    {
+        "name": "Magna",
+        "email": "Magna@gmail.com"
+    },
+    {
+        "name": "Appollo",
+        "email": "appollo@gmail.com"
+    },
+    {
+        "name": "Atlantica",
+        "email": "Atlantica@gmail.com"
+    },
+    {
+        "name": "Alberto Polis",
+        "email": "alberto@gmail.com"
+    },
+    {
+        "name": "Tensile",
+        "email": "tensile@gmail.com"
+    },
+    {
+        "name": "Methew Leathers",
+        "email": "leather@gmail.com"
+    },
+    {
+        "name": "Albert Einstein",
+        "email": "albert@gmail.com"
+    },
+    {
+        "name": "James Maron",
+        "email": "james@gmail.com"
+    },
+    {
+        "name": "Martin Luther",
+        "email": "martin@gmail.com"
+    }
+]}

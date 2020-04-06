@@ -54,57 +54,53 @@ class RegisteredAddress extends Component {
                     <div className=' flex items-center  m-16' >
                         <FormLabel className='w-224' >Name </FormLabel>
                         {editFlag ?
-                            <Input className='w-224' name='username' value={username} onChange={(e) => this.handleInputChange(e)} inputProps={{ 'aria-label': 'description' }} />
-                            : <div className='w-full'>{username}</div>
+                            <Input className='w-1/4' name='username' value={username} onChange={(e) => this.handleInputChange(e)} inputProps={{ 'aria-label': 'description' }} />
+                            : <div className='w-1/4'>{username}</div>
                             }
 
                     </div>
                     <div className='flex items-center  m-16'>
                         <FormLabel className='w-224'>Email </FormLabel>
                         {editFlag ?
-                            <Input className='w-224' name='email' value={email} onChange={(e) => this.handleInputChange(e)} inputProps={{ 'aria-label': 'description' }} />
-                        : <div className='w-full'>{email}</div>
+                            <Input className='w-1/4' name='email' value={email} onChange={(e) => this.handleInputChange(e)} inputProps={{ 'aria-label': 'description' }} />
+                        : <div className='w-1/4'>{email}</div>
                         }
                     </div>
                     <div className='flex items-center  m-16'>
                         <FormLabel className='w-224'>Street Address</FormLabel>
                         {editFlag ?
-                            <Input className='w-224' name='streetAddress' value={streetAddress} onChange={(e) => this.handleInputChange(e)} inputProps={{ 'aria-label': 'description' }} />
-                        : <div className='w-full'>{streetAddress}</div>
+                            <Input className='w-1/4' name='streetAddress' value={streetAddress} onChange={(e) => this.handleInputChange(e)} inputProps={{ 'aria-label': 'description' }} />
+                        : <div className='w-1/4'>{streetAddress}</div>
                         }
                     </div>
                     <div className='flex items-center  m-16'>
                         <FormLabel className='w-224'>Town/City </FormLabel>
                         {editFlag ?
-                            <Input className='w-224' name='town_city' value={town_city} onChange={(e) => this.handleInputChange(e)} inputProps={{ 'aria-label': 'description' }} />
-                        : <div className='w-full'>{town_city}</div>
+                            <Input className='w-1/4' outlined name='town_city' value={town_city} onChange={(e) => this.handleInputChange(e)} inputProps={{ 'aria-label': 'description' }} />
+                        : <div className='w-1/4'>{town_city}</div>
                         }
                     </div>
                     <div className='flex items-center  m-16'>
                         <FormLabel className='w-224'>Country </FormLabel>
                         {editFlag ?
-                            <Input className='w-224' name='country' value={country} onChange={(e) => this.handleInputChange(e)} inputProps={{ 'aria-label': 'description' }} />
-                        : <div className='w-full'>{country}</div>
+                            <Input className='w-1/4' name='country' value={country} onChange={(e) => this.handleInputChange(e)} inputProps={{ 'aria-label': 'description' }} />
+                        : <div className='w-1/4'>{country}</div>
                         }
                     </div>
                     <div className='flex items-center   m-16'>
                         <FormLabel className='w-224'>State </FormLabel>
                         {editFlag ?
-                            <Input className='w-224' name='state' value={state} onChange={(e) => this.handleInputChange(e)} inputProps={{ 'aria-label': 'description' }} />
-                            : <div className='w-full'>{state}</div>
+                            <Input className='w-1/4' name='state' value={state} onChange={(e) => this.handleInputChange(e)} inputProps={{ 'aria-label': 'description' }} />
+                            : <div className='w-1/4'>{state}</div>
                         }
                     </div>
                     <div className='flex items-center  m-16'>
                         <FormLabel className='w-224'>Postcode</FormLabel>
                         {editFlag ?
-                            <Input className='w-224' name='postcode' value={postcode} onChange={(e) => this.handleInputChange(e)} inputProps={{ 'aria-label': 'description' }} />
-                            : <div className='w-full'>{postcode}</div>
+                            <Input className='w-1/4' name='postcode' value={postcode} onChange={(e) => this.handleInputChange(e)} inputProps={{ 'aria-label': 'description' }} />
+                            : <div className='w-1/4'>{postcode}</div>
                         }
                     </div>
-                    {editFlag ? 
-                        <div className="flex justify-end">
-                            <Button className="w-128 mx-8" variant="contained" color="secondary">Save</Button>
-                        </div>: ''}
                 </Typography>
             </div>
         )

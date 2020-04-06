@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import { Typography, InputLabel, FormLabel, InputBase } from '@material-ui/core';
-import { FuseAnimate, FusePageCarded } from '@fuse';
+import { Typography, InputLabel, Button, InputBase } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
 import './device.scss'
 import RegisteredAddress from './registeredAddressDetail'
+import DeviceTariff from './deviceTariffDetail'
 
 class DeviceDetailPage extends Component {
     constructor(props) {
@@ -77,7 +76,7 @@ class DeviceDetailPage extends Component {
                         </div>
                         <Divider />
 
- {/* ------------------------------------Device Access detail container--------------------------------------------- */}
+                        {/* ------------------------------------Device Access detail container--------------------------------------------- */}
                         <div className='p-16' >
                             <div className="pb-16 flex items-center">
                                 <Typography className="h2 deviceBorderBtm" color="default">Device Access</Typography>
@@ -92,13 +91,13 @@ class DeviceDetailPage extends Component {
                                     <div>abc123@gmail.com</div>
                                     <div>xyz123@gmail.com</div>
                                 </div>
-                            </Typography>                            
+                            </Typography>
                         </div>
                         <Divider />
                         <RegisteredAddress />
                         <Divider />
 
-{/* -----------------------------------------House Details Container---------------------------------------------- */}
+                        {/* -----------------------------------------House Details Container---------------------------------------------- */}
                         <div className='p-16' >
                             <div className="pb-16 flex items-center">
                                 <Typography className="h2 deviceBorderBtm" color="default">House Details</Typography>
@@ -136,6 +135,17 @@ class DeviceDetailPage extends Component {
                                 </div>
                             </Typography>
                         </div>
+                        <Divider />
+                        <DeviceTariff />
+
+                        <Typography>
+                            <div className="flex justify-end">
+                                <Link className="font-medium" to="/devices">
+                                <Button className="w-128 my-16 " variant="outlined" >Back</Button>
+                                </Link>
+                                <Button className="w-128 m-16 detailButton" variant="contained" >Save</Button>
+                            </div>
+                        </Typography>
                     </Paper>
                 </div>
             </div>

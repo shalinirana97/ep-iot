@@ -5,12 +5,14 @@ import { UserConfig } from 'app/main/containers/users/UserConfig';
 import {DeviceListConfig} from 'app/main/containers/Devices/DeviceListConfig';
 import {TariffConfig} from 'app/main/containers/tarrif/TariffConfig';
 import {LoginConfig} from 'app/main/containers/login/LoginConfig';
+import { InstallerAgencyConfig} from 'app/main/containers/InstallerAgencies/InstallerConfig';
 
 const routeConfigs = [
     UserConfig,
     DeviceListConfig,
     TariffConfig,
-    LoginConfig
+    LoginConfig,
+    InstallerAgencyConfig
 ];
 
 const routes = [
@@ -33,7 +35,12 @@ const routes = [
     {
         path: '/',
         exact: true,
-        component: () => <Redirect to="/devices/details" />
+        component: () => <Redirect to="/device/details" />
+    },
+    {
+        path: '/',
+        exact: true,
+        component: () => <Redirect to="/installer-agencies" />
     },
     {
         path: '/',
