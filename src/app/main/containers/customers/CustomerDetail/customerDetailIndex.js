@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { FusePageSimple, FuseAnimate, FusePageCarded } from '@fuse';
-import DeviceDetailPage from './DeviceDetailPage';
+import CustomerDetailsPage from './customerDetails';
 import DetailPageHeader from '../../../components/common/DetailPageHeader';
 
 const styles = theme => ({
     layoutRoot: {}
 });
 
-class MainDeviceDetails extends Component {
+class MainCustomerDetails extends Component {
 
     render() {
         const { classes } = this.props;
@@ -20,16 +20,16 @@ class MainDeviceDetails extends Component {
                 header={
                     <DetailPageHeader
                         pageTitle='Devices'
-                        detailTitle='Device Type'
-                        subTitle='Device'
-                        pageRoute='/devices'
+                        detailTitle='Customer Name'
+                        subTitle='Customer'
+                        pageRoute='/customers'
                     />
                 }
                 // contentToolbar={
                 //     <div className="px-24"><h4>Details</h4></div>
                 // }
                 content={
-                    <DeviceDetailPage />
+                    <CustomerDetailsPage />
                 }
                 innerScroll
             />
@@ -37,4 +37,4 @@ class MainDeviceDetails extends Component {
     }
 }
 
-export default withStyles(styles, { withTheme: true })(MainDeviceDetails);
+export default withStyles(styles, { withTheme: true })(MainCustomerDetails);

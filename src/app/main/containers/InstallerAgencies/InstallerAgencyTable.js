@@ -35,11 +35,9 @@ class InstallerTable extends Component {
             },
             columnDefs: [
                 {
-                    headerName: "Agency Name", field: "name", rowDrag: true,
-                    checkboxSelection: true,
-                    headerCheckboxSelection: true
+                    headerName: "Agency Name", field: "name", filter: 'agTextColumnFilter', cellStyle: { cursor: 'pointer' }
                 },
-                { headerName: "Email ID", field: "email" },
+                { headerName: "Email ID", field: "email", filter: 'agTextColumnFilter', cellStyle: { cursor: 'pointer' } },
                 { headerName: "Actions", field: "actions", cellRenderer: 'actionButtonRender' }
             ],
             rowData: agency_data && agency_data.length && agency_data.map((item, index) => {
@@ -60,7 +58,7 @@ class InstallerTable extends Component {
         } = this.state;
 
         return (
-            <div>
+            <React.Fragment>
                 <AgGridTable
                     tableData={{
                         ...tableData,
@@ -72,10 +70,10 @@ class InstallerTable extends Component {
                     filter={true}
                     sortable={true}
                     rowDragManaged={true}
-                    rowHeight={40}
+                    rowHeight={50}
                 />
                 <CustomPagination />
-            </div>
+            </React.Fragment>
         )
     }
 }
@@ -91,8 +89,8 @@ export default withStyles(styles, { withTheme: true })(withRouter(connect(mapSta
 
 function ActionButtonRender(item) {
     return <div>
-        <Link className="font-medium" to="/device/details">
-            <i className="fa fa-edit edit-icon" onClick={() => console.log('installer edit button clicked')} />
+        <Link className="font-medium icon_font" to="/installer-agency/details">
+            <i className="fa fa-edit" onClick={() => console.log('installer agency edit button clicked',item.data)} />
         </Link>
     </div>
 }

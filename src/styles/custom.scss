@@ -1,5 +1,19 @@
 .icon_font{
-        i{
-            color : #00a78d !important
-    }
+        .fa:before {
+            color: #00A78D;
+        }
+}
+
+.makeStyles-item-573.active {
+    color: #fff!important;
+    transition: border-radius .15s cubic-bezier(0.4,0.0,0.2,1);
+    pointer-events: none;
+    background-color: #00A78D;
+}
+
+.borderBtm{
+    border-bottom: 2px solid #00A78D;
+}
+.makeStyles-item-804.active {
+    background-color: #00A78D !important;
 }

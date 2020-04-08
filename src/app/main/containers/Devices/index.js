@@ -22,9 +22,9 @@ class DevicesList extends Component {
                 }}
                 header={
                     <TableMainHeader
-                    iconName='devices' 
-                    title='Devices'
-                    buttonTitle='Export Data'
+                        iconName= 'devices'
+                        title= 'Devices'
+                        buttonTitle= 'Export Data'
                     />
                 }
                 // contentToolbar={
@@ -62,7 +62,9 @@ class DevicesList extends Component {
                 //         </div>
                 // }
                 content={
-                    <DevicesTable />
+                    <div className="p-24">
+                        <DevicesTable />
+                    </div>
                 }
                 innerScroll
             />

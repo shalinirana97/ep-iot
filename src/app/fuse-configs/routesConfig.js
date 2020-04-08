@@ -1,14 +1,14 @@
 import React from 'react';
 import {Redirect} from 'react-router-dom';
 import {FuseUtils} from '@fuse';
-import { UserConfig } from 'app/main/containers/users/UserConfig';
+import { CustomerConfig } from 'app/main/containers/customers/CustomerConfig';
 import {DeviceListConfig} from 'app/main/containers/Devices/DeviceListConfig';
 import {TariffConfig} from 'app/main/containers/tarrif/TariffConfig';
 import {LoginConfig} from 'app/main/containers/login/LoginConfig';
 import { InstallerAgencyConfig} from 'app/main/containers/InstallerAgencies/InstallerConfig';
 
 const routeConfigs = [
-    UserConfig,
+    CustomerConfig,
     DeviceListConfig,
     TariffConfig,
     LoginConfig,
@@ -25,11 +25,6 @@ const routes = [
     {
         path: '/',
         exact: true,
-        component: () => <Redirect to="/customers"/>
-    },
-    {
-        path: '/',
-        exact: true,
         component: () => <Redirect to="/devices" />
     },
     {
@@ -40,7 +35,22 @@ const routes = [
     {
         path: '/',
         exact: true,
+        component: () => <Redirect to="/customers" />
+    },
+    {
+        path: '/',
+        exact: true,
+        component: () => <Redirect to="/customer/details" />
+    },
+    {
+        path: '/',
+        exact: true,
         component: () => <Redirect to="/installer-agencies" />
+    },
+    {
+        path: '/',
+        exact: true,
+        component: () => <Redirect to="/installer-agency/details" />
     },
     {
         path: '/',

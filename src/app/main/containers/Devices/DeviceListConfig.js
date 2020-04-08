@@ -1,5 +1,5 @@
 import {authRoles} from 'app/auth'
-import DevicesList from './Devices';
+import DevicesList from './index'
 import MainDeviceDetails from './DeviceDetail/index';
 
 export const DeviceListConfig = {

@@ -7,6 +7,7 @@ import { withRouter } from 'react-router-dom';
 import _ from '@lodash';
 import { Link } from 'react-router-dom';
 import  { CustomPagination } from "../../components";
+import moment from 'moment'
 
 const styles = theme => ({
     layoutRoot: {}
@@ -41,16 +42,12 @@ class DevicesTable extends Component {
                 actionButtonRender: ActionButtonRender,
             },
             columnDefs: [
-                {
-                    headerName: "Date Installed", field: "date", rowDrag: true, color:'#d3d3d3', 
-                    checkboxSelection: true,
-                    headerCheckboxSelection: true
-                },
-                { headerName: "Device Id", field: "recovered" },
-                { headerName: "Installation Company", field: "confirmed" },
-                { headerName: "NMI", field: "confirmed" },
-                { headerName: "PostCode", field: "deaths" },
-                { headerName: "Premium Validity", field: "date" },
+                { headerName: "Date Installed", field: "date", filter: true, cellStyle: { cursor: 'pointer' }  },
+                { headerName: "Device Id", field: "recovered", filter: 'agTextColumnFilter', cellStyle: { cursor: 'pointer' } },
+                { headerName: "Installation Company", field: "confirmed", filter: 'agTextColumnFilter', cellStyle: { cursor: 'pointer' } },
+                { headerName: "NMI", field: "confirmed", filter: true, cellStyle: { cursor: 'pointer' } },
+                { headerName: "PostCode", field: "deaths", filter: 'agNumberColumnFilter', cellStyle: { cursor: 'pointer' } },
+                { headerName: "Premium Validity", field: "date", filter: true, cellStyle: { cursor: 'pointer' } },
                 { headerName: "Actions", field: "actions", cellRenderer: 'actionButtonRender' }
             ],
             rowData: corona_data && corona_data.length && corona_data.map((item, index) => {
@@ -77,7 +74,7 @@ class DevicesTable extends Component {
         } = this.state;
 
         return (
-            <div>
+            <React.Fragment>
                 <AgGridTable
                     tableData={{
                         ...tableData,
@@ -89,10 +86,10 @@ class DevicesTable extends Component {
                     filter={true}
                     sortable={true}
                     rowDragManaged={true}
-                    rowHeight={40}
+                    rowHeight={50}
                 />
                 <CustomPagination />
-            </div>
+            </React.Fragment>
         )
     }
 }
@@ -100,8 +97,8 @@ class DevicesTable extends Component {
 export default withStyles(styles, { withTheme: true })(DevicesTable);
 
 function ActionButtonRender(item) {
-    return <div className='icon_font'>
-        <Link className="font-medium" to="/device/details">
+    return <div >
+        <Link className="font-medium icon_font" to="/device/details">
             <i className="fa fa-edit edit-icon" onClick={() => item.data.editFunction(item.data)} />
         </Link>
            </div>

@@ -33,10 +33,18 @@ const navigationConfig = [
             },  
             {
                 'id': 'A4',
-                'title': 'Tariff',
+                'title': 'Tariffs',
                 'type': 'item',
                 'auth': authRoles.admin,
                 'icon': 'monetization_on',
+                'url': '/tariff'
+            },
+            {
+                'id': 'A5',
+                'title': 'Promotions',
+                'type': 'item',
+                'auth': authRoles.admin,
+                'icon': 'speaker',
                 'url': '/tariff'
             }
         ]

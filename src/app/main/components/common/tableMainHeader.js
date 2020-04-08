@@ -4,6 +4,7 @@ import { ThemeProvider } from '@material-ui/styles';
 import { FuseAnimate } from '@fuse';
 import * as Actions from '../../../store/actions';
 import { useDispatch, useSelector } from 'react-redux';
+import { ThemeButton } from '../../../../styles/customCss'
 
 function TableMainHeader(props) {
     const { iconName, title, buttonTitle } = props;
@@ -25,8 +26,10 @@ function TableMainHeader(props) {
             {buttonTitle ?
                 <div className="flex items-center justify-center pr-0 pl-12 sm:px-12">
                     <FuseAnimate animation="transition.slideDownIn" delay={300}>
+                        <ThemeButton>
                         <Button className=" sm:flex cursor-pointer" variant="contained" color="secondary" onClick={() => console.log('export data button clicked')}>
                             {buttonTitle}</Button>
+                        </ThemeButton>
                     </FuseAnimate>
                 </div>
             :''}

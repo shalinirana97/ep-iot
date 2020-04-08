@@ -18,8 +18,8 @@ function Login() {
     const classes = useStyles();
 
     const { form, handleChange, resetForm } = useForm({
-        email: 'johndoe@withinpixels.com',
-        password: '1',
+        email: 'test@emeraldplanet.com',
+        password: 'test1234',
         remember: true
     });
 
@@ -42,7 +42,7 @@ function Login() {
 
                 <FuseAnimate animation="transition.slideUpIn" delay={300}>
                     <Typography variant="h3" color="inherit" className="font-light">
-                        Welcome to the <span style={{ color: '#0fd1ef' }}>Emerald Planet</span>
+                        Welcome to the <span style={{ color: '#00A78D' }}>Emerald Planet</span>
                     </Typography>
                 </FuseAnimate>
 
@@ -121,7 +121,7 @@ function Login() {
                                 </Link>
                             </div>
 
-                            <Link className="font-medium" to="/tariff">
+                            <Link className="font-medium" to="/devices">
                                 <Button
                                     variant="contained"
                                     color="primary"

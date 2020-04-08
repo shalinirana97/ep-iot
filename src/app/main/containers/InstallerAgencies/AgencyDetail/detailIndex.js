@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { FusePageSimple, FusePageCarded } from '@fuse';
-import TableMainHeader from '../../components/common/tableMainHeader';
-import InstallerTable from './InstallerAgencyTable';
+import { FuseAnimate } from '@fuse';
+import AgencyDetailsPage from './installerAgencyDetails';
+import DetailPageHeader from '../../../components/common/DetailPageHeader'
 
 const styles = theme => ({
     layoutRoot: {}
 });
 
-class InstallerAgencyList extends Component {
+class InstallerAgencyDetail extends Component {
 
     render() {
         const { classes } = this.props;
@@ -18,19 +19,19 @@ class InstallerAgencyList extends Component {
                     root: classes.layoutRoot
                 }}
                 header={
-                    <TableMainHeader
-                        iconName='settings'
-                        title='Installer Agencies'
-                    />
+                    <DetailPageHeader 
+                        pageTitle='Installer Agencies'
+                        detailTitle='Agency Name'
+                        subTitle='Installer Agency'
+                        pageRoute='/installer-agencies'
+                     />
                 }
                 // contentToolbar={
                 //     <div className="flex flex-1 px-24 w-full items-center justify-between">
                 //         </div>
                 // }
                 content={
-                    <div className="p-24">
-                        <InstallerTable />
-                    </div>
+                    <AgencyDetailsPage />
                 }
                 innerScroll
             />
@@ -38,4 +39,4 @@ class InstallerAgencyList extends Component {
     }
 }
 
-export default withStyles(styles, { withTheme: true })(InstallerAgencyList);
+export default withStyles(styles, { withTheme: true })(InstallerAgencyDetail);

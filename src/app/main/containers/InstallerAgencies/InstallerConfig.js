@@ -1,5 +1,6 @@
 import {authRoles} from 'app/auth'
 import InstallerAgencyList from './index';
+import InstallerAgencyDetail from './AgencyDetail/detailIndex';
 // import MainDeviceDetails from './DeviceDetail/index';
 
 export const InstallerAgencyConfig = {
@@ -15,10 +16,10 @@ export const InstallerAgencyConfig = {
             exact: true,
             component: InstallerAgencyList
         },
-        // {
-        //     path: '/installer_agency/details',
-        //     exact: true,
-        //     component: MainDeviceDetails
-        // }
+        {
+            path: '/installer-agency/details',
+            exact: true,
+            component: InstallerAgencyDetail
+        }
     ]
 };

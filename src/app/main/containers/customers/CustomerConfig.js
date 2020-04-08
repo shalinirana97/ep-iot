@@ -1,6 +1,7 @@
-import UserList from './UserList';
+import CustomerList from './index';
+import MainCustomerDetails from './CustomerDetail/customerDetailIndex'
 
-export const UserConfig = {
+export const CustomerConfig = {
     settings: {
         layout: {
             config: {}
@@ -9,7 +10,12 @@ export const UserConfig = {
     routes  : [
         {
             path: '/customers',
-            component: UserList
+            component: CustomerList
+        },
+        {
+            path: '/customer/details',
+            exact: true,
+            component: MainCustomerDetails
         }
     ]
 };

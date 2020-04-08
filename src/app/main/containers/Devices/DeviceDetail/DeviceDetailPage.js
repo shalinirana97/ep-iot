@@ -6,6 +6,7 @@ import Divider from '@material-ui/core/Divider';
 import './device.scss'
 import RegisteredAddress from './registeredAddressDetail'
 import DeviceTariff from './deviceTariffDetail'
+import { CustomSaveBtn } from '../../../../../styles/customCss'
 
 class DeviceDetailPage extends Component {
     constructor(props) {
@@ -141,9 +142,12 @@ class DeviceDetailPage extends Component {
                         <Typography>
                             <div className="flex justify-end">
                                 <Link className="font-medium" to="/devices">
-                                <Button className="w-128 my-16 " variant="outlined" >Back</Button>
+                                    <Button className="w-128 my-16 " variant="outlined" >Back</Button>
                                 </Link>
-                                <Button className="w-128 m-16 detailButton" variant="contained" >Save</Button>
+
+                                <CustomSaveBtn>
+                                    <Button className="w-128 m-16 " variant="contained" color="secondary" >Save</Button>
+                                </CustomSaveBtn>
                             </div>
                         </Typography>
                     </Paper>
