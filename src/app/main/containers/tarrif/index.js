@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import { FusePageSimple, DemoContent } from '@fuse';
+import { FusePageSimple} from '@fuse';
 import TableMainHeader from '../../components/common/tableMainHeader'
 import TariffDetails from './TariffDetail'
 

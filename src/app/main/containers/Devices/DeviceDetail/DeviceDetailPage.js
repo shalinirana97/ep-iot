@@ -6,7 +6,6 @@ import Divider from '@material-ui/core/Divider';
 import './device.scss'
 import RegisteredAddress from './registeredAddressDetail'
 import DeviceTariff from './deviceTariffDetail'
-import { CustomSaveBtn } from '../../../../../styles/customCss'
 
 class DeviceDetailPage extends Component {
     constructor(props) {
