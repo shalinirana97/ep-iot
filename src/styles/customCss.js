@@ -10,22 +10,20 @@ export const ThemeButton = styled.div`
         background-color: #00A78D;
     }
     
-    .MuiButton-containedSecondary-224 {
+    .MuiButton-containedSecondary-1993 {
         background-color: #07af93;
     }
 
-    .MuiButton-containedSecondary-224: hover {
+    .MuiButton-containedSecondary-1993: hover {
         background-color: #00A78D;
     }
 
 `
-export const CustomSaveBtn = styled.div`
-
-    .MuiButton-containedSecondary{
-            background-color: #07af93;
-    }
-
-    .MuiButton-containedSecondary: hover{
-            background-color: #00A78D;
-    }
+export const CustomRow = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 85%;
+    margin: 12px 0;
 `

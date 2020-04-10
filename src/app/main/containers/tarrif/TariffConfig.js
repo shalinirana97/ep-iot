@@ -1,5 +1,5 @@
 import { authRoles } from 'app/auth'
-import TariffList from './TariffList';
+import TariffList from './index.js';
 
 export const TariffConfig = {
     settings: {

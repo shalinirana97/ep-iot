@@ -2,9 +2,45 @@ import * as Actions from 'app/store/actions/tariff.action';
 
 const initialState = {
     state: false,
-    tariff_data: [{ postCode: '520103, 430122', peak: '07:00 - 10:00 AM', offPeak: '12:00 - 01:00 PM', schedule: '04:00 - 06:00 PM' },
-    { postCode: '580104', peak: '07:00 - 10:00 AM', offPeak: '12:00 - 01:00 PM', schedule: '04:00 - 06:00 PM' },
-    { postCode: '750108', peak: '07:00 - 10:00 AM', offPeak: '12:00 - 01:00 PM', schedule: '04:00 - 06:00 PM' }],
+    tariff_data: [{
+        id: 1, direction: 'desc', postCode: '520103, 430122', timing: 'Flat',
+        weekday: {
+            peakTime: [{ startTime: '07:00', endTime: '10:00' }],
+            offTime: [{ startTime: '11:00', endTime: '01:00' }],
+            shoulderTime: [{ startTime: '04:00', endTime: '06:00' }]
+        },
+        weekends: {
+            peakTime: [{ startTime: '09:00', endTime: '10:00' }],
+            offTime: [{ startTime: '12:00', endTime: '02:00' }],
+            shoulderTime: [{ startTime: '05:00', endTime: '07:00' }]
+        }
+    },
+    {
+        id: 2, direction: 'desc', postCode: '320104', timing:'variable',
+        weekday: {
+            peakTime: [{ startTime: '07:00', endTime: '10:00' }],
+            offTime: [{ startTime: '11:00', endTime: '01:00' }],
+            shoulderTime: [{ startTime: '04:00', endTime: '06:00' }]
+        },
+        weekends: {
+            peakTime: [{ startTime: '09:00', endTime: '10:00' }],
+            offTime: [{ startTime: '12:00', endTime: '02:00' }],
+            shoulderTime: [{ startTime: '05:00', endTime: '07:00' }]
+        }
+    },
+    {
+        id: 3, direction: 'desc', postCode: '750108', timing: 'Flat',
+        weekday: {
+            peakTime: [{ startTime: '07:00', endTime: '10:00' }],
+            offTime: [{ startTime: '11:00', endTime: '01:00' }],
+            shoulderTime: [{ startTime: '04:00', endTime: '06:00' }]
+        },
+        weekends: {
+            peakTime: [{ startTime: '09:00', endTime: '10:00' }],
+            offTime: [{ startTime: '12:00', endTime: '02:00' }],
+            shoulderTime: [{ startTime: '05:00', endTime: '07:00' }]
+        }
+    }],
     options: {
         children: 'Hi'
     }
@@ -43,7 +79,7 @@ const tariffDetail = function (state = initialState, action) {
             }
         default:
             {
-                return {...state};
+                return { ...state };
             }
     }
 };

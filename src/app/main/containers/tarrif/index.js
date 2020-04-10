@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { FusePageSimple, DemoContent } from '@fuse';
-import TariffHeader from './TariffHeader'
+import TableMainHeader from '../../components/common/tableMainHeader'
 import TariffDetails from './TariffDetail'
 
 const styles = theme => ({
@@ -18,7 +18,10 @@ class TariffList extends Component {
                     root: classes.layoutRoot
                 }}
                 header={
-                        <TariffHeader />
+                    <TableMainHeader
+                        iconName='monetization_on'
+                        title='Tariffs'
+                    />
                 }
                 // contentToolbar={
                 //     <div className="px-24"><h4>Content Toolbar</h4></div>

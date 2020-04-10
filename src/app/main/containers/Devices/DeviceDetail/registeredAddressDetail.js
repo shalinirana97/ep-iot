@@ -32,7 +32,6 @@ class RegisteredAddress extends Component {
     }
 
     handleInputChange(text){
-        console.log('texttarget',text.target)
             let {formData} = this.state;  
             formData[text.target.name] = text.target.value;
         this.setState({

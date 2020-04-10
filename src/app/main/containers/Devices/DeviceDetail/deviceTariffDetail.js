@@ -47,7 +47,6 @@ class DeviceTariff extends Component {
     }
 
     handleInputChange(text, key) {
-        console.log('texttarget', text.target)
         let { formData } = this.state;
         if(key == 'weekday'){
             formData.weekday[text.target.name] = text.target.value;

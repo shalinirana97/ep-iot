@@ -1,9 +1,59 @@
 .icon_font{
-        .fa:before {
-            color: #00A78D;
-        }
+    .fa:before {
+        color: #00A78D;
+        font-size: 22px;
+    }
 }
 
+.iconBgColor{
+    background-color: #00A78D;
+    color: white
+}
+
+.customIconColor{
+    color: #00A78D;
+    font-size: 32px
+}
+
+.borderBtm{
+    border-bottom: 2px solid #00A78D;
+}
+
+.labelWidth{
+    min-width: 120px;
+}
+
+.subHeadingColor {
+    color: #00A78D;
+    font-size: 18px;
+    margin-bottom: 12px;
+}
+
+.addIconDivWidth{
+    width: 85%;
+}
+.tariffHead{
+    font-size: 15px;
+    flex-shrink: 0;
+    display: flex;
+    flex-basis: 33.33%;
+    align-items: center;
+}
+
+.bgTableHead{
+    background-color: #f1f0f0;
+}
+
+.MuiTableCell-root {
+    padding: 1px 40px 1px 16px;
+    // border-right: 1px solid rgba(224, 224, 224, 1);
+    border-top: 1px solid rgba(224, 224, 224, 1);
+    // border-left: 1px solid rgba(224, 224, 224, 1);
+}
+
+
+
+//---------------------------override css for change sidebar menuitem color--------------"
 .makeStyles-item-573.active {
     color: #fff!important;
     transition: border-radius .15s cubic-bezier(0.4,0.0,0.2,1);
@@ -11,9 +61,34 @@
     background-color: #00A78D;
 }
 
-.borderBtm{
-    border-bottom: 2px solid #00A78D;
+.makeStyles-item-2312.active {
+    background-color: #00A78D !important;
 }
+
 .makeStyles-item-804.active {
     background-color: #00A78D !important;
+}
+
+
+//---------------------------------override button colors------------------------
+.MuiButton-containedSecondary{
+    background-color: #07af93;
+}
+
+.MuiButton-containedSecondary:hover {
+    background-color: #00A78D;
+}
+
+.MuiButton-outlinedPrimary{
+    color:#00A78D;
+    border: 1px solid #00A78D;
+}
+
+.MuiButton-outlinedPrimary:hover{
+    color:#00A78D;
+    border: 1px solid #00A78D;
+}
+
+.MuiCheckbox-colorPrimary.Mui-checked{
+    color: #00A78D
 }

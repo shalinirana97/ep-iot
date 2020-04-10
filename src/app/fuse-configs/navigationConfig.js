@@ -45,7 +45,7 @@ const navigationConfig = [
                 'type': 'item',
                 'auth': authRoles.admin,
                 'icon': 'speaker',
-                'url': '/tariff'
+                'url': '/device/details'
             }
         ]
     }

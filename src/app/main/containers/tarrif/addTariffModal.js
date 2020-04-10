@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import Modal from '@material-ui/core/Modal';
-import Backdrop from '@material-ui/core/Backdrop';
-import Fade from '@material-ui/core/Fade';
 import TextField from '@material-ui/core/TextField';
-import { Button } from '@material-ui/core';
-import './tariff.scss';
+import { Button, Typography, Checkbox, FormGroup, FormLabel, FormControl, FormControlLabel, Icon,
+    Dialog, DialogActions, DialogContent, DialogTitle, DialogContentText
+} from '@material-ui/core';
+import { CustomRow } from '../../../../styles/customCss'
 import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, KeyboardTimePicker } from '@material-ui/pickers';
 
@@ -14,9 +13,19 @@ export default class TariffModal extends Component {
         this.state = {
             terrif_data: {
                 postCode: '',
-                peak: new Date(),
-                offPeak: new Date(),
-                schedule: new Date(),
+                timing: {},
+                weekday: {
+                    peak: [{ startTime: null, endTime: null }],
+                    offPeak: [{ startTime: null, endTime: null }],
+                    shoulder: [{ startTime: null, endTime: null }]
+
+                },
+                weekends: {
+                    peak: [{ startTime: null, endTime: null }],
+                    offPeak: [{ startTime: null, endTime: null }],
+                    shoulder: [{ startTime: null, endTime: null }]
+
+                }
             }
         }
     }
@@ -26,8 +35,31 @@ export default class TariffModal extends Component {
         this.props.tariffModal(false, modalTitle);
     };
 
-    handleDataChange(data, key) {
+    addWeekdayRow(key) {
+        let { weekday } = this.state.terrif_data
+        weekday[key].push({ startTime: null, endTime: null })
+        this.setState({ weekday })
+    }
 
+    removeWeekdayRow(data, key, title) {
+        let { weekday } = this.state.terrif_data
+        weekday[title].splice(key, 1)
+        this.setState({ weekday })
+    }
+
+    addWeekendRow(key) {
+        let { weekends } = this.state.terrif_data
+        weekends[key].push({ startTime: null, endTime: null })
+        this.setState({ weekends })
+    }
+
+    removeWeekendRow(data, key, title) {
+        let { weekends } = this.state.terrif_data
+        weekends[title].splice(key, 1)
+        this.setState({ weekends })
+    }
+
+    handleInputChange(data, key) {
         let { terrif_data } = this.state
         terrif_data[key] = data
         this.setState({
@@ -35,86 +67,345 @@ export default class TariffModal extends Component {
         })
     };
 
+    handleWeekdayChange(data, index, key, title) {
+        let { weekday } = this.state.terrif_data
+        weekday[title][index][key] = data
+        this.setState({
+            weekday
+        })
+
+    };
+
+    handleWeekendChange(data, index, key, title) {
+        let { weekends } = this.state.terrif_data
+        weekends[title][index][key] = data
+        this.setState({
+            weekends
+        })
+    };
+
+
     render() {
         const { openModal, modalTitle } = this.props;
-        const { peak, offPeak, schedule, postCode } = this.state.terrif_data
+        const { postCode, timing, weekday, weekends } = this.state.terrif_data
+        const scroll = 'paper'
 
         return (
 
             <div>
-                <Modal
-                    aria-labelledby="tariff-modal-title"
-                    aria-describedby="tariff-modal-description"
-                    className="flex justify-center w-full items-center"
+                <Dialog
                     open={openModal}
                     onClose={this.handleClose}
-                    closeAfterTransition
-                    BackdropComponent={Backdrop}
-                    BackdropProps={{
-                        timeout: 500,
-                    }}
+                    scroll={scroll}
+                    maxWidth={"lg"}
+                    aria-labelledby="scroll-dialog-title"
+                    aria-describedby="scroll-dialog-description"
                 >
-                    <Fade in={openModal}>
-                        <div className="w-400 bg-white py-12 px-16 ">
-                            <h2 id="tariff-modal-title">{modalTitle} Tariff</h2>
-                            <div id="tariff-modal-description">
+                    <DialogTitle id="scroll-dialog-title">{modalTitle} Tariff</DialogTitle>
+                    <DialogContent dividers={scroll === 'paper'}>
+                        <DialogContentText
+                            id="scroll-dialog-description"
+                            // ref={descriptionElementRef}
+                            className='px-12'
+                            tabIndex={-1}
+                        >
+                            <Typography className='flex justify-between items-center'>
                                 <TextField
                                     label="Post Codes"
-                                    id="mui-theme-provider-outlined-input"
-                                    className="mt-8"
+                                    className="w-6/12"
                                     value={postCode}
-                                    onChange={(e) => this.handleDataChange(e.target.value,'postCode')}
-                                    fullWidth
-                                />
-                                <br />
+                                    variant='outlined'
+                                    size='small'
+                                    margin='dense'
+                                    onChange={(e) => this.handleInputChange(e.target.value, 'postCode')}
 
-                                <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                                    <KeyboardTimePicker
-                                        margin="normal"
-                                        id="peak"
-                                        name='peak'
-                                        label="Peak"
-                                        value={peak}
-                                        onChange={(e) => this.handleDataChange(e, 'peak')}
-                                        KeyboardButtonProps={{
-                                            'aria-label': 'change time',
-                                        }}
-                                        fullWidth
-                                    />
-                                    <KeyboardTimePicker
-                                        margin="normal"
-                                        id="time-picker"
-                                        label="Off Peak"
-                                        name='offPeak'
-                                        value={offPeak}
-                                        onChange={(e) => this.handleDataChange(e, 'offPeak')}
-                                        KeyboardButtonProps={{
-                                            'aria-label': 'change time',
-                                        }}
-                                        fullWidth
-                                    />
-                                    <KeyboardTimePicker
-                                        margin="normal"
-                                        id="schedule"
-                                        name="schedule"
-                                        label="Schedule"
-                                        value={schedule}
-                                        onChange={(e) => this.handleDataChange(e, 'schedule')}
-                                        KeyboardButtonProps={{
-                                            'aria-label': 'change time',
-                                        }}
-                                        fullWidth
-                                    />
-                                </MuiPickersUtilsProvider>
-                                <br />
-                                <div className="flex justify-end">
-                                    <Button className="w-128 mx-8" variant="contained" color="secondary">Save</Button>
-                                    <Button className="w-128" variant="contained" color="primary" onClick={this.handleClose}>Cancel</Button>
-                                </div>
-                            </div>
-                        </div>
-                    </Fade>
-                </Modal>
+                                />
+                                <FormControl component="fieldset">
+                                    <FormLabel component="legend">Timing</FormLabel>
+                                    <FormGroup aria-label="position" row>
+                                        <FormControlLabel
+                                            value="Flat"
+                                            control={<Checkbox color="primary" />}
+                                            label="Flat Rate"
+                                            labelPlacement="end"
+                                            checked={timing === 'Flat'}
+                                            onChange={(e) => this.handleInputChange(e.target.value, 'timing')}
+                                        />
+                                        <FormControlLabel
+                                            value="Variable"
+                                            control={<Checkbox color="primary" />}
+                                            label="Variable"
+                                            checked={timing === 'Variable'}
+                                            labelPlacement="end"
+                                            onChange={(e) => this.handleInputChange(e.target.value, 'timing')}
+                                        />
+                                    </FormGroup>
+                                </FormControl>
+                            </Typography>
+
+                            <Typography className='my-24'>
+                                <FormControl component="fieldset" className='w-full'>
+                                    <FormLabel component="legend" className='subHeadingColor'>Weekdays</FormLabel>
+                                    <Typography aria-label="position" className='w-full flex justify-between'>
+                                        <FormLabel className='labelWidth mt-10'>Peak</FormLabel>
+                                        <div className='w-10/12 '>
+                                            {weekday.peak.map((data, key) => {
+                                                return (
+                                                    <CustomRow>
+                                                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                                            <KeyboardTimePicker
+                                                                label='Start Time'
+                                                                name="startTime"
+                                                                value={data.startTime}
+                                                                onChange={(e) => this.handleWeekdayChange(e, key, 'startTime', 'peak')}
+                                                                KeyboardButtonProps={{
+                                                                    'aria-label': 'change time',
+                                                                }}
+                                                                className='mx-12'
+                                                            />
+                                                            <KeyboardTimePicker
+                                                                label="End Time"
+                                                                name='endTime'
+                                                                value={data.endTime}
+                                                                onChange={(e) => this.handleWeekdayChange(e, key, 'endTime', 'peak')}
+                                                                KeyboardButtonProps={{
+                                                                    'aria-label': 'change time',
+                                                                }}
+                                                                className='mx-12'
+                                                            />
+                                                            <Icon size='small' onClick={() => this.removeWeekdayRow(data, key, 'peak')}>clear</Icon>
+
+                                                        </MuiPickersUtilsProvider>
+                                                    </CustomRow>
+                                                )
+                                            })}
+                                            <Typography className='flex justify-end items-center addIconDivWidth'>
+                                                <Icon size='smal' onClick={() => this.addWeekdayRow('peak')} style={{ color: '#00A78D' }}>add_circle_outline</Icon>
+                                            </Typography>
+                                        </div>
+                                    </Typography>
+                                    <br />
+                                    <Typography aria-label="position" className='w-full flex justify-between'>
+                                        <FormLabel className='labelWidth'>Off Peak</FormLabel>
+                                        <div className='w-10/12 '>
+                                            {weekday.offPeak.map((data, index) => {
+                                                return (
+                                                    <CustomRow>
+                                                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                                            <KeyboardTimePicker
+                                                                label='Start Time'
+                                                                name="startTime"
+                                                                value={data.startTime}
+                                                                onChange={(e) => this.handleWeekdayChange(e, index, 'startTime', 'offPeak')}
+                                                                KeyboardButtonProps={{
+                                                                    'aria-label': 'change time',
+                                                                }}
+                                                                className='mx-12'
+                                                            />
+                                                            <KeyboardTimePicker
+                                                                label="End Time"
+                                                                name='endTime'
+                                                                value={data.endTime}
+                                                                onChange={(e) => this.handleWeekdayChange(e, index, 'endTime', 'offPeak')}
+                                                                KeyboardButtonProps={{
+                                                                    'aria-label': 'change time',
+                                                                }}
+                                                                className='mx-12'
+                                                            />
+                                                            <Icon size='small' onClick={() => this.removeWeekdayRow(data, index, 'offPeak')}>clear</Icon>
+
+                                                        </MuiPickersUtilsProvider>
+                                                    </CustomRow>
+                                                )
+                                            })}
+                                            <Typography className='flex justify-end items-center addIconDivWidth'>
+                                                <Icon size='small' onClick={() => this.addWeekdayRow('offPeak')} style={{ color: '#00A78D' }}>add_circle_outline</Icon>
+                                            </Typography>
+                                        </div>
+                                    </Typography>
+                                    <br />
+
+                                    <Typography aria-label="position" className='w-full flex justify-between'>
+                                        <FormLabel className='labelWidth'>Shoulder</FormLabel>
+                                        <div className='w-10/12 '>
+                                            {weekday.shoulder.map((data, key) => {
+                                                return (
+                                                    <CustomRow>
+                                                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                                            <KeyboardTimePicker
+                                                                label='Start Time'
+                                                                name="startTime"
+                                                                value={data.startTime}
+                                                                onChange={(e) => this.handleWeekdayChange(e, key, 'startTime', 'shoulder')}
+                                                                KeyboardButtonProps={{
+                                                                    'aria-label': 'change time',
+                                                                }}
+                                                                className='mx-12'
+                                                            />
+                                                            <KeyboardTimePicker
+                                                                label="End Time"
+                                                                name='endTime'
+                                                                value={data.endTime}
+                                                                onChange={(e) => this.handleWeekdayChange(e, key, 'endTime', 'shoulder')}
+                                                                KeyboardButtonProps={{
+                                                                    'aria-label': 'change time',
+                                                                }}
+                                                                className='mx-12'
+                                                            />
+                                                            <Icon size='small' onClick={() => this.removeWeekdayRow(data, key, 'shoulder')}>clear</Icon>
+
+                                                        </MuiPickersUtilsProvider>
+                                                    </CustomRow>
+                                                )
+                                            })}
+                                            <Typography className='flex justify-end items-center addIconDivWidth'>
+                                                <Icon size='small' onClick={() => this.addWeekdayRow('shoulder')} style={{ color: '#00A78D' }}>add_circle_outline</Icon>
+                                            </Typography>
+                                        </div>
+                                    </Typography>
+                                </FormControl>
+                            </Typography>
+
+                            <Typography className='my-24'>
+                                <FormControl component="fieldset" className='w-full'>
+                                    <FormLabel component="legend" className='subHeadingColor'>Weekends</FormLabel>
+                                    <Typography aria-label="position" className='w-full flex justify-between'>
+                                        <FormLabel className='labelWidth mt-10'>Peak</FormLabel>
+                                        <div className='w-10/12 '>
+                                            {weekends.peak.map((data, key) => {
+                                                return (
+                                                    <CustomRow>
+                                                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                                            <KeyboardTimePicker
+                                                                id="peak"
+                                                                label='Start Time'
+                                                                name="startTime"
+                                                                value={data.startTime}
+                                                                onChange={(e) => this.handleWeekendChange(e, key, 'startTime', 'peak')}
+                                                                KeyboardButtonProps={{
+                                                                    'aria-label': 'change time',
+                                                                }}
+                                                                className='mx-12'
+                                                            />
+                                                            <KeyboardTimePicker
+                                                                id="time-picker"
+                                                                label="End Time"
+                                                                name='endTime'
+                                                                value={data.endTime}
+                                                                onChange={(e) => this.handleWeekendChange(e, key, 'endTime', 'peak')}
+                                                                KeyboardButtonProps={{
+                                                                    'aria-label': 'change time',
+                                                                }}
+                                                                className='mx-12'
+                                                            />
+                                                            <Icon size='small' onClick={() => this.removeWeekendRow(data, key, 'peak')}>clear</Icon>
+
+                                                        </MuiPickersUtilsProvider>
+                                                    </CustomRow>
+                                                )
+                                            })}
+                                            <Typography className='flex justify-end items-center addIconDivWidth'>
+                                                <Icon size='small' onClick={() => this.addWeekendRow('peak')} style={{ color: '#00A78D' }}>add_circle_outline</Icon>
+                                            </Typography>
+                                        </div>
+                                    </Typography>
+                                    <br />
+
+                                    <Typography aria-label="position" className='w-full flex justify-between'>
+                                        <FormLabel className='labelWidth '>Off Peak</FormLabel>
+                                        <div className='w-10/12 '>
+                                            {weekends.offPeak.map((data, key) => {
+                                                return (
+                                                    <CustomRow>
+                                                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                                            <KeyboardTimePicker
+                                                                id="peak"
+                                                                label='Start Time'
+                                                                name="startTime"
+                                                                value={data.startTime}
+                                                                onChange={(e) => this.handleWeekendChange(e, key, 'startTime', 'offPeak')}
+                                                                KeyboardButtonProps={{
+                                                                    'aria-label': 'change time',
+                                                                }}
+                                                                className='mx-12'
+                                                            />
+                                                            <KeyboardTimePicker
+                                                                id="time-picker"
+                                                                label="End Time"
+                                                                name='endTime'
+                                                                value={data.endTime}
+                                                                onChange={(e) => this.handleWeekendChange(e, key, 'endTime', 'offPeak')}
+                                                                KeyboardButtonProps={{
+                                                                    'aria-label': 'change time',
+                                                                }}
+                                                                className='mx-12'
+                                                            />
+                                                            <Icon size='small' onClick={() => this.removeWeekendRow(data, key, 'offPeak')}>clear</Icon>
+
+                                                        </MuiPickersUtilsProvider>
+                                                    </CustomRow>
+                                                )
+                                            })}
+                                            <Typography className='flex justify-end items-center addIconDivWidth'>
+                                                <Icon size='small' onClick={() => this.addWeekendRow('offPeak')} style={{ color: '#00A78D' }}>add_circle_outline</Icon>
+                                            </Typography>
+                                        </div>
+                                    </Typography>
+                                    <br />
+
+                                    <Typography aria-label="position" className='w-full flex justify-between'>
+                                        <FormLabel className='labelWidth '>Shoulder</FormLabel>
+                                        <div className='w-10/12 '>
+                                            {weekends.shoulder.map((data, key) => {
+                                                return (
+                                                    <CustomRow>
+                                                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                                            <KeyboardTimePicker
+                                                                id="peak"
+                                                                label='Start Time'
+                                                                name="startTime"
+                                                                value={data.startTime}
+                                                                onChange={(e) => this.handleWeekendChange(e, key, 'startTime', 'shoulder')}
+                                                                KeyboardButtonProps={{
+                                                                    'aria-label': 'change time',
+                                                                }}
+                                                                className='mx-12'
+                                                            />
+                                                            <KeyboardTimePicker
+                                                                id="time-picker"
+                                                                label="End Time"
+                                                                name='endTime'
+                                                                value={data.endTime}
+                                                                onChange={(e) => this.handleWeekendChange(e, key, 'endTime', 'shoulder')}
+                                                                KeyboardButtonProps={{
+                                                                    'aria-label': 'change time',
+                                                                }}
+                                                                className='mx-12'
+                                                            />
+                                                            <Icon size='small' onClick={() => this.removeWeekendRow(data, key, 'shoulder')}>clear</Icon>
+
+                                                        </MuiPickersUtilsProvider>
+                                                    </CustomRow>
+                                                )
+                                            })}
+                                            <Typography className='flex justify-end items-center addIconDivWidth'>
+                                                <Icon size='small' onClick={() => this.addWeekendRow('shoulder')} style={{ color: '#00A78D' }}>add_circle_outline</Icon>
+                                            </Typography>
+                                        </div>
+                                    </Typography>
+                                </FormControl>
+                            </Typography>
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions className='p-24'>
+                        <Button onClick={this.handleClose} color="primary" variant='outlined' className='mx-8'>
+                            Cancel
+                        </Button>
+                        <Button onClick={this.handleClose} color="secondary" variant='contained'>
+                            Submit
+                        </Button>
+                    </DialogActions>
+                </Dialog>
             </div >
         );
     }

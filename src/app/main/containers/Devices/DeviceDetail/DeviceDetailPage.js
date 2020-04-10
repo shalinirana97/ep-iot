@@ -142,13 +142,11 @@ class DeviceDetailPage extends Component {
                         <Typography>
                             <div className="flex justify-end">
                                 <Link className="font-medium" to="/devices">
-                                    <Button className="w-128 my-16 " variant="outlined" >Back</Button>
+                                    <Button className="w-128 my-16 " variant="outlined" color="primary" >Back</Button>
                                 </Link>
 
-                                <CustomSaveBtn>
-                                    <Button className="w-128 m-16 " variant="contained" color="secondary" >Save</Button>
-                                </CustomSaveBtn>
-                            </div>
+                                <Button className="w-128 m-16 " variant="contained" color="secondary" >Save</Button>
+                                </div>
                         </Typography>
                     </Paper>
                 </div>

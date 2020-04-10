@@ -35,7 +35,7 @@ export default function DeleteAlertDialogSlide(props) {
           </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button variant="contained" onClick={handleClose} color="primary">
+                    <Button variant="outlined" onClick={handleClose} color="primary" >
                         No
           </Button>
                     <Button variant="contained" onClick={handleClose} color="secondary">
