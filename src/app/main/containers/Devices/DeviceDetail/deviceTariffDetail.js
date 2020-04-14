@@ -73,7 +73,7 @@ class DeviceTariff extends Component {
         return (
             <div className='p-16'>
                 <div className="pb-16 flex items-center items-center">
-                    <Typography className="h2 deviceBorderBtm" >Tariff Details</Typography>
+                    <Typography className="h2 borderBtm" >Tariff Details</Typography>
                     <Icon onClick={this.editToggle} className='ml-4'>edit</Icon>
                 </div>
                 <Typography className='flex w-full items-center' variant='subtitle1'>

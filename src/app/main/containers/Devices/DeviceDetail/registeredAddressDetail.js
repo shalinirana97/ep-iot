@@ -46,7 +46,7 @@ class RegisteredAddress extends Component {
         return (
             <div className='p-16'>
                 <div className="pb-16 flex items-center items-center">
-                    <Typography className="h2 deviceBorderBtm" >Registered Address</Typography>
+                    <Typography className="h2 borderBtm" >Registered Address</Typography>
                     <Icon onClick={this.editToggle} className= 'ml-4'>edit</Icon>
                 </div>
                 <Typography className='w-full items-center' variant='subtitle1'>

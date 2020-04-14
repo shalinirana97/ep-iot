@@ -23,7 +23,7 @@ class DeviceDetailPage extends Component {
                     <Paper className='deviceCol'>
                         <div className='p-16'>
                             <div className="pb-16 flex items-center">
-                                <Typography className="h2 deviceBorderBtm" color="default">Device Data</Typography>
+                                <Typography className="h2 borderBtm" color="default">Device Data</Typography>
                             </div>
                             <Typography className='flex w-full items-start' variant='subtitle1'>
                                 <div className='w-128 m-16' >
@@ -79,7 +79,7 @@ class DeviceDetailPage extends Component {
                         {/* ------------------------------------Device Access detail container--------------------------------------------- */}
                         <div className='p-16' >
                             <div className="pb-16 flex">
-                                <Typography className="h2 deviceBorderBtm" color="default">Device Access</Typography>
+                                <Typography className="h2 borderBtm" color="default">Device Access</Typography>
                             </div>
 
                             <Typography className='w-full' variant='subtitle1'>
@@ -100,7 +100,7 @@ class DeviceDetailPage extends Component {
                         {/* -----------------------------------------House Details Container---------------------------------------------- */}
                         <div className='p-16' >
                             <div className="pb-16 flex items-center">
-                                <Typography className="h2 deviceBorderBtm" color="default">House Details</Typography>
+                                <Typography className="h2 borderBtm" color="default">House Details</Typography>
                             </div>
                             <Typography className='flex w-full items-center' variant='subtitle1'>
                                 <div className='w-128 m-16' >

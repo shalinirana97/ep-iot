@@ -116,7 +116,7 @@ function Login() {
                                     />
                                 </FormControl>
 
-                                <Link className="font-medium" to="/pages/auth/forgot-password-2">
+                                <Link className="font-medium text-color" to="/pages/auth/forgot-password-2">
                                     Forgot Password?
                                 </Link>
                             </div>
@@ -142,7 +142,7 @@ function Login() {
 
                         <div className="flex flex-col items-center justify-center pb-24">
                             <span className="font-medium">Don't have an account?</span>
-                            <Link className="font-medium" to="/pages/auth/register-2">Create an account</Link>
+                            <Link className="font-medium text-color" to="/pages/auth/register-2">Create an account</Link>
                         </div>
 
                     </CardContent>

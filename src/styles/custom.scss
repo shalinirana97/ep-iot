@@ -15,8 +15,8 @@
     font-size: 32px
 }
 
-.borderBtm{
-    border-bottom: 2px solid #00A78D;
+.text-color {
+    color: #00A78D !important;
 }
 
 .labelWidth{
@@ -41,9 +41,17 @@
 }
 
 .bgTableHead{
-    background-color: #f1f0f0;
+    background-color: #f2f2f2;
 }
-
+.borderBtm:after {
+    content: ""; /* This is necessary for the pseudo element to work. */ 
+    display: block; /* This will put the pseudo element on its own line. */
+    margin: 0; /* This will center the border. */
+    width: 25%; /* Change this to whatever width you want. */
+    padding: 8px 45px 0 0; /* This creates some space between the element and the border. */
+    border-bottom: 2px solid #00A78D; /* This creates the border. Replace black with whatever color you want. */
+    transition: all ease-in-out .2s;
+}
 .MuiTableCell-root {
     padding: 1px 40px 1px 16px;
     // border-right: 1px solid rgba(224, 224, 224, 1);
@@ -51,6 +59,11 @@
     // border-left: 1px solid rgba(224, 224, 224, 1);
 }
 
+.ag-theme-material input:focus[class^='ag-']:not([type]), .ag-theme-material input:focus[class^='ag-'][type='text'], .ag-theme-material input:focus[class^='ag-'][type='number'], .ag-theme-material input:focus[class^='ag-'][type='tel'], .ag-theme-material input:focus[class^='ag-'][type='date'], .ag-theme-material input:focus[class^='ag-'][type='datetime-local'], .ag-theme-material textarea:focus[class^='ag-']{
+    border-bottom: 2px solid #00A78D !important;
+    outline: none;
+    box-shadow: none;
+}
 
 
 //---------------------------override css for change sidebar menuitem color--------------"
@@ -89,6 +102,6 @@
     border: 1px solid #00A78D;
 }
 
-.MuiCheckbox-colorPrimary.Mui-checked{
-    color: #00A78D
+.MuiCheckbox-colorPrimary, .MuiCheckbox-colorSecondary.Mui-checked{
+    color: #00A78D !important
 }

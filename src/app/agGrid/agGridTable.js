@@ -4,16 +4,16 @@ import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-material.css';
 import { CustomPagination } from "../main/components";
 import styled, { css } from 'styled-components';
-import { Select, MenuItem } from '@material-ui/core';
+import { Select, MenuItem, Paper, Icon, Input } from '@material-ui/core';
 
 
 const BtnPanelFilter = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
   border-bottom: 1px solid rgba(170, 162, 162, 0.295);
-  padding: 20px;
+  padding: 20px 10px;
   background-color: white
 `
 
@@ -45,6 +45,10 @@ const TableList = styled.div`
       color: #00A78D;
     }
 
+    .ag-header-row-column {
+        background-color: #f2f2f2
+    }    
+
     ${(props) => props.reducePadding && css`
       .ag-header-cell {
         padding-left: 10px;
@@ -60,7 +64,8 @@ class AgGridTable extends Component {
         super(props);
         this.state = {
             tableData: {},
-            filteredList: 0 ,
+            filteredList: 0,
+            searchText:'',
             defaultColDef: {
                 sortable: this.props.sortable,
                 resizable: this.props.resizable,
@@ -69,19 +74,19 @@ class AgGridTable extends Component {
             defaultGridOptions: {
                 rowDragManaged: this.props.rowDragManaged,
                 animateRows: true,
-                rowSelection: 'single',
+                rowSelection: 'multiple',
                 onSelectionChanged: this.onSelectionChanged,
                 // enables pagination in the grid
                 // pagination: true,
                 // sets 10 rows per page (default is 100)
                 paginationPageSize: 10,
             },
-            
+
         }
     }
 
     handleChange = (event) => {
-        this.setState({ filteredList: event.target.value})
+        this.setState({ filteredList: event.target.value })
     };
 
     // Function Name : onSelectionChanged
@@ -108,15 +113,37 @@ class AgGridTable extends Component {
         params.api.sizeColumnsToFit();
     }
 
+    handleChangeSearch(e){
+        this.setState({
+            searchText: e.target.value
+        })
+    }
+
     render() {
-        const { tableData, rowHeight = 100, dataRenderWidth = true, reducePadding} = this.props;
+        const { tableData, rowHeight = 100, dataRenderWidth = true, reducePadding } = this.props;
         return (
             <div className="ag-theme-material " style={{ height: '700px', width: '100%' }}>
                 <TableList
                     reducePadding={reducePadding}
                 >
                     <BtnPanelFilter>
-                        <div className="counts-ctn">
+                        <Paper className="flex flex-1 items-center w-full max-w-512 px-8 py-4 rounded-8 sm:px-12" elevation={1}>
+
+                            <Icon className="mr-8" color="action">search</Icon>
+
+                            <Input
+                                placeholder="Search"
+                                className="flex flex-1"
+                                disableUnderline
+                                fullWidth
+                                value={this.state.searchText}
+                                inputProps={{
+                                    'aria-label': 'Search'
+                                }}
+                                onChange={(e) => this.handleChangeSearch(e)}
+                            />
+                        </Paper>
+                        <div className="flex items-center justify-center pr-0 pl-12 sm:px-12">
                             <CountItem>
                                 <span>Show: </span>
                                 <Select

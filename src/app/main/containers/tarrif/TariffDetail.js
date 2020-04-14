@@ -2,10 +2,7 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import clsx from 'clsx';
 import _ from '@lodash';
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import { Typography, Tooltip, Icon, FormLabel, Button, Fab, Table, TableBody, TableCell, TablePagination, TableRow, Divider, } from '@material-ui/core';
+import { Typography, Tooltip, Icon, FormLabel, Button, Fab, Table, TableBody, TableCell, TablePagination, Paper, Input, TableRow, Divider, } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import TariffModal from './addTariffModal';
 import { FuseAnimate } from '@fuse';
@@ -17,7 +14,6 @@ class TariffDetails extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            expanded: '',
             openTariff: false,
             modalTitle: '',
             openDelete: false,
@@ -29,6 +25,7 @@ class TariffDetails extends Component {
             page: 0,
             selected: [],
             data: this.props.tariff_data,
+            searchText:''
         }
     }
     handleChangeTariffTariff = (id) => {
@@ -60,21 +57,46 @@ class TariffDetails extends Component {
 
         if (order.id === property && order.direction === 'desc') {
             direction = 'asc';
-        } 
+        }
 
         this.setState({
-           order:{ ...order,
-            direction,
-            id}
+            order: {
+                ...order,
+                direction,
+                id
+            }
         });
     }
 
+    handleChangeSearch(e) {
+        this.setState({
+            searchText: e.target.value
+        })
+    }
+
     render() {
-        const { expanded, rowsPerPage, page, selected, data, isExpanded, selectedId,order } = this.state
-        const { tariff_data } = this.props;
+        const { rowsPerPage, page, selected, data, selectedId, order, searchText } = this.state
         return (
             <React.Fragment>
-                <div className="flex items-center justify-end ">
+                <div className="flex items-center justify-between ">
+                    <FuseAnimate animation="transition.slideDownIn" delay={300}>
+                        <Paper className="flex items-center w-full max-w-512 px-8 py-4 mb-10 rounded-8" elevation={1}>
+
+                            <Icon className="mr-8" color="action">search</Icon>
+
+                            <Input
+                                placeholder="Search"
+                                className="flex flex-1"
+                                disableUnderline
+                                fullWidth
+                                value={searchText}
+                                inputProps={{
+                                    'aria-label': 'Search'
+                                }}
+                                onChange={(e) => this.handleChangeSearch(e)}
+                            />
+                        </Paper>
+                    </FuseAnimate>
                     <FuseAnimate animation="transition.slideDownIn" delay={300}>
                         <Button className=" sm:flex cursor-pointer mb-10" variant="contained" color="secondary" onClick={() => this.openTariffModel(true, 'Add')}>
                             <Icon>add</Icon>Add New</Button>
@@ -123,14 +145,14 @@ class TariffDetails extends Component {
                                                 {n.timing}
                                             </TableCell>
 
-                                            <TableCell component="th" scope="row" align="right">
+                                            <TableCell component="th" scope="row" align="left">
                                                 <Tooltip title="Edit">
                                                     <span className=" icon_font" >
                                                         <i className="fa fa-edit " onClick={() => this.openTariffModel(true, 'Edit')} />
                                                     </span>
                                                 </Tooltip>
                                                 <Tooltip title="Delete">
-                                                    <span className="mx-6 icon_font" >
+                                                    <span className="mx-8 icon_font" >
                                                         <i className="fa fa-trash-o " onClick={() => this.handleDeleteModal(true)} />
                                                     </span>
                                                 </Tooltip>
@@ -153,7 +175,7 @@ class TariffDetails extends Component {
                                                                 return (
                                                                     <div className='flex items-center'>
                                                                         <FormLabel className='w-64'>Time </FormLabel>
-                                                                <div className='w-auto'>{item.startTime}-{item.endTime}</div>
+                                                                        <div className='w-auto'>{item.startTime}-{item.endTime}</div>
                                                                     </div>
                                                                 )
                                                             })}
@@ -184,7 +206,7 @@ class TariffDetails extends Component {
                                                             })}
                                                         </div>
                                                     </Typography>
-                                                    
+
                                                     {/* ---------------------------Weekends data----------------------- */}
                                                     <Typography variant='subtitle1'>
                                                         <div className='mb-4 mx-16' style={{ color: '#00A78D' }}>Weekend </div>

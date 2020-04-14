@@ -42,7 +42,7 @@ class CustomerDetailsPage extends Component {
                         {/* ------------------------------------Device Access detail container--------------------------------------------- */}
                         <div className='p-16' >
                             <div className="pb-16 flex">
-                                <Typography className="h2 deviceBorderBtm" color="default">Customer Details</Typography>
+                                <Typography className="h2 borderBtm" color="default">Customer Details</Typography>
                             </div>
 
                             <Typography className='w-6/12 m-16' variant='subtitle1'>
