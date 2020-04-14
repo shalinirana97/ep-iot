@@ -35,9 +35,9 @@ class InstallerTable extends Component {
             },
             columnDefs: [
                 {
-                    headerName: "Agency Name", field: "name", filter: 'agTextColumnFilter', cellStyle: { cursor: 'pointer' }
+                    headerName: "Agency Name", field: "name"
                 },
-                { headerName: "Email ID", field: "email", filter: 'agTextColumnFilter', cellStyle: { cursor: 'pointer' } },
+                { headerName: "Email ID", field: "email" },
                 { headerName: "Actions", field: "actions", cellRenderer: 'actionButtonRender' }
             ],
             rowData: agency_data && agency_data.length && agency_data.map((item, index) => {

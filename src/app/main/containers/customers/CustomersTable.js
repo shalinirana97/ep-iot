@@ -34,10 +34,10 @@ class CustomersTable extends Component {
                 actionButtonRender: ActionButtonRender,
             },
             columnDefs: [
-                { headerName: "Email ID", field: "email", filter: 'agTextColumnFilter', cellStyle: {cursor: 'pointer'} },
-                { headerName: "Name", field: "name", filter: 'agTextColumnFilter', cellStyle: { cursor: 'pointer' } },
-                { headerName: "Postcode", field: "postcode", filter: 'agNumberColumnFilter', cellStyle: { cursor: 'pointer' } },
-                { headerName: "Device ID", field: "deviceId", filter: 'agNumberColumnFilter', cellStyle: { cursor: 'pointer' } },
+                { headerName: "Email ID", field: "email" },
+                { headerName: "Name", field: "name" },
+                { headerName: "Postcode", field: "postcode" },
+                { headerName: "Device ID", field: "deviceId" },
                 { headerName: "Actions", field: "actions", cellRenderer: 'actionButtonRender' }
             ],
             rowData: agency_data && agency_data.length && agency_data.map((item, index) => {

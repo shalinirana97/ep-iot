@@ -3,7 +3,7 @@ import * as Actions from 'app/store/actions/tariff.action';
 const initialState = {
     state: false,
     tariff_data: [{
-        id: 1, direction: 'desc', postCode: '520103, 430122', timing: 'Flat',
+        id: 1, direction: 'desc', postCode: '520103', timing: 'Flat',
         weekday: {
             peakTime: [{ startTime: '07:00', endTime: '10:00' }],
             offTime: [{ startTime: '11:00', endTime: '01:00' }],

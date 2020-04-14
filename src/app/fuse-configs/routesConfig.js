@@ -6,13 +6,15 @@ import {DeviceListConfig} from 'app/main/containers/Devices/DeviceListConfig';
 import {TariffConfig} from 'app/main/containers/tarrif/TariffConfig';
 import {LoginConfig} from 'app/main/containers/login/LoginConfig';
 import { InstallerAgencyConfig} from 'app/main/containers/InstallerAgencies/InstallerConfig';
+import { PromotionsConfig } from 'app/main/containers/promotions/PromotionsConfig';
 
 const routeConfigs = [
     CustomerConfig,
     DeviceListConfig,
     TariffConfig,
     LoginConfig,
-    InstallerAgencyConfig
+    InstallerAgencyConfig,
+    PromotionsConfig
 ];
 
 const routes = [
@@ -56,7 +58,12 @@ const routes = [
         path: '/',
         exact: true,
         component: () => <Redirect to="/tariff" />
-    }
+    },
+    {
+        path: '/',
+        exact: true,
+        component: () => <Redirect to="/promotion/create-notification" />
+    },
 ];
 
 export default routes;

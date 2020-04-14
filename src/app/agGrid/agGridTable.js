@@ -20,8 +20,8 @@ const BtnPanelFilter = styled.div`
 const CountItem = styled.span`
   color: black;
 
-  &:first-child {
-    margin-right: 10px;
+  &:last-child {
+    margin-left: 10px;
   }
   
   .MuiOutlinedInput-input{
@@ -122,7 +122,7 @@ class AgGridTable extends Component {
     render() {
         const { tableData, rowHeight = 100, dataRenderWidth = true, reducePadding } = this.props;
         return (
-            <div className="ag-theme-material " style={{ height: '700px', width: '100%' }}>
+            <div className="ag-theme-material" style={{ height: '700px', width: '100%' }}>
                 <TableList
                     reducePadding={reducePadding}
                 >
@@ -144,8 +144,8 @@ class AgGridTable extends Component {
                             />
                         </Paper>
                         <div className="flex items-center justify-center pr-0 pl-12 sm:px-12">
-                            <CountItem>
-                                <span>Show: </span>
+                            <CountItem className="flex items-center sm:flex" >
+                                <span className="px-4" >Show: </span>
                                 <Select
                                     value={this.state.filteredList}
                                     onChange={this.handleChange}
@@ -159,7 +159,7 @@ class AgGridTable extends Component {
                                     <MenuItem value={50}>50</MenuItem>
                                 </Select>
                             </CountItem>
-                            <CountItem>Total: {tableData.rowData ? tableData.rowData.length : ''}</CountItem>
+                            <CountItem className='hidden sm:flex'>Total: {tableData.rowData ? tableData.rowData.length : ''}</CountItem>
                         </div>
                     </BtnPanelFilter>
 
@@ -167,7 +167,6 @@ class AgGridTable extends Component {
                         columnDefs={tableData.columnDefs}
                         rowData={tableData.rowData}
                         //   components={tableData.components}
-                        floatingFilter
                         frameworkComponents={tableData.frameworkComponents}
                         rowHeight={rowHeight}
                         defaultColDef={this.state.defaultColDef}

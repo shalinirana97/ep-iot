@@ -45,7 +45,7 @@ const navigationConfig = [
                 'type': 'item',
                 'auth': authRoles.admin,
                 'icon': 'speaker',
-                'url': '/device/details'
+                'url': '/promotion/create-notification'
             }
         ]
     }

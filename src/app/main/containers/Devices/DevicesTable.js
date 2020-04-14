@@ -42,12 +42,12 @@ class DevicesTable extends Component {
                 actionButtonRender: ActionButtonRender,
             },
             columnDefs: [
-                { headerName: "Date Installed", field: "date", filter: true, cellStyle: { cursor: 'pointer' }  },
-                { headerName: "Device Id", field: "recovered", filter: 'agTextColumnFilter', cellStyle: { cursor: 'pointer' } },
-                { headerName: "Installation Company", field: "confirmed", filter: 'agTextColumnFilter', cellStyle: { cursor: 'pointer' } },
-                { headerName: "NMI", field: "confirmed", filter: true, cellStyle: { cursor: 'pointer' } },
-                { headerName: "PostCode", field: "deaths", filter: 'agNumberColumnFilter', cellStyle: { cursor: 'pointer' } },
-                { headerName: "Premium Validity", field: "date", filter: true, cellStyle: { cursor: 'pointer' } },
+                { headerName: "Date Installed", field: "date"  },
+                { headerName: "Device Id", field: "recovered" },
+                { headerName: "Installation Company", field: "confirmed" },
+                { headerName: "NMI", field: "confirmed" },
+                { headerName: "PostCode", field: "deaths" },
+                { headerName: "Premium Validity", field: "date" },
                 { headerName: "Actions", field: "actions", cellRenderer: 'actionButtonRender' }
             ],
             rowData: corona_data && corona_data.length && corona_data.map((item, index) => {

@@ -62,7 +62,7 @@ const TariffTablehead = (props) => {
             <TableRow className="h-52 bgTableHead">
                 {rows.map(row => {
                     return (
-                        <TableCell
+                        <TableCell className="relative pl-4 sm:pl-12"
                             key={row.id}
                             align={row.align}
                             padding={row.disablePadding ? 'none' : 'default'}
