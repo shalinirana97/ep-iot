@@ -4,7 +4,7 @@ import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-material.css';
 import { CustomPagination } from "../main/components";
 import styled, { css } from 'styled-components';
-import { Select, MenuItem, Paper, Icon, Input } from '@material-ui/core';
+import { Select, MenuItem, Paper, Icon, Input, Tooltip } from '@material-ui/core';
 
 
 const BtnPanelFilter = styled.div`
@@ -20,8 +20,8 @@ const BtnPanelFilter = styled.div`
 const CountItem = styled.span`
   color: black;
 
-  &:last-child {
-    margin-left: 10px;
+  &:first-child {
+    margin-right: 10px;
   }
   
   .MuiOutlinedInput-input{
@@ -65,12 +65,7 @@ class AgGridTable extends Component {
         this.state = {
             tableData: {},
             filteredList: 0,
-            searchText:'',
-            defaultColDef: {
-                sortable: this.props.sortable,
-                resizable: this.props.resizable,
-                // filter: this.props.filter,
-            },
+            searchText: '',
             defaultGridOptions: {
                 rowDragManaged: this.props.rowDragManaged,
                 animateRows: true,
@@ -80,6 +75,12 @@ class AgGridTable extends Component {
                 // pagination: true,
                 // sets 10 rows per page (default is 100)
                 paginationPageSize: 10,
+
+                defaultColDef: {
+                    sortable: this.props.sortable,
+                    resizable: this.props.resizable,
+                    filter: this.props.filter,
+                },
             },
 
         }
@@ -113,10 +114,16 @@ class AgGridTable extends Component {
         params.api.sizeColumnsToFit();
     }
 
-    handleChangeSearch(e){
+    //-----Function for Searchbar---------------------
+    handleChangeSearch(e) {
         this.setState({
             searchText: e.target.value
         })
+    }
+
+    clearFilters() {
+        this.state.defaultGridOptions.api.setFilterModel(null);
+        this.state.defaultGridOptions.api.onFilterChanged();
     }
 
     render() {
@@ -143,7 +150,7 @@ class AgGridTable extends Component {
                                 onChange={(e) => this.handleChangeSearch(e)}
                             />
                         </Paper>
-                        <div className="flex items-center justify-center pr-0 pl-12 sm:px-12">
+                        <div className="flex items-center justify-between w-256 pr-0 pl-12 sm:px-12">
                             <CountItem className="flex items-center sm:flex" >
                                 <span className="px-4" >Show: </span>
                                 <Select
@@ -160,6 +167,14 @@ class AgGridTable extends Component {
                                 </Select>
                             </CountItem>
                             <CountItem className='hidden sm:flex'>Total: {tableData.rowData ? tableData.rowData.length : ''}</CountItem>
+
+                            <Tooltip
+                                title="Clear filter"
+                                placement={'bottom-end'}
+                                enterDelay={300}
+                            >
+                                <img onClick={()=>this.clearFilters()} className="customIconColor" width="30" src="https://img.icons8.com/windows/2x/clear-filters.png" alt="clearFilters" />
+                            </Tooltip>
                         </div>
                     </BtnPanelFilter>
 
@@ -167,9 +182,10 @@ class AgGridTable extends Component {
                         columnDefs={tableData.columnDefs}
                         rowData={tableData.rowData}
                         //   components={tableData.components}
+                        clearFilters
                         frameworkComponents={tableData.frameworkComponents}
                         rowHeight={rowHeight}
-                        defaultColDef={this.state.defaultColDef}
+                        // defaultColDef={this.state.defaultColDef}
                         onFirstDataRendered={dataRenderWidth ? this.onFirstDataRendered : () => { }}
                         gridOptions={this.state.defaultGridOptions}
                     >

@@ -163,11 +163,11 @@ class TariffDetails extends Component {
                                                         </Tooltip>
                                                     </TableCell>
                                                     <TableCell component="th" scope="row" align="right">
-                                                        <Icon className="customIconColor text-20" onClick={() => this.handleChangeTariffTariff(n.id)}>{selectedId === n.id ? 'keyboard_arrow_up' : 'keyboard_arrow_down'}</Icon>
+                                                        <Icon className="customIconColor text-20" onClick={() => this.handleChangeTariffTariff(n.id)}>{selectedId === n.id && n.timing === 'Variable' ? 'keyboard_arrow_up' : 'keyboard_arrow_down'}</Icon>
                                                     </TableCell>
                                                 </TableRow>
-                                                {n.id === selectedId ?
-                                                    <tr className="h-64 cursor-pointer" >
+                                                {n.id === selectedId && n.timing === 'Variable' ?
+                                                    <TableRow className="h-64 cursor-pointer" >
                                                         <td colspan='4'>
                                                             <Typography variant='subtitle1'>
                                                                 <div className='mb-4 mx-16' style={{ color: '#00A78D' }}>Weekday </div>
@@ -257,7 +257,7 @@ class TariffDetails extends Component {
                                                             </Typography>
                                                             <Divider />
                                                         </td>
-                                                    </tr>
+                                                    </TableRow>
                                                     : ''}
                                             </React.Fragment>
                                         );

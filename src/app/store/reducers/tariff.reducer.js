@@ -16,7 +16,7 @@ const initialState = {
         }
     },
     {
-        id: 2, direction: 'desc', postCode: '320104', timing:'variable',
+        id: 2, direction: 'desc', postCode: '320104', timing:'Variable',
         weekday: {
             peakTime: [{ startTime: '07:00', endTime: '10:00' }],
             offTime: [{ startTime: '11:00', endTime: '01:00' }],
