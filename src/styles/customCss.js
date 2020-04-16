@@ -25,5 +25,5 @@ export const CustomRow = styled.div`
     justify-content: space-between;
     align-items: center;
     width: 85%;
-    margin: 12px 0;
+    marging-bottom:10px
 `
