@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import _ from '@lodash';
-import { Typography, Tooltip, Icon, FormLabel, Button, Fab, Table, TableBody, TableCell, TablePagination, Paper, Input, TableRow, Divider, } from '@material-ui/core';
-import { FuseAnimate} from '@fuse';
+import { Typography, Tooltip, TextField, Checkbox, FormLabel, FormControl, FormControlLabel, FormGroup, Button, Table, TableBody, TableCell, TablePagination, Paper, Input, TableRow, Divider, } from '@material-ui/core';
+import { FuseAnimate } from '@fuse';
+import NotificationDetailTable from './notificationDetailTable';
 
 class CreateNotificationPage extends Component {
     constructor(props) {
@@ -10,16 +11,7 @@ class CreateNotificationPage extends Component {
         this.state = {
             openTariff: false,
             modalTitle: '',
-            openDelete: false,
-            order: {
-                direction: 'asc',
-                id: null
-            },
-            rowsPerPage: 10,
-            page: 0,
-            selected: [],
-            data: this.props.tariff_data,
-            searchText: ''
+            formData: {}
         }
     }
     handleChangeTariffTariff = (id) => {
@@ -33,53 +25,129 @@ class CreateNotificationPage extends Component {
             })
         }
     }
-    openTariffModel(modalFlag, titleKey) {
 
-        this.setState({ openTariff: modalFlag, modalTitle: titleKey })
-    }
-
-    handleDeleteModal(deleteFlag) {
+    handleInputChange(text) {
+        let { formData } = this.state;
+        formData[text.target.name] = text.target.value;
         this.setState({
-            openDelete: deleteFlag
+            formData
         })
-    }
 
-    handleRequestSort = (event, property) => {
-        const { order } = this.state
-        const id = property;
-        let direction = 'desc';
-
-        if (order.id === property && order.direction === 'desc') {
-            direction = 'asc';
-        }
-
-        this.setState({
-            order: {
-                ...order,
-                direction,
-                id
-            }
-        });
-    }
-
-    handleChangeSearch(e) {
-        this.setState({
-            searchText: e.target.value
-        })
     }
 
     render() {
-        const { rowsPerPage, page, selected, data, selectedId, order, searchText } = this.state
+        const { notificationName, deviceType, postcode, company, installationDate, elecDistributor, premium,
+            adults, child, floors, rooms, solar, hws, ac } = this.state.formData
         return (
-            <React.Fragment >
-            </React.Fragment>
+            <div className="bg-white">
+                <Typography className='flex flex-1 justify-between w-100'>
+                    <div className='flex flex-col m-20 flex-1' >
+                        <FormLabel className='mb-16' >Notification Name </FormLabel>
+                        <Input className='w-sm  inputBorder' name='notificationName' value={notificationName} onChange={(e) => this.handleInputChange(e)} inputProps={{ 'aria-label': 'description' }} />
+                    </div>
+                    <div className='flex flex-col m-20 flex-1' >
+                        <FormLabel className='mb-16' >Device Type </FormLabel>
+                        <Input className='w-sm inputBorder' name='deviceType' value={deviceType} onChange={(e) => this.handleInputChange(e)} inputProps={{ 'aria-label': 'description' }} />
+                    </div>
+                </Typography>
+
+                <Typography className='flex flex-1 justify-between w-100'>
+                    <div className='flex flex-col m-20 flex-1' >
+                        <FormLabel className='mb-16' >Postcode </FormLabel>
+                        <Input type='number' className='w-sm inputBorder' name='postcode' value={postcode} onChange={(e) => this.handleInputChange(e)} inputProps={{ 'aria-label': 'description' }} />
+                    </div>
+                    <div className='flex flex-col m-20 flex-1' >
+                        <FormLabel className='mb-16' >Installation Company </FormLabel>
+                        <Input className='w-sm inputBorder' name='company' value={company} onChange={(e) => this.handleInputChange(e)} inputProps={{ 'aria-label': 'description' }} />
+                    </div>
+                </Typography>
+
+                <Typography className='flex flex-1 justify-between w-100 '>
+                    <div className='flex flex-col m-20 flex-1' >
+                        <FormLabel className='mb-16' >Date Installed Before </FormLabel>
+                        <Input type='date' className='w-sm inputBorder' name='installationDate' value={installationDate} onChange={(e) => this.handleInputChange(e)} inputProps={{ 'aria-label': 'description' }} />
+                    </div>
+                    <div className='flex flex-col m-20 flex-1' >
+                        <FormLabel className='mb-16' >Electricity Distributor </FormLabel>
+                        <Input className='w-sm inputBorder' name='elecDistributor' value={elecDistributor} onChange={(e) => this.handleInputChange(e)} inputProps={{ 'aria-label': 'description' }} />
+                    </div>
+                </Typography>
+
+                <Typography className='m-20'>
+                    <FormControl component="fieldset">
+                        <FormLabel component="legend">Premium</FormLabel>
+                        <FormGroup aria-label="position" row>
+                            <FormControlLabel
+                                value="yes"
+                                control={<Checkbox color="primary" />}
+                                label="Yes"
+                                name='premium'
+                                labelPlacement="end"
+                                checked={premium === 'yes'}
+                                onChange={(e) => this.handleInputChange(e, 'premium')}
+                            />
+                            <FormControlLabel
+                                value="no"
+                                control={<Checkbox color="primary" />}
+                                label="No"
+                                name='premium'
+                                checked={premium === 'no'}
+                                labelPlacement="end"
+                                onChange={(e) => this.handleInputChange(e)}
+                            />
+                        </FormGroup>
+                    </FormControl>
+                </Typography>
+
+                <Typography className='flex flex-1 justify-between w-100 '>
+                    <div className='flex flex-col m-20 flex-1' >
+                        <FormLabel className='mb-16' >No. of Adults </FormLabel>
+                        <Input type='number' className='w-sm inputBorder' name='adults' value={adults} onChange={(e) => this.handleInputChange(e)} inputProps={{ 'aria-label': 'description' }} />
+                    </div>
+                    <div className='flex flex-col m-20 flex-1' >
+                        <FormLabel className='mb-16' >No. of Child </FormLabel>
+                        <Input type='number' className='w-sm inputBorder' name='child' value={child} onChange={(e) => this.handleInputChange(e)} inputProps={{ 'aria-label': 'description' }} />
+                    </div>
+                </Typography>
+
+                <Typography className='flex flex-1 justify-between w-100 '>
+                    <div className='flex flex-col m-20 flex-1' >
+                        <FormLabel className='mb-16' >Floors </FormLabel>
+                        <Input type='number' className='w-sm inputBorder' name='floors' value={floors} onChange={(e) => this.handleInputChange(e)} inputProps={{ 'aria-label': 'description' }} />
+                    </div>
+                    <div className='flex flex-col m-20 flex-1' >
+                        <FormLabel className='mb-16' >Rooms </FormLabel>
+                        <Input type='number' className='w-sm inputBorder' name='rooms' value={rooms} onChange={(e) => this.handleInputChange(e)} inputProps={{ 'aria-label': 'description' }} />
+                    </div>
+                </Typography>
+
+                <Typography className='flex flex-1 justify-between w-100 '>
+                    <div className='flex flex-col m-20 flex-1' >
+                        <FormLabel className='mb-16' >Solar (If yes enter KW) </FormLabel>
+                        <Input type='number' className='w-sm inputBorder' name='solar' value={solar} onChange={(e) => this.handleInputChange(e)} inputProps={{ 'aria-label': 'description' }} />
+                    </div>
+                    <div className='flex flex-col m-20 flex-1' >
+                        <FormLabel className='mb-16' >HWS (If yes enter size) </FormLabel>
+                        <Input type='number' className='w-sm inputBorder' name='hws' value={hws} onChange={(e) => this.handleInputChange(e)} inputProps={{ 'aria-label': 'description' }} />
+                    </div>
+                </Typography>
+
+                <Typography className='flex flex-1 justify-between w-100 '>
+                    <div className='flex flex-col m-20 flex-1' >
+                        <FormLabel className='mb-16' >AC </FormLabel>
+                        <Input type='number' className='w-sm inputBorder' name='ac' value={ac} onChange={(e) => this.handleInputChange(e)} inputProps={{ 'aria-label': 'description' }} />
+                    </div>
+                </Typography>
+
+                    <NotificationDetailTable tableContent={this.state.formData} />
+            </div>
         );
     }
 }
 
 const mapStateToProps = (state) => {
     return {
-        
+
     }
 }
 

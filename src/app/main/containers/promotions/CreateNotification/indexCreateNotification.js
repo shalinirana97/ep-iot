@@ -23,11 +23,14 @@ class MainCreateNotification extends Component {
                         detailTitle='Create Notification'
                         subTitle='Promotion'
                         pageRoute='/promotions'
+                        headerIcon= 'add_alert'
                     />
                 }
                 
                 content={
-                    <CreateNotificationPage />
+                   <div className='p-24'>
+                        <CreateNotificationPage />
+                   </div>
                 }
                 innerScroll
             />

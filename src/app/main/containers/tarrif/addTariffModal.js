@@ -72,6 +72,8 @@ export default class TariffModal extends Component {
 
     handleWeekdayChange(data, index, key, title) {
         let { weekday } = this.state.terrif_data
+        const newTimestamp = moment(data).format('x')
+
         const peakLength = weekday.peak.length - 1;
         const offPeakLength = weekday.offPeak.length - 1;
         const shoulderLength = weekday.shoulder.length - 1;
@@ -79,39 +81,47 @@ export default class TariffModal extends Component {
         const peakTimeStamp = moment(weekday.peak[peakLength].endTime).format('x')
         const startOffTimeStamp = moment(weekday.offPeak[offPeakLength].startTime).format('x')
         const endOffTimeStamp = moment(weekday.offPeak[offPeakLength].endTime).format('x')
-        console.log('peakTimeStamp', peakTimeStamp)
-        // const diff = (moment(data).format('x')).diff(moment(weekday.peak[peakLength].endTime).format('x'))
-        if (title === 'offPeak' && weekday.peak[peakLength].endTime !== null ) {
-            if (key === 'endTime' && weekday.offPeak[offPeakLength].startTime !== null && startOffTimeStamp < (moment(data).format('x')) ) {
+
+        if (title === 'offPeak' && weekday.peak[peakLength].endTime !== null) {
+            if (key === 'endTime' && weekday.offPeak[offPeakLength].startTime !== null && startOffTimeStamp < newTimestamp) {
                 weekday[title][index][key] = data
+
             }
-            else if (key === 'startTime' && peakTimeStamp < (moment(data).format('x'))) {
+            else if (key === 'startTime' && peakTimeStamp < newTimestamp) {
                 weekday[title][index][key] = data
                 this.setState({ isValidTime: false })
+
             } else {
                 console.log('please fill offpeak start time first')
             }
         } else if (title === 'offPeak') {
             this.setState({ isValidTime: true })
+
         } else if (title === 'shoulder' && peakTimeStamp < startOffTimeStamp) {
-            if (key === 'endTime' && weekday.shoulder[shoulderLength].startTime < (moment(data).format('x')) && starPeakTimeStamp < (moment(data).format('x'))) {
+            if (key === 'endTime' && weekday.shoulder[shoulderLength].startTime < newTimestamp && starPeakTimeStamp < newTimestamp) {
                 weekday[title][index][key] = data
+
             }
-            else if (key === 'startTime' && peakTimeStamp < (moment(data).format('x')) && endOffTimeStamp < (moment(data).format('x'))) {
+            else if (key === 'startTime' && peakTimeStamp < newTimestamp && endOffTimeStamp < newTimestamp) {
                 weekday[title][index][key] = data
                 this.setState({ isValidTime: false })
+
             } else {
                 console.log('please fill shoulder start time first')
             }
         } else if (title === 'shoulder') {
             console.log('shoulder time must be grater than peak & offpeak time')
-        } else if (title === 'peak' && key === 'endTime' && weekday.peak[peakLength].startTime!==null && starPeakTimeStamp < (moment(data).format('x')) ) {
+
+        } else if (title === 'peak' && key === 'endTime' && weekday.peak[peakLength].startTime !== null && starPeakTimeStamp < newTimestamp) {
             weekday[title][index][key] = data
-        } else if (title === 'peak' && key === 'startTime') { 
-            weekday[title][index][key] = data 
+
+        } else if (title === 'peak' && key === 'startTime') {
+            weekday[title][index][key] = data
+
         }
-        else{
-            console.log('please fill peak start time first') 
+        else {
+            console.log('please fill peak start time first')
+
         }
         this.setState({
             weekday
@@ -199,7 +209,7 @@ export default class TariffModal extends Component {
                                                                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
                                                                     <KeyboardTimePicker
                                                                         inputVariant="outlined"
-                                                                        
+
                                                                         label='Start Time'
                                                                         name="startTime"
                                                                         value={data.startTime}
@@ -213,7 +223,7 @@ export default class TariffModal extends Component {
                                                                     />
                                                                     <KeyboardTimePicker
                                                                         inputVariant="outlined"
-                                                                        
+
                                                                         label="End Time"
                                                                         name='endTime'
                                                                         value={data.endTime}
@@ -242,46 +252,46 @@ export default class TariffModal extends Component {
                                                     {weekday.offPeak.map((data, index) => {
                                                         return (
                                                             <React.Fragment>
-                                                            {
-                                                            this.state.isValidTime && (
-                                                            <div>
-                                                            'Please fill peak time first'</div>)}
-                                                            <CustomRow>
-                                                                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                                                {
+                                                                    this.state.isValidTime && (
+                                                                        <div>
+                                                                            'Please fill peak time first'</div>)}
+                                                                <CustomRow>
+                                                                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
 
-                                                                    <KeyboardTimePicker
-                                                                        label='Start Time'
-                                                                        // error={this.state.isValidTime && true}
-                                                                        // helperText={this.state.isValidTime && ('fill peak time first')}
-                                                                        name="startTime"
-                                                                        value={data.startTime}
-                                                                        onChange={(e) => this.handleWeekdayChange(e, index, 'startTime', 'offPeak')}
-                                                                        KeyboardButtonProps={{
-                                                                            'aria-label': 'change time',
-                                                                         }}
-                                                                        inputVariant="outlined"
-                                                                        
-                                                                        margin='dense'
-                                                                        className='mx-12'
+                                                                        <KeyboardTimePicker
+                                                                            label='Start Time'
+                                                                            // error={this.state.isValidTime && true}
+                                                                            // helperText={this.state.isValidTime && ('fill peak time first')}
+                                                                            name="startTime"
+                                                                            value={data.startTime}
+                                                                            onChange={(e) => this.handleWeekdayChange(e, index, 'startTime', 'offPeak')}
+                                                                            KeyboardButtonProps={{
+                                                                                'aria-label': 'change time',
+                                                                            }}
+                                                                            inputVariant="outlined"
 
-                                                                    />
-                                                                    <KeyboardTimePicker
-                                                                        label="End Time"
-                                                                        name='endTime'
-                                                                        value={data.endTime}
-                                                                        onChange={(e) => this.handleWeekdayChange(e, index, 'endTime', 'offPeak')}
-                                                                        KeyboardButtonProps={{
-                                                                            'aria-label': 'change time',
-                                                                        }}
-                                                                        inputVariant="outlined"
-                                                                        
-                                                                        margin='dense'
-                                                                        className='mx-12'
-                                                                    />
-                                                                    <Icon size='small' onClick={() => this.removeWeekdayRow(data, index, 'offPeak')}>clear</Icon>
+                                                                            margin='dense'
+                                                                            className='mx-12'
 
-                                                                </MuiPickersUtilsProvider>
-                                                            </CustomRow>
+                                                                        />
+                                                                        <KeyboardTimePicker
+                                                                            label="End Time"
+                                                                            name='endTime'
+                                                                            value={data.endTime}
+                                                                            onChange={(e) => this.handleWeekdayChange(e, index, 'endTime', 'offPeak')}
+                                                                            KeyboardButtonProps={{
+                                                                                'aria-label': 'change time',
+                                                                            }}
+                                                                            inputVariant="outlined"
+
+                                                                            margin='dense'
+                                                                            className='mx-12'
+                                                                        />
+                                                                        <Icon size='small' onClick={() => this.removeWeekdayRow(data, index, 'offPeak')}>clear</Icon>
+
+                                                                    </MuiPickersUtilsProvider>
+                                                                </CustomRow>
                                                             </React.Fragment>
                                                         )
                                                     })}
@@ -308,7 +318,7 @@ export default class TariffModal extends Component {
                                                                             'aria-label': 'change time',
                                                                         }}
                                                                         inputVariant="outlined"
-                                                                        
+
                                                                         margin='dense'
                                                                         className='mx-12'
                                                                     />
@@ -321,7 +331,7 @@ export default class TariffModal extends Component {
                                                                             'aria-label': 'change time',
                                                                         }}
                                                                         inputVariant="outlined"
-                                                                        
+
                                                                         margin='dense'
                                                                         className='mx-12'
                                                                     />
@@ -359,7 +369,7 @@ export default class TariffModal extends Component {
                                                                             'aria-label': 'change time',
                                                                         }}
                                                                         inputVariant="outlined"
-                                                                        
+
                                                                         margin='dense'
                                                                         className='mx-12'
                                                                     />
@@ -373,7 +383,7 @@ export default class TariffModal extends Component {
                                                                             'aria-label': 'change time',
                                                                         }}
                                                                         inputVariant="outlined"
-                                                                        
+
                                                                         margin='dense'
                                                                         className='mx-12'
                                                                     />
@@ -406,7 +416,7 @@ export default class TariffModal extends Component {
                                                                             'aria-label': 'change time',
                                                                         }}
                                                                         inputVariant="outlined"
-                                                                        
+
                                                                         margin='dense'
                                                                         className='mx-12'
                                                                     />
@@ -420,7 +430,7 @@ export default class TariffModal extends Component {
                                                                             'aria-label': 'change time',
                                                                         }}
                                                                         inputVariant="outlined"
-                                                                        
+
                                                                         margin='dense'
                                                                         className='mx-12'
                                                                     />
@@ -454,7 +464,7 @@ export default class TariffModal extends Component {
                                                                             'aria-label': 'change time',
                                                                         }}
                                                                         inputVariant="outlined"
-                                                                        
+
                                                                         margin='dense'
                                                                         className='mx-12'
                                                                     />
@@ -468,7 +478,7 @@ export default class TariffModal extends Component {
                                                                             'aria-label': 'change time',
                                                                         }}
                                                                         inputVariant="outlined"
-                                                                        
+
                                                                         margin='dense'
                                                                         className='mx-12'
                                                                     />

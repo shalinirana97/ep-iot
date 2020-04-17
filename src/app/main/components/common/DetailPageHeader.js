@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 function DetailPageHeader(props) {
-    const { pageTitle, detailTitle, subTitle, pageRoute } = props;
+    const { pageTitle, detailTitle, subTitle, pageRoute, headerIcon } = props;
     const mainTheme = useSelector(({ fuse }) => fuse.settings.mainTheme);
     const searchText = '';
     return (
@@ -17,12 +17,15 @@ function DetailPageHeader(props) {
                     <Typography className="normal-case flex items-center sm:mb-12" component={Link} role="button" to={pageRoute} color="inherit">
                         <Icon className="mr-4 text-20">arrow_back</Icon>
                                     {pageTitle}
-                                </Typography>
+                    </Typography>
                 </FuseAnimate>
+                
                 <div className="flex items-center max-w-full">
                     <FuseAnimate animation="transition.expandIn" delay={300}>
-                                <img className="w-32 sm:w-48 mr-8 sm:mr-16 rounded" src="assets/images/ecommerce/product-image-placeholder.png" alt={pageTitle} />
-                           
+                        {headerIcon ?
+                            <Icon className="text-32 mr-0 sm:mr-12">{headerIcon}</Icon>
+                            :<img className="w-32 sm:w-48 mr-8 sm:mr-16 rounded" src="assets/images/ecommerce/product-image-placeholder.png" alt={pageTitle} />
+                        }           
                     </FuseAnimate>
                     <div className="flex flex-col min-w-0">
                         <FuseAnimate animation="transition.slideLeftIn" delay={300}>

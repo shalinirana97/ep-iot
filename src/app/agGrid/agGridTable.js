@@ -4,7 +4,7 @@ import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-material.css';
 import { CustomPagination } from "../main/components";
 import styled, { css } from 'styled-components';
-import { Select, MenuItem, Paper, Icon, Input, Tooltip } from '@material-ui/core';
+import { Select, MenuItem, Paper, Icon, Input, Tooltip, Typography } from '@material-ui/core';
 
 
 const BtnPanelFilter = styled.div`
@@ -78,7 +78,7 @@ class AgGridTable extends Component {
 
                 defaultColDef: {
                     sortable: this.props.sortable,
-                    resizable: this.props.resizable,
+                    resizable: this.props.resizable || true,
                     filter: this.props.filter,
                 },
             },
@@ -127,56 +127,62 @@ class AgGridTable extends Component {
     }
 
     render() {
-        const { tableData, rowHeight = 100, dataRenderWidth = true, reducePadding } = this.props;
+        const { tableData, rowHeight = 100, dataRenderWidth = true, reducePadding, isSearchBar } = this.props;
         return (
             <div className="ag-theme-material" style={{ height: '700px', width: '100%' }}>
                 <TableList
-                    reducePadding={reducePadding}
+                    // reducePadding={reducePadding}
                 >
-                    <BtnPanelFilter>
-                        <Paper className="flex flex-1 items-center w-full max-w-512 px-8 py-4 rounded-8 sm:px-12" elevation={1}>
+                    {isSearchBar ?
+                        <BtnPanelFilter>
+                            <Typography >Filtered Devices</Typography>
+                            <CountItem className='hidden sm:flex'>No. of results found: {tableData.rowData ? tableData.rowData.length : ''}</CountItem>
+                        </BtnPanelFilter>
+                        : <BtnPanelFilter>
+                            <Paper className="flex flex-1 items-center w-full max-w-512 px-8 py-4 rounded-8 sm:px-12" elevation={1}>
 
-                            <Icon className="mr-8" color="action">search</Icon>
+                                <Icon className="mr-8" color="action">search</Icon>
 
-                            <Input
-                                placeholder="Search"
-                                className="flex flex-1"
-                                disableUnderline
-                                fullWidth
-                                value={this.state.searchText}
-                                inputProps={{
-                                    'aria-label': 'Search'
-                                }}
-                                onChange={(e) => this.handleChangeSearch(e)}
-                            />
-                        </Paper>
-                        <div className="flex items-center justify-between w-256 pr-0 pl-12 sm:px-12">
-                            <CountItem className="flex items-center sm:flex" >
-                                <span className="px-4" >Show: </span>
-                                <Select
-                                    value={this.state.filteredList}
-                                    onChange={this.handleChange}
-                                    variant='outlined'
+                                <Input
+                                    placeholder="Search"
+                                    className="flex flex-1"
+                                    disableUnderline
+                                    fullWidth
+                                    value={this.state.searchText}
+                                    inputProps={{
+                                        'aria-label': 'Search'
+                                    }}
+                                    onChange={(e) => this.handleChangeSearch(e)}
+                                />
+                            </Paper>
+                            <div className="flex items-center justify-between w-256 pr-0 pl-12 sm:px-12">
+                                <CountItem className="flex items-center sm:flex" >
+                                    <span className="px-4" >Show: </span>
+                                    <Select
+                                        value={this.state.filteredList}
+                                        onChange={this.handleChange}
+                                        variant='outlined'
+                                    >
+                                        <MenuItem >
+                                            <em>Select</em>
+                                        </MenuItem>
+                                        <MenuItem value={10}>10</MenuItem>
+                                        <MenuItem value={25}>25</MenuItem>
+                                        <MenuItem value={50}>50</MenuItem>
+                                    </Select>
+                                </CountItem>
+                                <CountItem className='hidden sm:flex'>Total: {tableData.rowData ? tableData.rowData.length : ''}</CountItem>
+
+                                <Tooltip
+                                    title="Clear filter"
+                                    placement={'bottom-end'}
+                                    enterDelay={300}
                                 >
-                                    <MenuItem >
-                                        <em>Select</em>
-                                    </MenuItem>
-                                    <MenuItem value={10}>10</MenuItem>
-                                    <MenuItem value={25}>25</MenuItem>
-                                    <MenuItem value={50}>50</MenuItem>
-                                </Select>
-                            </CountItem>
-                            <CountItem className='hidden sm:flex'>Total: {tableData.rowData ? tableData.rowData.length : ''}</CountItem>
-
-                            <Tooltip
-                                title="Clear filter"
-                                placement={'bottom-end'}
-                                enterDelay={300}
-                            >
-                                <img onClick={()=>this.clearFilters()} className="customIconColor" width="30" src="https://img.icons8.com/windows/2x/clear-filters.png" alt="clearFilters" />
-                            </Tooltip>
-                        </div>
-                    </BtnPanelFilter>
+                                    <img onClick={() => this.clearFilters()} className="customIconColor" width="30" src="https://img.icons8.com/windows/2x/clear-filters.png" alt="clearFilters" />
+                                </Tooltip>
+                            </div>
+                        </BtnPanelFilter>
+                    }
 
                     <AgGridReact
                         columnDefs={tableData.columnDefs}
@@ -185,7 +191,7 @@ class AgGridTable extends Component {
                         clearFilters
                         frameworkComponents={tableData.frameworkComponents}
                         rowHeight={rowHeight}
-                        // defaultColDef={this.state.defaultColDef}
+                        defaultColDef={this.state.defaultColDef}
                         onFirstDataRendered={dataRenderWidth ? this.onFirstDataRendered : () => { }}
                         gridOptions={this.state.defaultGridOptions}
                     >
