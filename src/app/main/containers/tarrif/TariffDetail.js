@@ -26,7 +26,7 @@ class TariffDetails extends Component {
             searchText: ''
         }
     }
-    handleChangeTariffTariff = (id) => {
+    handleChangeTariff = (id) => {
         if (id == this.state.selectedId) {
             this.setState({
                 selectedId: null
@@ -163,7 +163,7 @@ class TariffDetails extends Component {
                                                         </Tooltip>
                                                     </TableCell>
                                                     <TableCell component="th" scope="row" align="right">
-                                                        <Icon className="customIconColor text-20" onClick={() => this.handleChangeTariffTariff(n.id)}>{selectedId === n.id && n.timing === 'Variable' ? 'keyboard_arrow_up' : 'keyboard_arrow_down'}</Icon>
+                                                        <Icon className="customIconColor text-20" onClick={() => this.handleChangeTariff(n.id)}>{selectedId === n.id && n.timing === 'Variable' ? 'keyboard_arrow_up' : 'keyboard_arrow_down'}</Icon>
                                                     </TableCell>
                                                 </TableRow>
                                                 {n.id === selectedId && n.timing === 'Variable' ?

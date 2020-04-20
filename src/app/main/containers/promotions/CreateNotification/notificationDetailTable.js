@@ -29,14 +29,12 @@ class NotificationDetailTable extends Component {
 
     createTableData = () => {
         const { tableContent } = this.props
+        console.log('tablecontent', tableContent)
         let tableData = {
             frameworkComponents: {
                 actionButtonRender: ActionButtonRender,
             },
-            columnDefs: /* tableContent && tableContent.length && tableContent.map((item, index) =>{ */ [
-                // { item.deviceType && 
-
-                // },
+            columnDefs: [
                 { headerName: "Device Type", field: "deviceType",
                     checkboxSelection: true,
                     headerCheckboxSelection: true },
@@ -50,14 +48,15 @@ class NotificationDetailTable extends Component {
                 { headerName: "Floors", field: "floors" },
                 { headerName: "Solar", field: "solar" }
             ],
-            rowData: tableContent && tableContent.length>0 && tableContent.map((item, index) => {
+            rowData: tableContent && tableContent.length>0 && tableContent.map(item => {
+                console.log('teim',item)
                 return {
-                    deviceType: item.deviceType,
+                    // deviceType: item.deviceType,
                     postcode: item.postcode || null,
-                    company: item.company,
-                    dateBefore: item.dateBefore,
-                    elecDistributor: item.elecDistributor,
-                    premium: item.premium,
+                    // company: item.company,
+                    // dateBefore: item.dateBefore,
+                    // elecDistributor: item.elecDistributor,
+                    // premium: item.premium,
                     adults: item.adults,
                     child: item.child,
                     floors: item.floors,

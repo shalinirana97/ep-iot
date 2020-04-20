@@ -209,7 +209,7 @@ export default class TariffModal extends Component {
                                                                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
                                                                     <KeyboardTimePicker
                                                                         inputVariant="outlined"
-
+                                                                        ampm={false}
                                                                         label='Start Time'
                                                                         name="startTime"
                                                                         value={data.startTime}
@@ -223,6 +223,7 @@ export default class TariffModal extends Component {
                                                                     />
                                                                     <KeyboardTimePicker
                                                                         inputVariant="outlined"
+                                                                        ampm={false}
 
                                                                         label="End Time"
                                                                         name='endTime'
@@ -261,6 +262,7 @@ export default class TariffModal extends Component {
 
                                                                         <KeyboardTimePicker
                                                                             label='Start Time'
+                                                                            ampm={false}
                                                                             // error={this.state.isValidTime && true}
                                                                             // helperText={this.state.isValidTime && ('fill peak time first')}
                                                                             name="startTime"
@@ -277,6 +279,7 @@ export default class TariffModal extends Component {
                                                                         />
                                                                         <KeyboardTimePicker
                                                                             label="End Time"
+                                                                            ampm={false}
                                                                             name='endTime'
                                                                             value={data.endTime}
                                                                             onChange={(e) => this.handleWeekdayChange(e, index, 'endTime', 'offPeak')}
@@ -311,6 +314,7 @@ export default class TariffModal extends Component {
                                                                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
                                                                     <KeyboardTimePicker
                                                                         label='Start Time'
+                                                                        ampm={false}
                                                                         name="startTime"
                                                                         value={data.startTime}
                                                                         onChange={(e) => this.handleWeekdayChange(e, key, 'startTime', 'shoulder')}
@@ -324,6 +328,7 @@ export default class TariffModal extends Component {
                                                                     />
                                                                     <KeyboardTimePicker
                                                                         label="End Time"
+                                                                        ampm={false}
                                                                         name='endTime'
                                                                         value={data.endTime}
                                                                         onChange={(e) => this.handleWeekdayChange(e, key, 'endTime', 'shoulder')}

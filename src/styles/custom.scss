@@ -76,6 +76,8 @@
     }
     
 }
+
+
 .MuiInput-underline:hover:not(.Mui-disabled):before{
     border-bottom: none;
 }
@@ -120,6 +122,6 @@
     border: 1px solid #00A78D;
 }
 
-.MuiCheckbox-colorPrimary, .MuiCheckbox-colorSecondary.Mui-checked{
+.MuiCheckbox-colorPrimary, .MuiCheckbox-colorSecondary.Mui-checked, .MuiRadio-colorPrimary.Mui-checked{
     color: #00A78D !important
 }

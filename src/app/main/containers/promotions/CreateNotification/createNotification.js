@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import _ from '@lodash';
-import { Typography, Tooltip, TextField, Checkbox, FormLabel, FormControl, FormControlLabel, FormGroup, Button, Table, TableBody, TableCell, TablePagination, Paper, Input, TableRow, Divider, } from '@material-ui/core';
+import { Typography, Tooltip, Checkbox, FormLabel, FormControl, FormControlLabel, FormGroup, Button, Table, TableBody, TableCell, TablePagination, Paper, Input, TableRow, Divider, Radio, } from '@material-ui/core';
 import { FuseAnimate } from '@fuse';
 import NotificationDetailTable from './notificationDetailTable';
+import ScheduleForm from './ScheduleForm';
 
 class CreateNotificationPage extends Component {
     constructor(props) {
@@ -11,18 +12,8 @@ class CreateNotificationPage extends Component {
         this.state = {
             openTariff: false,
             modalTitle: '',
-            formData: {}
-        }
-    }
-    handleChangeTariffTariff = (id) => {
-        if (id == this.state.selectedId) {
-            this.setState({
-                selectedId: null
-            })
-        } else {
-            this.setState({
-                selectedId: id
-            })
+            formData: [],
+            filterTable: false
         }
     }
 
@@ -35,9 +26,16 @@ class CreateNotificationPage extends Component {
 
     }
 
+    handleDetailSubmit() {
+    }
+
+    scheduleData = (data) => {
+        console.log('datata', data)
+    }
+
     render() {
         const { notificationName, deviceType, postcode, company, installationDate, elecDistributor, premium,
-            adults, child, floors, rooms, solar, hws, ac } = this.state.formData
+            adults, child, floors, rooms, solar, hws, ac, description, link, heading, send, } = this.state.formData
         return (
             <div className="bg-white">
                 <Typography className='flex flex-1 justify-between w-100'>
@@ -139,7 +137,73 @@ class CreateNotificationPage extends Component {
                     </div>
                 </Typography>
 
-                    <NotificationDetailTable tableContent={this.state.formData} />
+                <div className="flex flex-1 justify-start ml-1">
+                    <Button className="w-128 m-16 " variant="contained" color="secondary" onClick={() => this.setState({ filterTable: true })} >
+                        Apply Filter</Button>
+                </div>
+
+                {this.state.filterTable && (
+                    <Typography className='m-20'>
+                        <NotificationDetailTable tableContent={this.state.formData} />
+                    </Typography>
+
+                )}
+
+                <FormLabel component="legend" className='h3 text-bold m-20'>Notification Description </FormLabel>
+                <Typography className='flex flex-1 justify-between w-100 '>
+
+                    <div className='flex flex-col m-20 flex-1' >
+                        <FormLabel className='mb-16' >Heading </FormLabel>
+                        <Input type='number' className='w-sm inputBorder' name='heading' value={heading} onChange={(e) => this.handleInputChange(e)} inputProps={{ 'aria-label': 'description' }} />
+                    </div>
+                    <div className='flex flex-col m-20 flex-1' >
+                        <FormLabel className='mb-16' >Description </FormLabel>
+                        <Input type='number' className='w-sm inputBorder' name='description' value={description} onChange={(e) => this.handleInputChange(e)} inputProps={{ 'aria-label': 'description' }} />
+                    </div>
+                </Typography>
+
+                <Typography className='flex flex-1 justify-between w-100 '>
+                    <div className='flex flex-col m-20 flex-1' >
+                        <FormLabel className='mb-16' >Link </FormLabel>
+                        <Input type='number' className='w-sm inputBorder' name='link' value={link} onChange={(e) => this.handleInputChange(e)} inputProps={{ 'aria-label': 'description' }} />
+                    </div>
+                </Typography>
+
+                <Typography className='m-20'>
+                    <FormControl component="fieldset">
+                        <FormGroup aria-label="position" row>
+                            <FormControlLabel
+                                value="schedule"
+                                control={<Radio color="primary" />}
+                                label="Schedule"
+                                name='send'
+                                labelPlacement="end"
+                                checked={send === 'schedule'}
+                                onChange={(e) => this.handleInputChange(e)}
+                            />
+                            <FormControlLabel
+                                value="sendNow"
+                                control={<Radio color="primary" />}
+                                label="Send Now"
+                                name='send'
+                                checked={send === 'sendNow'}
+                                labelPlacement="end"
+                                onChange={(e) => this.handleInputChange(e)}
+                            />
+                        </FormGroup>
+                    </FormControl>
+                </Typography>
+
+                {send === 'schedule' && (
+                    <ScheduleForm scheduleData={this.scheduleData} />
+                )}
+
+                <Typography>
+                    <div className="flex justify-start">
+                        <Button className="w-128 m-16 " variant="contained" color="secondary" onClick={() => this.handleDetailSubmit()} >Save</Button>
+                    </div>
+                </Typography>
+
             </div>
         );
     }
