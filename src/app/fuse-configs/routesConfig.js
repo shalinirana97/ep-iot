@@ -62,7 +62,17 @@ const routes = [
     {
         path: '/',
         exact: true,
+        component: () => <Redirect to="/promotions/notifications" />
+    },
+    {
+        path: '/',
+        exact: true,
         component: () => <Redirect to="/promotion/create-notification" />
+    },
+    {
+        path: '/',
+        exact: true,
+        component: () => <Redirect to="/promotion/notification-details/:id" />
     },
 ];
 
