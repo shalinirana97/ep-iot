@@ -75,7 +75,6 @@ class AgGridTable extends Component {
                 // pagination: true,
                 // sets 10 rows per page (default is 100)
                 paginationPageSize: 10,
-
                 defaultColDef: {
                     sortable: this.props.sortable,
                     resizable: this.props.resizable || true,
@@ -127,11 +126,12 @@ class AgGridTable extends Component {
     }
 
     render() {
-        const { tableData, rowHeight = 100, dataRenderWidth = true, reducePadding, isSearchBar } = this.props;
+        const { tableData, rowHeight = 100, dataRenderWidth = true, reducePadding, isSearchBar, onGridReady = () => { }, height = '700px' } = this.props;
+
         return (
-            <div className="ag-theme-material" style={{ height: '700px', width: '100%' }}>
+            <div className="ag-theme-material" style={{ height: height, width: '100%' }}>
                 <TableList
-                    // reducePadding={reducePadding}
+                // reducePadding={reducePadding}
                 >
                     {isSearchBar ?
                         <BtnPanelFilter>
@@ -194,6 +194,7 @@ class AgGridTable extends Component {
                         defaultColDef={this.state.defaultColDef}
                         onFirstDataRendered={dataRenderWidth ? this.onFirstDataRendered : () => { }}
                         gridOptions={this.state.defaultGridOptions}
+                        onGridReady={onGridReady}
                     >
                     </AgGridReact>
                 </TableList>

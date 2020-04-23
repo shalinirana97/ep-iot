@@ -103,7 +103,7 @@ export default withStyles(styles, { withTheme: true })(withRouter(connect(mapSta
 
 function ActionButtonRender(item) {
     return <div>
-        <Link className="font-medium icon_font" to="/promotion/create-notification">
+        <Link className="font-medium icon_font" to="/promotion/notification-details/123">
             <i className="fa fa-edit" onClick={() => console.log('installer agency edit button clicked', item.data)} />
         </Link>
     </div>

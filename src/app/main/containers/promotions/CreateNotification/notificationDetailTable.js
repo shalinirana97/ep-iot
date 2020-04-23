@@ -17,27 +17,38 @@ class NotificationDetailTable extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            tableData: {}
+            tableData: {},
+            tableContent: []
         }
 
     }
 
-
     componentDidMount = () => {
-        this.createTableData();
+        this.setState({ tableContent: this.props.tableContent }, () => {
+            this.createTableData();
+        });
+    }
+
+    componentWillReceiveProps = (props) => {
+        let updateTableData = props.tableContent.length == this.state.tableContent.length ? 1 : 0;
+        if (!updateTableData)
+            this.setState({ tableContent: props.tableContent }, () => {
+                this.createTableData();
+            });
     }
 
     createTableData = () => {
-        const { tableContent } = this.props
-        console.log('tablecontent', tableContent)
+        const { tableContent } = this.state;
         let tableData = {
             frameworkComponents: {
                 actionButtonRender: ActionButtonRender,
             },
             columnDefs: [
-                { headerName: "Device Type", field: "deviceType",
+                {
+                    headerName: "Device Type", field: "deviceType",
                     checkboxSelection: true,
-                    headerCheckboxSelection: true },
+                    headerCheckboxSelection: true
+                },
                 { headerName: "Postcode", field: "postcode" },
                 { headerName: "Installation Company", field: "company" },
                 { headerName: "Date Installed Before", field: "dateBefore" },
@@ -48,19 +59,19 @@ class NotificationDetailTable extends Component {
                 { headerName: "Floors", field: "floors" },
                 { headerName: "Solar", field: "solar" }
             ],
-            rowData: tableContent && tableContent.length>0 && tableContent.map(item => {
-                console.log('teim',item)
+            rowData: tableContent && tableContent.length > 0 && tableContent.map(item => {
+                console.log('teim', item)
                 return {
-                    // deviceType: item.deviceType,
+                    deviceType: item.deviceType || "--",
                     postcode: item.postcode || null,
-                    // company: item.company,
-                    // dateBefore: item.dateBefore,
-                    // elecDistributor: item.elecDistributor,
-                    // premium: item.premium,
-                    adults: item.adults,
-                    child: item.child,
-                    floors: item.floors,
-                    solar: item.solar,
+                    company: item.company || "--",
+                    dateBefore: item.dateBefore || "--",
+                    elecDistributor: item.elecDistributor || "--",
+                    premium: item.premium || "--",
+                    adults: item.adults || "--",
+                    child: item.child || "--",
+                    floors: item.floors || "--",
+                    solar: item.solar || "--",
 
                     editFunction: this.editFunction
                 }
@@ -69,11 +80,14 @@ class NotificationDetailTable extends Component {
         this.setState({ tableData });
     }
 
-
     render() {
         const {
             tableData
         } = this.state;
+
+        const {
+            onGridReady = () => { }
+        } = this.props;
 
         return (
             <React.Fragment>
@@ -89,7 +103,9 @@ class NotificationDetailTable extends Component {
                     sortable={true}
                     rowDragManaged={true}
                     rowHeight={50}
-                    isSearchBar= {true}
+                    isSearchBar={true}
+                    onGridReady={onGridReady}
+                    height="auto"
                 />
                 {/* <CustomPagination /> */}
             </React.Fragment>
@@ -108,7 +124,7 @@ export default withStyles(styles, { withTheme: true })(withRouter(connect(mapSta
 function ActionButtonRender(item) {
     return <div>
         <Link className="font-medium icon_font" to="/installer-agency/details">
-            <i className="fa fa-edit" onClick={() => console.log('installer agency edit button clicked',item.data)} />
+            <i className="fa fa-edit" onClick={() => console.log('installer agency edit button clicked', item.data)} />
         </Link>
     </div>
 }

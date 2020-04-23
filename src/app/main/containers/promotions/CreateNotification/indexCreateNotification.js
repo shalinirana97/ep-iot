@@ -12,6 +12,7 @@ class MainCreateNotification extends Component {
 
     render() {
         const { classes } = this.props;
+        const routeId = this.props.match.params.id
         return (
             <FusePageSimple
                 classes={{
@@ -20,17 +21,17 @@ class MainCreateNotification extends Component {
                 header={
                     <DetailPageHeader
                         pageTitle='Promotions'
-                        detailTitle='Create Notification'
+                        detailTitle={routeId && routeId != null ? routeId : 'Create Notification'}
                         subTitle='Promotion'
-                        pageRoute='/promotions'
-                        headerIcon= 'add_alert'
+                        pageRoute='/promotions/notifications'
+                        headerIcon='add_alert'
                     />
                 }
-                
+
                 content={
-                   <div className='p-24'>
-                        <CreateNotificationPage />
-                   </div>
+                    <div className='p-24'>
+                        <CreateNotificationPage routeMatch={this.props.match} />
+                    </div>
                 }
                 innerScroll
             />

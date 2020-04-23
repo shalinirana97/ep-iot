@@ -18,6 +18,11 @@ export const PromotionsConfig = {
             exact: true,
             path: '/promotions/notifications',
             component: SentNotificationsList
+        },
+        {
+            exact: true,
+            path: '/promotion/notification-details/:id',
+            component: MainCreateNotification
         }
     ]
 };
