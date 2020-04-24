@@ -4,7 +4,7 @@ import {
     Button, Typography, Checkbox, FormGroup, FormLabel, FormControl, FormControlLabel, Icon,
     Dialog, DialogActions, DialogContent, DialogTitle, DialogContentText
 } from '@material-ui/core';
-import { CustomRow } from '../../../../styles/customCss'
+import { CustomRow, ErrorLabel } from '../../../../styles/customCss'
 import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, KeyboardTimePicker } from '@material-ui/pickers';
 import moment from 'moment';
@@ -13,7 +13,7 @@ export default class TariffModal extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            terrif_data: {
+            tariff_data: {
                 postCode: '',
                 timing: {},
                 weekday: {
@@ -29,7 +29,10 @@ export default class TariffModal extends Component {
 
                 }
             },
-            isValidTime: false
+            isValidTime: false, type: '',
+            weekdayIncomplete:false,
+            isValidWeekendTime: false, typeWeekend:'',
+            weekendIncomplete:false
         }
     }
 
@@ -39,108 +42,160 @@ export default class TariffModal extends Component {
     };
 
     addWeekdayRow(key) {
-        let { weekday } = this.state.terrif_data
+        let { weekday } = this.state.tariff_data
         weekday[key].push({ startTime: null, endTime: null })
         this.setState({ weekday })
     }
 
     removeWeekdayRow(data, key, title) {
-        let { weekday } = this.state.terrif_data
+        let { weekday } = this.state.tariff_data
         weekday[title].splice(key, 1)
         this.setState({ weekday })
     }
 
     addWeekendRow(key) {
-        let { weekends } = this.state.terrif_data
+        let { weekends } = this.state.tariff_data
         weekends[key].push({ startTime: null, endTime: null })
         this.setState({ weekends })
     }
 
     removeWeekendRow(data, key, title) {
-        let { weekends } = this.state.terrif_data
+        let { weekends } = this.state.tariff_data
         weekends[title].splice(key, 1)
         this.setState({ weekends })
     }
 
     handleInputChange(data, key) {
-        let { terrif_data } = this.state
-        terrif_data[key] = data
+        let { tariff_data } = this.state
+        tariff_data[key] = data
         this.setState({
-            terrif_data
+            tariff_data
         })
     };
 
     handleWeekdayChange(data, index, key, title) {
-        let { weekday } = this.state.terrif_data
-        const newTimestamp = moment(data).format('x')
-
-        const peakLength = weekday.peak.length - 1;
-        const offPeakLength = weekday.offPeak.length - 1;
-        const shoulderLength = weekday.shoulder.length - 1;
-        const starPeakTimeStamp = moment(weekday.peak[peakLength].startTime).format('x')
-        const peakTimeStamp = moment(weekday.peak[peakLength].endTime).format('x')
-        const startOffTimeStamp = moment(weekday.offPeak[offPeakLength].startTime).format('x')
-        const endOffTimeStamp = moment(weekday.offPeak[offPeakLength].endTime).format('x')
-
-        if (title === 'offPeak' && weekday.peak[peakLength].endTime !== null) {
-            if (key === 'endTime' && weekday.offPeak[offPeakLength].startTime !== null && startOffTimeStamp < newTimestamp) {
-                weekday[title][index][key] = data
-
-            }
-            else if (key === 'startTime' && peakTimeStamp < newTimestamp) {
-                weekday[title][index][key] = data
-                this.setState({ isValidTime: false })
-
-            } else {
-                console.log('please fill offpeak start time first')
-            }
-        } else if (title === 'offPeak') {
-            this.setState({ isValidTime: true })
-
-        } else if (title === 'shoulder' && peakTimeStamp < startOffTimeStamp) {
-            if (key === 'endTime' && weekday.shoulder[shoulderLength].startTime < newTimestamp && starPeakTimeStamp < newTimestamp) {
-                weekday[title][index][key] = data
-
-            }
-            else if (key === 'startTime' && peakTimeStamp < newTimestamp && endOffTimeStamp < newTimestamp) {
-                weekday[title][index][key] = data
-                this.setState({ isValidTime: false })
-
-            } else {
-                console.log('please fill shoulder start time first')
-            }
-        } else if (title === 'shoulder') {
-            console.log('shoulder time must be grater than peak & offpeak time')
-
-        } else if (title === 'peak' && key === 'endTime' && weekday.peak[peakLength].startTime !== null && starPeakTimeStamp < newTimestamp) {
+        let { weekday } = this.state.tariff_data;
+        if (key === 'startTime') {
             weekday[title][index][key] = data
+            this.setState({ isValidTime: false })
 
-        } else if (title === 'peak' && key === 'startTime') {
-            weekday[title][index][key] = data
-
-        }
-        else {
-            console.log('please fill peak start time first')
-
+        } else if (key === 'endTime' && weekday[title][index].startTime !== null && moment(weekday[title][index].startTime).format('x') < moment(data).format('x')) {
+            weekday[title][index][key] = data;
+            this.setState({ isValidTime: false })
+        } else {
+            this.setState({
+                isValidTime: true,
+                type: title
+            })
         }
         this.setState({
             weekday
         })
-
     };
 
     handleWeekendChange(data, index, key, title) {
-        let { weekends } = this.state.terrif_data
-        weekends[title][index][key] = data
+        let { weekends } = this.state.tariff_data
+        if (key === 'startTime') {
+            weekends[title][index][key] = data
+            this.setState({ isValidWeekendTime: false })
+
+        } else if (key === 'endTime' && weekends[title][index].startTime !== null && moment(weekends[title][index].startTime).format('x') < moment(data).format('x')) {
+            weekends[title][index][key] = data;
+            this.setState({ isValidWeekendTime: false })
+        } else {
+            this.setState({
+                isValidWeekendTime: true,
+                typeWeekend: title
+            })
+        }
         this.setState({
             weekends
         })
     };
 
+    timevalidator() {
+        let { tariff_data:{weekday, weekends}, weekdayIncomplete, weekendIncomplete } = this.state
+
+    // -----------------------------------weekdays Total Time validation---------------------------------------------------------
+
+        let totalPeak = 0, totalOffPeak = 0, shoulder = 0;
+        weekday.peak.forEach((item, index) => {
+
+            const startTimeStamp = moment(item.startTime).format('x')
+            const endTimeStamp = moment(item.endTime).format('x')
+            if (startTimeStamp < moment(item[index - 1].endTime).format('x')) {
+                this.setState({
+                    isValidTime: true,
+                    type: 'peak'
+                })
+            }
+            totalPeak = totalPeak + (moment.duration(endTimeStamp - startTimeStamp).asHours());
+        })
+
+        weekday.offPeak.forEach((item, index) => {
+            const startTimeStamp = moment(item.startTime).format('x')
+            const endTimeStamp = moment(item.endTime).format('x')
+            totalOffPeak = totalOffPeak + (moment.duration(endTimeStamp - startTimeStamp).asHours());
+        })
+
+        weekday.shoulder.forEach((item, index) => {
+            const startTimeStamp = moment(item.startTime).format('x')
+            const endTimeStamp = moment(item.endTime).format('x')
+            shoulder = shoulder + (moment.duration(endTimeStamp - startTimeStamp).asHours());
+        })
+
+        const totalWeekdayTime = (isNaN(totalPeak) ? 0 : totalPeak )+ (isNaN(totalOffPeak) ? 0 : totalOffPeak )+ (isNaN(shoulder) ? 0 :shoulder)
+        if (totalWeekdayTime < 23.9833 || totalWeekdayTime>24) {
+            var elem = document.getElementById('weekdayTime');
+            elem.scrollIntoView()
+            this.setState({ weekdayIncomplete: true })
+        }
+
+    //--------------------------------------weekends Total Time Validation----------------------------------------------
+        let totalPeak2 = 0, totalOffPeak2 = 0, shoulder2 = 0;
+        weekends.peak.forEach((item, index) => {
+            const startTimeStamp = moment(item.startTime).format('x')
+            const endTimeStamp = moment(item.endTime).format('x')
+            totalPeak2 = totalPeak2 + (moment.duration(endTimeStamp - startTimeStamp).asHours());
+        })
+
+        weekends.offPeak.forEach((item, index) => {
+            const startTimeStamp = moment(item.startTime).format('x')
+            const endTimeStamp = moment(item.endTime).format('x')
+            totalOffPeak2 = totalOffPeak2 + (moment.duration(endTimeStamp - startTimeStamp).asHours());
+        })
+
+        weekends.shoulder.forEach((item, index) => {
+            const startTimeStamp = moment(item.startTime).format('x')
+            const endTimeStamp = moment(item.endTime).format('x')
+            shoulder2 = shoulder2 + (moment.duration(endTimeStamp - startTimeStamp).asHours());
+        })
+
+        const totalWeekendTime = (isNaN(totalPeak2) ? 0 : totalPeak2) + (isNaN(totalOffPeak2) ? 0 : totalOffPeak2) + (isNaN(shoulder2) ? 0 : shoulder2)
+        
+        if (totalWeekendTime < 23.9833 || totalWeekendTime>24) {
+            var elem = document.getElementById('weekendTime');
+            elem.scrollIntoView()
+            this.setState({ weekendIncomplete: true })
+        }
+        
+        console.log('hjhjhj', totalWeekdayTime,'totalWeekendTime',totalWeekendTime)
+        if (totalWeekdayTime>=23.98333 && totalWeekendTime>=23.98333){
+            this.handleTariffSubmit();
+            this.setState({ weekendIncomplete: false, weekdayIncomplete:false })
+        }
+    }
+
+    handleTariffSubmit() {
+        console.log('formdata',this.state.tariff_data)
+
+    }
+
 
     render() {
         const { openModal, modalTitle } = this.props;
-        const { postCode, timing, weekday, weekends } = this.state.terrif_data
+        const { tariff_data: { postCode, timing, weekday, weekends }, isValidTime, type, weekdayIncomplete, 
+        isValidWeekendTime, typeWeekend, weekendIncomplete } = this.state
         const scroll = 'paper'
 
         return (
@@ -199,13 +254,20 @@ export default class TariffModal extends Component {
                                 <React.Fragment>
                                     <Typography className='my-24'>
                                         <FormControl component="fieldset" className='w-full'>
-                                            <FormLabel component="legend" className='subHeadingColor'>Weekdays</FormLabel>
+                                            <FormLabel component="legend" id='weekdayTime' className='subHeadingColor'>Weekdays
+                                            {weekdayIncomplete && (
+                                                    <ErrorLabel >*Please complete 24 hours !</ErrorLabel>
+                                                )}</FormLabel>
                                             <Typography aria-label="position" className='w-full mt-10 flex justify-between'>
                                                 <FormLabel className='labelWidth'>Peak</FormLabel>
                                                 <div className='w-10/12 '>
+                                                    {isValidTime && type == 'peak' && (
+                                                        <ErrorLabel>! End time must be less then start time</ErrorLabel>
+                                                    )}
                                                     {weekday.peak.map((data, key) => {
                                                         return (
                                                             <CustomRow>
+
                                                                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
                                                                     <KeyboardTimePicker
                                                                         inputVariant="outlined"
@@ -217,14 +279,13 @@ export default class TariffModal extends Component {
                                                                         KeyboardButtonProps={{
                                                                             'aria-label': 'change time',
                                                                         }}
-                                                                        placeholder='--:-- AM/PM'
+                                                                        placeholder='00:00'
                                                                         margin='dense'
                                                                         className='mx-12'
                                                                     />
                                                                     <KeyboardTimePicker
                                                                         inputVariant="outlined"
                                                                         ampm={false}
-
                                                                         label="End Time"
                                                                         name='endTime'
                                                                         value={data.endTime}
@@ -232,6 +293,7 @@ export default class TariffModal extends Component {
                                                                         KeyboardButtonProps={{
                                                                             'aria-label': 'change time',
                                                                         }}
+                                                                        placeholder='00:00'
                                                                         margin='dense'
                                                                         className='mx-12'
                                                                     />
@@ -250,52 +312,47 @@ export default class TariffModal extends Component {
                                             <Typography aria-label="position" className='w-full flex justify-between'>
                                                 <FormLabel className='labelWidth'>Off Peak</FormLabel>
                                                 <div className='w-10/12 '>
+                                                    {isValidTime && type == 'offPeak' && (
+                                                        <ErrorLabel>! End time must be less then start time</ErrorLabel>
+                                                    )}
                                                     {weekday.offPeak.map((data, index) => {
                                                         return (
-                                                            <React.Fragment>
-                                                                {
-                                                                    this.state.isValidTime && (
-                                                                        <div>
-                                                                            'Please fill peak time first'</div>)}
-                                                                <CustomRow>
-                                                                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                                            <CustomRow>
+                                                                <MuiPickersUtilsProvider utils={DateFnsUtils}>
 
-                                                                        <KeyboardTimePicker
-                                                                            label='Start Time'
-                                                                            ampm={false}
-                                                                            // error={this.state.isValidTime && true}
-                                                                            // helperText={this.state.isValidTime && ('fill peak time first')}
-                                                                            name="startTime"
-                                                                            value={data.startTime}
-                                                                            onChange={(e) => this.handleWeekdayChange(e, index, 'startTime', 'offPeak')}
-                                                                            KeyboardButtonProps={{
-                                                                                'aria-label': 'change time',
-                                                                            }}
-                                                                            inputVariant="outlined"
+                                                                    <KeyboardTimePicker
+                                                                        label='Start Time'
+                                                                        ampm={false}
+                                                                        name="startTime"
+                                                                        value={data.startTime}
+                                                                        onChange={(e) => this.handleWeekdayChange(e, index, 'startTime', 'offPeak')}
+                                                                        KeyboardButtonProps={{
+                                                                            'aria-label': 'change time',
+                                                                        }}
+                                                                        inputVariant="outlined"
+                                                                        placeholder='00:00'
+                                                                        margin='dense'
+                                                                        className='mx-12'
 
-                                                                            margin='dense'
-                                                                            className='mx-12'
+                                                                    />
+                                                                    <KeyboardTimePicker
+                                                                        label="End Time"
+                                                                        ampm={false}
+                                                                        name='endTime'
+                                                                        value={data.endTime}
+                                                                        onChange={(e) => this.handleWeekdayChange(e, index, 'endTime', 'offPeak')}
+                                                                        KeyboardButtonProps={{
+                                                                            'aria-label': 'change time',
+                                                                        }}
+                                                                        inputVariant="outlined"
+                                                                        placeholder='00:00'
+                                                                        margin='dense'
+                                                                        className='mx-12'
+                                                                    />
+                                                                    <Icon size='small' onClick={() => this.removeWeekdayRow(data, index, 'offPeak')}>clear</Icon>
 
-                                                                        />
-                                                                        <KeyboardTimePicker
-                                                                            label="End Time"
-                                                                            ampm={false}
-                                                                            name='endTime'
-                                                                            value={data.endTime}
-                                                                            onChange={(e) => this.handleWeekdayChange(e, index, 'endTime', 'offPeak')}
-                                                                            KeyboardButtonProps={{
-                                                                                'aria-label': 'change time',
-                                                                            }}
-                                                                            inputVariant="outlined"
-
-                                                                            margin='dense'
-                                                                            className='mx-12'
-                                                                        />
-                                                                        <Icon size='small' onClick={() => this.removeWeekdayRow(data, index, 'offPeak')}>clear</Icon>
-
-                                                                    </MuiPickersUtilsProvider>
-                                                                </CustomRow>
-                                                            </React.Fragment>
+                                                                </MuiPickersUtilsProvider>
+                                                            </CustomRow>
                                                         )
                                                     })}
                                                     <Typography className='flex justify-end items-center addIconDivWidth'>
@@ -308,6 +365,9 @@ export default class TariffModal extends Component {
                                             <Typography aria-label="position" className='w-full flex justify-between'>
                                                 <FormLabel className='labelWidth'>Shoulder</FormLabel>
                                                 <div className='w-10/12 '>
+                                                    {isValidTime && type == 'shoulder' && (
+                                                        <ErrorLabel>! End time must be less then start time</ErrorLabel>
+                                                    )}
                                                     {weekday.shoulder.map((data, key) => {
                                                         return (
                                                             <CustomRow>
@@ -322,7 +382,7 @@ export default class TariffModal extends Component {
                                                                             'aria-label': 'change time',
                                                                         }}
                                                                         inputVariant="outlined"
-
+                                                                        placeholder='00:00'
                                                                         margin='dense'
                                                                         className='mx-12'
                                                                     />
@@ -336,7 +396,7 @@ export default class TariffModal extends Component {
                                                                             'aria-label': 'change time',
                                                                         }}
                                                                         inputVariant="outlined"
-
+                                                                        placeholder='00:00'
                                                                         margin='dense'
                                                                         className='mx-12'
                                                                     />
@@ -356,17 +416,23 @@ export default class TariffModal extends Component {
 
                                     <Typography className='my-24'>
                                         <FormControl component="fieldset" className='w-full'>
-                                            <FormLabel component="legend" className='subHeadingColor'>Weekends</FormLabel>
+                                            <FormLabel component="legend" id="weekendTime" className='subHeadingColor'>Weekends
+                                            {weekendIncomplete && (
+                                                    <ErrorLabel >*Please complete 24 hours !</ErrorLabel>
+                                                )}</FormLabel>
                                             <Typography aria-label="position" className='w-full flex mt-10 justify-between'>
                                                 <FormLabel className='labelWidth'>Peak</FormLabel>
                                                 <div className='w-10/12 '>
+                                                    {isValidWeekendTime && typeWeekend == 'peak' && (
+                                                        <ErrorLabel>! End time must be less then start time</ErrorLabel>
+                                                    )}
                                                     {weekends.peak.map((data, key) => {
                                                         return (
                                                             <CustomRow>
                                                                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
                                                                     <KeyboardTimePicker
-                                                                        id="peak"
                                                                         label='Start Time'
+                                                                        ampm={false}
                                                                         name="startTime"
                                                                         value={data.startTime}
                                                                         onChange={(e) => this.handleWeekendChange(e, key, 'startTime', 'peak')}
@@ -374,13 +440,13 @@ export default class TariffModal extends Component {
                                                                             'aria-label': 'change time',
                                                                         }}
                                                                         inputVariant="outlined"
-
+                                                                        placeholder='00:00'
                                                                         margin='dense'
                                                                         className='mx-12'
                                                                     />
                                                                     <KeyboardTimePicker
-                                                                        id="time-picker"
                                                                         label="End Time"
+                                                                        ampm={false}
                                                                         name='endTime'
                                                                         value={data.endTime}
                                                                         onChange={(e) => this.handleWeekendChange(e, key, 'endTime', 'peak')}
@@ -388,7 +454,7 @@ export default class TariffModal extends Component {
                                                                             'aria-label': 'change time',
                                                                         }}
                                                                         inputVariant="outlined"
-
+                                                                        placeholder='00:00'
                                                                         margin='dense'
                                                                         className='mx-12'
                                                                     />
@@ -407,13 +473,16 @@ export default class TariffModal extends Component {
                                             <Typography aria-label="position" className='w-full flex justify-between'>
                                                 <FormLabel className='labelWidth '>Off Peak</FormLabel>
                                                 <div className='w-10/12 '>
+                                                    {isValidWeekendTime && typeWeekend == 'offPeak' && (
+                                                        <ErrorLabel>! End time must be less then start time</ErrorLabel>
+                                                    )}
                                                     {weekends.offPeak.map((data, key) => {
                                                         return (
                                                             <CustomRow>
                                                                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
                                                                     <KeyboardTimePicker
-                                                                        id="peak"
                                                                         label='Start Time'
+                                                                        ampm={false}
                                                                         name="startTime"
                                                                         value={data.startTime}
                                                                         onChange={(e) => this.handleWeekendChange(e, key, 'startTime', 'offPeak')}
@@ -421,13 +490,13 @@ export default class TariffModal extends Component {
                                                                             'aria-label': 'change time',
                                                                         }}
                                                                         inputVariant="outlined"
-
+                                                                        placeholder='00:00'
                                                                         margin='dense'
                                                                         className='mx-12'
                                                                     />
                                                                     <KeyboardTimePicker
-                                                                        id="time-picker"
                                                                         label="End Time"
+                                                                        ampm={false}
                                                                         name='endTime'
                                                                         value={data.endTime}
                                                                         onChange={(e) => this.handleWeekendChange(e, key, 'endTime', 'offPeak')}
@@ -435,7 +504,7 @@ export default class TariffModal extends Component {
                                                                             'aria-label': 'change time',
                                                                         }}
                                                                         inputVariant="outlined"
-
+                                                                        placeholder='00:00'
                                                                         margin='dense'
                                                                         className='mx-12'
                                                                     />
@@ -455,13 +524,16 @@ export default class TariffModal extends Component {
                                             <Typography aria-label="position" className='w-full flex justify-between'>
                                                 <FormLabel className='labelWidth '>Shoulder</FormLabel>
                                                 <div className='w-10/12 '>
+                                                    {isValidWeekendTime && typeWeekend == 'shoulder' && (
+                                                        <ErrorLabel>! End time must be less then start time</ErrorLabel>
+                                                    )}
                                                     {weekends.shoulder.map((data, key) => {
                                                         return (
                                                             <CustomRow>
                                                                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
                                                                     <KeyboardTimePicker
-                                                                        id="peak"
                                                                         label='Start Time'
+                                                                        ampm={false}
                                                                         name="startTime"
                                                                         value={data.startTime}
                                                                         onChange={(e) => this.handleWeekendChange(e, key, 'startTime', 'shoulder')}
@@ -469,13 +541,13 @@ export default class TariffModal extends Component {
                                                                             'aria-label': 'change time',
                                                                         }}
                                                                         inputVariant="outlined"
-
+                                                                        placeholder='00:00'
                                                                         margin='dense'
                                                                         className='mx-12'
                                                                     />
                                                                     <KeyboardTimePicker
-                                                                        id="time-picker"
                                                                         label="End Time"
+                                                                        ampm={false}
                                                                         name='endTime'
                                                                         value={data.endTime}
                                                                         onChange={(e) => this.handleWeekendChange(e, key, 'endTime', 'shoulder')}
@@ -483,7 +555,7 @@ export default class TariffModal extends Component {
                                                                             'aria-label': 'change time',
                                                                         }}
                                                                         inputVariant="outlined"
-
+                                                                        placeholder='00:00'
                                                                         margin='dense'
                                                                         className='mx-12'
                                                                     />
@@ -509,7 +581,7 @@ export default class TariffModal extends Component {
                         <Button onClick={this.handleClose} color="primary" variant='outlined' className='mx-8'>
                             Cancel
                         </Button>
-                        <Button onClick={this.handleClose} color="secondary" variant='contained'>
+                        <Button onClick={(e) => {timing=='Flat' ?this.handleTariffSubmit(e) :this.timevalidator(e)}} color="secondary" variant='contained'>
                             Submit
                         </Button>
                     </DialogActions>

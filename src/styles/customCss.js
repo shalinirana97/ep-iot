@@ -27,3 +27,8 @@ export const CustomRow = styled.div`
     width: 85%;
     marging-bottom:10px
 `
+export const ErrorLabel = styled.span`
+    color: red;
+    font-size: 12px;
+    margin-left: 1.2rem
+`
