@@ -30,9 +30,9 @@ export default class TariffModal extends Component {
                 }
             },
             isValidTime: false, type: '',
-            weekdayIncomplete:false,
-            isValidWeekendTime: false, typeWeekend:'',
-            weekendIncomplete:false
+            weekdayIncomplete: false, weekdayOverlap: false,
+            isValidWeekendTime: false, weekendType: '',
+            weekendIncomplete: false, weekendOverlap:false
         }
     }
 
@@ -75,7 +75,9 @@ export default class TariffModal extends Component {
 
     handleWeekdayChange(data, index, key, title) {
         let { weekday } = this.state.tariff_data;
-        if (key === 'startTime') {
+        const endTimeStamp = weekday[title][index].endTime !== null ? (moment(weekday[title][index].endTime).format('x')) : 0
+
+        if (key === 'startTime' && (endTimeStamp !== 0 ? endTimeStamp > (weekday[title][index][key] = data) : true)) {
             weekday[title][index][key] = data
             this.setState({ isValidTime: false })
 
@@ -95,7 +97,9 @@ export default class TariffModal extends Component {
 
     handleWeekendChange(data, index, key, title) {
         let { weekends } = this.state.tariff_data
-        if (key === 'startTime') {
+        const endTimeStamp = weekends[title][index].endTime !== null ? (moment(weekends[title][index].endTime).format('x')) : 0
+
+        if (key === 'startTime' && (endTimeStamp !== 0 ? endTimeStamp > (weekends[title][index][key] = data) : true)) {
             weekends[title][index][key] = data
             this.setState({ isValidWeekendTime: false })
 
@@ -105,7 +109,7 @@ export default class TariffModal extends Component {
         } else {
             this.setState({
                 isValidWeekendTime: true,
-                typeWeekend: title
+                weekendType: title
             })
         }
         this.setState({
@@ -114,88 +118,119 @@ export default class TariffModal extends Component {
     };
 
     timevalidator() {
-        let { tariff_data:{weekday, weekends}, weekdayIncomplete, weekendIncomplete } = this.state
+        let { tariff_data: { weekday, weekends }, weekdayIncomplete, weekendIncomplete, weekdayOverlap, weekendOverlap } = this.state
+        if(weekdayIncomplete || weekendIncomplete){
+            this.setState({weekdayIncomplete:false, weekendIncomplete:false})
+        }
 
-    // -----------------------------------weekdays Total Time validation---------------------------------------------------------
+        // -----------------------------------weekdays Total Time validation---------------------------------------------------------
+        let newWeekdayData = []
 
-        let totalPeak = 0, totalOffPeak = 0, shoulder = 0;
         weekday.peak.forEach((item, index) => {
-
-            const startTimeStamp = moment(item.startTime).format('x')
-            const endTimeStamp = moment(item.endTime).format('x')
-            if (startTimeStamp < moment(item[index - 1].endTime).format('x')) {
-                this.setState({
-                    isValidTime: true,
-                    type: 'peak'
-                })
-            }
-            totalPeak = totalPeak + (moment.duration(endTimeStamp - startTimeStamp).asHours());
+            newWeekdayData.push(item);
         })
 
         weekday.offPeak.forEach((item, index) => {
-            const startTimeStamp = moment(item.startTime).format('x')
-            const endTimeStamp = moment(item.endTime).format('x')
-            totalOffPeak = totalOffPeak + (moment.duration(endTimeStamp - startTimeStamp).asHours());
+            newWeekdayData.push(item);
         })
 
         weekday.shoulder.forEach((item, index) => {
-            const startTimeStamp = moment(item.startTime).format('x')
-            const endTimeStamp = moment(item.endTime).format('x')
-            shoulder = shoulder + (moment.duration(endTimeStamp - startTimeStamp).asHours());
+            newWeekdayData.push(item);
         })
 
-        const totalWeekdayTime = (isNaN(totalPeak) ? 0 : totalPeak )+ (isNaN(totalOffPeak) ? 0 : totalOffPeak )+ (isNaN(shoulder) ? 0 :shoulder)
-        if (totalWeekdayTime < 23.9833 || totalWeekdayTime>24) {
+        newWeekdayData = newWeekdayData.sort((a, b) => a.startTime - b.startTime);
+
+        let totalDifference = 0
+        newWeekdayData.forEach((item, index) => {
+            const startTimeStamp = moment(item.startTime).format('x')
+            const endTimeStamp = moment(item.endTime).format('x')
+            totalDifference = totalDifference + (moment.duration(endTimeStamp - startTimeStamp).asHours());
+        })
+
+        const totalWeekdayTime = (isNaN(totalDifference) ? 0 : totalDifference)
+
+        if (totalWeekdayTime < 23.9833 || totalWeekdayTime > 24) {
             var elem = document.getElementById('weekdayTime');
             elem.scrollIntoView()
             this.setState({ weekdayIncomplete: true })
         }
 
-    //--------------------------------------weekends Total Time Validation----------------------------------------------
-        let totalPeak2 = 0, totalOffPeak2 = 0, shoulder2 = 0;
+        if (!weekdayIncomplete) {
+            for (let i = 0; i < newWeekdayData.length - 1; i++) {
+                if (moment(newWeekdayData[i].endTime).format('x') > moment(newWeekdayData[i + 1].startTime).format('x')) {
+                    var elem = document.getElementById('weekdayTime');
+                    elem.scrollIntoView()
+                    this.setState({ weekdayOverlap: true })
+                    break;
+                } else {
+                    this.setState({ weekdayOverlap: false })
+                }
+            }
+        }
+
+
+        //--------------------------------------weekends Total Time Validation----------------------------------------------
+        let newWeekendData = []
+
         weekends.peak.forEach((item, index) => {
-            const startTimeStamp = moment(item.startTime).format('x')
-            const endTimeStamp = moment(item.endTime).format('x')
-            totalPeak2 = totalPeak2 + (moment.duration(endTimeStamp - startTimeStamp).asHours());
+            newWeekendData.push(item);
         })
 
         weekends.offPeak.forEach((item, index) => {
-            const startTimeStamp = moment(item.startTime).format('x')
-            const endTimeStamp = moment(item.endTime).format('x')
-            totalOffPeak2 = totalOffPeak2 + (moment.duration(endTimeStamp - startTimeStamp).asHours());
+            newWeekendData.push(item);
         })
 
         weekends.shoulder.forEach((item, index) => {
-            const startTimeStamp = moment(item.startTime).format('x')
-            const endTimeStamp = moment(item.endTime).format('x')
-            shoulder2 = shoulder2 + (moment.duration(endTimeStamp - startTimeStamp).asHours());
+            newWeekendData.push(item);
         })
 
-        const totalWeekendTime = (isNaN(totalPeak2) ? 0 : totalPeak2) + (isNaN(totalOffPeak2) ? 0 : totalOffPeak2) + (isNaN(shoulder2) ? 0 : shoulder2)
+        newWeekendData = newWeekendData.sort((a, b) => a.startTime - b.startTime);
+
+        let totalDifference2 = 0
         
-        if (totalWeekendTime < 23.9833 || totalWeekendTime>24) {
+        newWeekendData.forEach((item, index) => {
+            const startTimeStamp = moment(item.startTime).format('x')
+            const endTimeStamp = moment(item.endTime).format('x')
+            totalDifference2 = totalDifference2 + (moment.duration(endTimeStamp - startTimeStamp).asHours());
+        })
+
+        const totalWeekendTime = (isNaN(totalDifference2) ? 0 : totalDifference2)
+
+        if (totalWeekendTime < 23.9833 || totalWeekendTime > 24) {
             var elem = document.getElementById('weekendTime');
             elem.scrollIntoView()
             this.setState({ weekendIncomplete: true })
         }
-        
-        console.log('hjhjhj', totalWeekdayTime,'totalWeekendTime',totalWeekendTime)
-        if (totalWeekdayTime>=23.98333 && totalWeekendTime>=23.98333){
+
+        if (!weekendIncomplete) {
+            for (let i = 0; i < newWeekendData.length - 1; i++) {
+                if (moment(newWeekendData[i].endTime).format('x') > moment(newWeekendData[i + 1].startTime).format('x')) {
+                    var elem = document.getElementById('weekendTime');
+                    elem.scrollIntoView()
+                    this.setState({ weekendOverlap: true })
+                    break;
+                } else {
+                    this.setState({ weekendOverlap: false })
+                }
+            }
+        }
+
+        if (totalWeekdayTime >= 23.98333 && totalWeekendTime >= 23.98333) {
             this.handleTariffSubmit();
-            this.setState({ weekendIncomplete: false, weekdayIncomplete:false })
+            this.setState({ weekendIncomplete: false, weekdayIncomplete: false })
         }
     }
 
     handleTariffSubmit() {
-        console.log('formdata',this.state.tariff_data)
+        console.log('formdata', this.state.tariff_data)
 
     }
 
 
     render() {
         const { openModal, modalTitle } = this.props;
-        const { tariff_data: { postCode, timing, weekday, weekends }, isValidTime, type, weekdayIncomplete, 
-        isValidWeekendTime, typeWeekend, weekendIncomplete } = this.state
+        const { tariff_data: { postCode, timing, weekday, weekends }, isValidTime, type, weekdayIncomplete, weekdayOverlap,
+            isValidWeekendTime, weekendType, weekendIncomplete, weekendOverlap } = this.state
         const scroll = 'paper'
 
         return (
@@ -255,14 +290,16 @@ export default class TariffModal extends Component {
                                     <Typography className='my-24'>
                                         <FormControl component="fieldset" className='w-full'>
                                             <FormLabel component="legend" id='weekdayTime' className='subHeadingColor'>Weekdays
-                                            {weekdayIncomplete && (
+                                            {weekdayIncomplete ?
                                                     <ErrorLabel >*Please complete 24 hours !</ErrorLabel>
-                                                )}</FormLabel>
+                                                    : weekdayOverlap ?
+                                                        <ErrorLabel >*Time can't be overlap !</ErrorLabel> : ''
+                                                }</FormLabel>
                                             <Typography aria-label="position" className='w-full mt-10 flex justify-between'>
                                                 <FormLabel className='labelWidth'>Peak</FormLabel>
                                                 <div className='w-10/12 '>
                                                     {isValidTime && type == 'peak' && (
-                                                        <ErrorLabel>! End time must be less then start time</ErrorLabel>
+                                                        <ErrorLabel>! End time must be greater then start time</ErrorLabel>
                                                     )}
                                                     {weekday.peak.map((data, key) => {
                                                         return (
@@ -313,7 +350,7 @@ export default class TariffModal extends Component {
                                                 <FormLabel className='labelWidth'>Off Peak</FormLabel>
                                                 <div className='w-10/12 '>
                                                     {isValidTime && type == 'offPeak' && (
-                                                        <ErrorLabel>! End time must be less then start time</ErrorLabel>
+                                                        <ErrorLabel>! End time must be greater then start time</ErrorLabel>
                                                     )}
                                                     {weekday.offPeak.map((data, index) => {
                                                         return (
@@ -366,7 +403,7 @@ export default class TariffModal extends Component {
                                                 <FormLabel className='labelWidth'>Shoulder</FormLabel>
                                                 <div className='w-10/12 '>
                                                     {isValidTime && type == 'shoulder' && (
-                                                        <ErrorLabel>! End time must be less then start time</ErrorLabel>
+                                                        <ErrorLabel>! End time must be greater then start time</ErrorLabel>
                                                     )}
                                                     {weekday.shoulder.map((data, key) => {
                                                         return (
@@ -417,14 +454,15 @@ export default class TariffModal extends Component {
                                     <Typography className='my-24'>
                                         <FormControl component="fieldset" className='w-full'>
                                             <FormLabel component="legend" id="weekendTime" className='subHeadingColor'>Weekends
-                                            {weekendIncomplete && (
+                                            {weekendIncomplete ?
                                                     <ErrorLabel >*Please complete 24 hours !</ErrorLabel>
-                                                )}</FormLabel>
+                                                :weekendOverlap ?<ErrorLabel>*Time can't be overlap !</ErrorLabel>:''
+                                                }</FormLabel>
                                             <Typography aria-label="position" className='w-full flex mt-10 justify-between'>
                                                 <FormLabel className='labelWidth'>Peak</FormLabel>
                                                 <div className='w-10/12 '>
-                                                    {isValidWeekendTime && typeWeekend == 'peak' && (
-                                                        <ErrorLabel>! End time must be less then start time</ErrorLabel>
+                                                    {isValidWeekendTime && weekendType == 'peak' && (
+                                                        <ErrorLabel>! End time must be greater then start time</ErrorLabel>
                                                     )}
                                                     {weekends.peak.map((data, key) => {
                                                         return (
@@ -473,8 +511,8 @@ export default class TariffModal extends Component {
                                             <Typography aria-label="position" className='w-full flex justify-between'>
                                                 <FormLabel className='labelWidth '>Off Peak</FormLabel>
                                                 <div className='w-10/12 '>
-                                                    {isValidWeekendTime && typeWeekend == 'offPeak' && (
-                                                        <ErrorLabel>! End time must be less then start time</ErrorLabel>
+                                                    {isValidWeekendTime && weekendType == 'offPeak' && (
+                                                        <ErrorLabel>! End time must be greater then start time</ErrorLabel>
                                                     )}
                                                     {weekends.offPeak.map((data, key) => {
                                                         return (
@@ -524,8 +562,8 @@ export default class TariffModal extends Component {
                                             <Typography aria-label="position" className='w-full flex justify-between'>
                                                 <FormLabel className='labelWidth '>Shoulder</FormLabel>
                                                 <div className='w-10/12 '>
-                                                    {isValidWeekendTime && typeWeekend == 'shoulder' && (
-                                                        <ErrorLabel>! End time must be less then start time</ErrorLabel>
+                                                    {isValidWeekendTime && weekendType == 'shoulder' && (
+                                                        <ErrorLabel>! End time must be greater then start time</ErrorLabel>
                                                     )}
                                                     {weekends.shoulder.map((data, key) => {
                                                         return (
@@ -581,7 +619,7 @@ export default class TariffModal extends Component {
                         <Button onClick={this.handleClose} color="primary" variant='outlined' className='mx-8'>
                             Cancel
                         </Button>
-                        <Button onClick={(e) => {timing=='Flat' ?this.handleTariffSubmit(e) :this.timevalidator(e)}} color="secondary" variant='contained'>
+                        <Button onClick={(e) => { timing == 'Flat' ? this.handleTariffSubmit(e) : this.timevalidator(e) }} color="secondary" variant='contained'>
                             Submit
                         </Button>
                     </DialogActions>
