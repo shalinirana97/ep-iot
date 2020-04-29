@@ -155,7 +155,7 @@ class AgGridTable extends Component {
                                     onChange={(e) => this.handleChangeSearch(e)}
                                 />
                             </Paper>
-                            <div className="flex items-center justify-between w-256 pr-0 pl-12 sm:px-12">
+                            <div className="flex items-center justify-between w-auto pr-0 pl-12 sm:px-12">
                                 <CountItem className="flex items-center sm:flex" >
                                     <span className="px-4" >Show: </span>
                                     <Select
@@ -178,7 +178,7 @@ class AgGridTable extends Component {
                                     placement={'bottom-end'}
                                     enterDelay={300}
                                 >
-                                    <img onClick={() => this.clearFilters()} className="customIconColor" width="30" src="https://img.icons8.com/windows/2x/clear-filters.png" alt="clearFilters" />
+                                    <img onClick={() => this.clearFilters()} className="ml-4 customIconColor" width="30" src="https://img.icons8.com/windows/2x/clear-filters.png" alt="clearFilters" />
                                 </Tooltip>
                             </div>
                         </BtnPanelFilter>

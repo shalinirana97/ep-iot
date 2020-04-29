@@ -1,4 +1,4 @@
-import * as Actions from 'app/store/actions/tariff.action';
+import * as Actions from '../actionType';
 
 const initialState = {
     state: false,

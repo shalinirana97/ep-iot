@@ -2,11 +2,28 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import clsx from 'clsx';
 import _ from '@lodash';
-import { Typography, Tooltip, Icon, FormLabel, Button, Fab, Table, TableBody, TableCell, TablePagination, Paper, Input, TableRow, Divider, } from '@material-ui/core';
+import { Typography, Tooltip, Icon, FormLabel, Button, Select, MenuItem, Table, TableBody, TableCell, TablePagination, Paper, Input, TableRow, Divider, } from '@material-ui/core';
 import TariffModal from './addTariffModal';
 import { FuseAnimate, FuseScrollbars } from '@fuse';
+import styled, { css } from 'styled-components';
 import TariffTableHead from './TariffTableHead';
 import DeleteAlertDialogSlide from '../../components/deleteAlert'
+
+const CountItem = styled.span`
+  color: black;
+
+  &:first-child {
+    margin-right: 10px;
+  }
+  
+  .MuiOutlinedInput-input{
+      padding: 6px 20px 6px 6px;
+  }
+
+  .MuiSelect-iconOutlined {
+    right: 0px;
+    }
+`
 
 class TariffDetails extends Component {
     constructor(props) {
@@ -23,7 +40,8 @@ class TariffDetails extends Component {
             page: 0,
             selected: [],
             data: this.props.tariff_data,
-            searchText: ''
+            searchText: '',
+            filteredList:0
         }
     }
     handleChangeTariff = (id) => {
@@ -72,10 +90,22 @@ class TariffDetails extends Component {
         })
     }
 
+    handleChangeFilter = (event) => {
+        this.setState({ filteredList: event.target.value })
+    };
+
     render() {
         const { rowsPerPage, page, selected, data, selectedId, order, searchText } = this.state
         return (
             <React.Fragment >
+                <div className="flex items-center justify-end px-12 pt-20 bg-white">
+                    <FuseAnimate animation="transition.slideRightIn" delay={300}>
+                        <Button color="secondary" onClick={() => this.openTariffModel(true, 'Add')} className="whitespace-no-wrap" variant="contained">
+                            <span className="hidden sm:flex">Add New</span>
+                            <span className="flex sm:hidden">New</span>
+                        </Button>
+                    </FuseAnimate>
+                </div>
                 <div className="flex items-center justify-between px-12 py-20 bg-white">
                     <div className="flex flex-1 items-center pr-12">
                         <FuseAnimate animation="transition.slideDownIn" delay={300}>
@@ -97,12 +127,24 @@ class TariffDetails extends Component {
                             </Paper>
                         </FuseAnimate>
                     </div>
-                    <FuseAnimate animation="transition.slideRightIn" delay={300}>
-                        <Button color="secondary" onClick={() => this.openTariffModel(true, 'Add')} className="whitespace-no-wrap" variant="contained">
-                            <span className="hidden sm:flex">Add New</span>
-                            <span className="flex sm:hidden">New</span>
-                        </Button>
-                    </FuseAnimate>
+                    <div className="flex items-center justify-between pr-0 pl-12 sm:px-12">
+                        <CountItem className="flex items-center sm:flex" >
+                            <span className="px-4" >Show: </span>
+                            <Select
+                                value={this.state.filteredList}
+                                onChange={this.handleChangeFilter}
+                                variant='outlined'
+                            >
+                                <MenuItem >
+                                    <em>Select</em>
+                                </MenuItem>
+                                <MenuItem value={10}>10</MenuItem>
+                                <MenuItem value={25}>25</MenuItem>
+                                <MenuItem value={50}>50</MenuItem>
+                            </Select>
+                        </CountItem>
+                        <CountItem className='hidden sm:flex'>Total: {data ? data.length : ''}</CountItem>
+                    </div>
                 </div>
 
                 <div className="w-full flex flex-col bg-white">

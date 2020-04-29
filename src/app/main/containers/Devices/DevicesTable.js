@@ -88,7 +88,9 @@ class DevicesTable extends Component {
                     rowDragManaged={true}
                     rowHeight={50}
                 />
-                <CustomPagination />
+                <div className='flex flex-1 items-center justify-end'>
+                    <CustomPagination />
+                </div>
             </React.Fragment>
         )
     }

@@ -1,36 +1,36 @@
-import * as Actions from 'app/store/actions/tariff.action';
-import {data}  from '../../../app/main/containers/InstallerAgencies/agency.json'
+import * as Actions from '../actionType';
+import { data } from '../../../app/main/containers/InstallerAgencies/agency.json'
 
 const initialState = {
     state: false,
-    agencyData: data
+    customerData: data
 };
 
-const installerAgency = function (state = initialState, action) {
+const customers = function (state = initialState, action) {
     switch (action.type) {
-        case Actions.GET_TARIFF:
+        case Actions.GET_CUSTOMERS:
             {
                 return {
                     ...state,
                     state: true,
-                    agencyData: { ...state.agencyData, ...action.payload }
+                    customerData: { ...state.customerData, ...action.payload }
                 };
             }
-        case Actions.ADD_TARIFF:
+        case Actions.ADD_CUSTOMER:
             {
                 return {
                     ...state,
                     state: false
                 };
             }
-        case Actions.EDIT_TARIFF:
+        case Actions.EDIT_CUSTOMER:
             {
                 return {
                     ...state,
                     state: false
                 };
             }
-        case Actions.DELETE_TARIFF:
+        case Actions.DELETE_CUSTOMER:
             {
                 return {
                     ...state,
@@ -44,4 +44,4 @@ const installerAgency = function (state = initialState, action) {
     }
 };
 
-export default installerAgency;
+export default customers;

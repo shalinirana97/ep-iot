@@ -2,9 +2,10 @@ import {combineReducers} from 'redux';
 import fuse from './fuse';
 import auth from 'app/auth/store/reducers';
 import quickPanel from 'app/fuse-layouts/shared-components/quickPanel/store/reducers';
-import tariffDetail from './tariff.reducer';
 import devicesDetail from './devices.reducer';
-import installerAgency from './agency.reducer';
+import customers from './customers.reducer';
+import installerAgency from './installerAgency.reducer';
+import tariffDetail from './tariff.reducer';
 import promotions from './promotions.reducer';
 
 const createReducer = (asyncReducers) =>
@@ -12,9 +13,10 @@ const createReducer = (asyncReducers) =>
         auth,
         fuse,
         quickPanel,
-        tariffDetail,
         devicesDetail,
+        customers,
         installerAgency,
+        tariffDetail,
         promotions,
         ...asyncReducers
     });

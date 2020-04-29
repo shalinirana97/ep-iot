@@ -1,4 +1,5 @@
 export const GET_TARIFF = '[DIALOG] GET';
+export const GET_TARIFF_BY_ID = '[DIALOG] GET';
 export const ADD_TARIFF = '[DIALOG] ADD';
 export const EDIT_TARIFF = '[DIALOG] EDIT';
 export const DELETE_TARIFF = '[DIALOG] DELETE';
@@ -9,6 +10,14 @@ export const getTariffDetails = () => {
         type: GET_TARIFF
     }
 }
+
+export const getTariffById = (id) => {
+    return {
+        type: GET_TARIFF_BY_ID,
+        id
+    }
+}
+
 
 export const addTariffDetail = (options) => {
     return {

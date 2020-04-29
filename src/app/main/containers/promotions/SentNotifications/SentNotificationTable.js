@@ -63,7 +63,7 @@ class SentNotificationTable extends Component {
 
         return (
             <div>
-                <div className="flex items-center justify-end px-12 py-20 bg-white">
+                <div className="flex items-center justify-end px-12 pt-20 bg-white">
                     <FuseAnimate animation="transition.slideRightIn" delay={300}>
                         <Button color="secondary" onClick={() => this.props.history.push('/promotion/create-notification')} className="whitespace-no-wrap" variant="contained">
                             <span className="hidden sm:flex">Create</span>
@@ -86,7 +86,9 @@ class SentNotificationTable extends Component {
                     rowDragManaged={true}
                     rowHeight={50}
                 />
-                <CustomPagination />
+                <div className='flex flex-1 items-center justify-end'>
+                    <CustomPagination />
+                </div>
             </div>
         )
     }

@@ -20,21 +20,21 @@ const devicesDetail = function (state = initialState, action) {
                     devices_data: { ...state.devices_data, ...action.payload }
                 };
             }
-        case Actions.ADD_DEVICES:
+        case Actions.ADD_DEVICE:
             {
                 return {
                     ...state,
                     state: false
                 };
             }
-        case Actions.EDIT_DEVICES:
+        case Actions.EDIT_DEVICE:
             {
                 return {
                     ...state,
                     state: false
                 };
             }
-        case Actions.DELETE_DEVICES:
+        case Actions.DELETE_DEVICE:
             {
                 return {
                     ...state,

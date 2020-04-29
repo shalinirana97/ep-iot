@@ -28,7 +28,7 @@ class CustomersTable extends Component {
     }
 
     createTableData = () => {
-        const { agency_data } = this.props
+        const { customer_data } = this.props
         let tableData = {
             frameworkComponents: {
                 actionButtonRender: ActionButtonRender,
@@ -40,7 +40,7 @@ class CustomersTable extends Component {
                 { headerName: "Device ID", field: "deviceId" },
                 { headerName: "Actions", field: "actions", cellRenderer: 'actionButtonRender' }
             ],
-            rowData: agency_data && agency_data.length && agency_data.map((item, index) => {
+            rowData: customer_data && customer_data.length && customer_data.map((item, index) => {
                 return {
                     name: item.name,
                     email: item.email || null,
@@ -73,7 +73,9 @@ class CustomersTable extends Component {
                     rowDragManaged={true}
                     rowHeight={50}
                 />
-                <CustomPagination />
+                <div className='flex flex-1 items-center justify-end'>
+                    <CustomPagination />
+                </div>
             </React.Fragment>
         )
     }
@@ -81,7 +83,7 @@ class CustomersTable extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        agency_data: state.installerAgency.agencyData
+        customer_data: state.customers.customerData
     }
 }
 

@@ -72,7 +72,9 @@ class InstallerTable extends Component {
                     rowDragManaged={true}
                     rowHeight={50}
                 />
-                <CustomPagination />
+                <div className='flex flex-1 items-center justify-end'>
+                    <CustomPagination />
+                </div>
             </React.Fragment>
         )
     }
@@ -90,7 +92,7 @@ export default withStyles(styles, { withTheme: true })(withRouter(connect(mapSta
 function ActionButtonRender(item) {
     return <div>
         <Link className="font-medium icon_font" to="/installer-agency/details">
-            <i className="fa fa-edit" onClick={() => console.log('installer agency edit button clicked',item.data)} />
+            <i className="fa fa-edit" onClick={() => console.log('installer agency edit button clicked', item.data)} />
         </Link>
     </div>
 }
