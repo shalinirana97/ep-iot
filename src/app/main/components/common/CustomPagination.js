@@ -4,7 +4,21 @@ import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
 import Pagination from "material-ui-flat-pagination";
 
 
-const theme = createMuiTheme();
+const theme = createMuiTheme({
+  overrides: {
+    // Style sheet name ⚛️
+    MuiButton: {
+      // Name of the rule
+      textPrimary: {
+        // Some CSS
+        color: '#00a78d',
+      },
+      text: {
+        fontSize: '1.2rem'
+      }
+    },
+  },
+});
 
 class CustomPagination extends Component{
     constructor(props) {
@@ -25,7 +39,7 @@ class CustomPagination extends Component{
               limit={10}
               offset={this.state.offset}
               total={100}
-              currentPageColor='secondary'
+              // currentPageColor='secondary'
               onClick={(e, offset) => this.handleClick(offset)}
             />
           </MuiThemeProvider>

@@ -59,7 +59,7 @@ class CreateNotificationPage extends Component {
 
     render() {
         const { notificationName, deviceType, postcode, company, installationDate, elecDistributor, premium,
-            adults, child, floors, rooms, solar, hws, ac, description, link, heading, send, } = this.state.formData
+            adults, child, floors, rooms, solar, hws, ac, description, link, heading, send, } = this.state.singleFormData
         const routeId = this.props.routeMatch.params.id
         const { copied, filterTable } = this.state
 

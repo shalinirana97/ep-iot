@@ -1,15 +1,29 @@
 import React from 'react';
-import { Paper, Input, Icon, Typography, Button } from '@material-ui/core';
+import { Icon, Typography, Button } from '@material-ui/core';
+import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 import { FuseAnimate } from '@fuse';
-import * as Actions from '../../../store/actions';
-import { useDispatch, useSelector } from 'react-redux';
-import { ThemeButton } from '../../../../styles/customCss'
+
+const theme = createMuiTheme({
+    overrides: {
+        // Style sheet name ⚛️
+        MuiButton: {
+            // Name of the rule
+            text: {
+                // Some CSS
+                background: '#00A78D !important',
+                color: 'white',
+                padding: '6px 16px',
+                fontSize: '1.4rem',
+                letterSpacing:0
+            }
+        },
+    },
+});
+
 
 function TableMainHeader(props) {
     const { iconName, title, buttonTitle } = props;
-    const mainTheme = useSelector(({ fuse }) => fuse.settings.mainTheme);
-    const searchText = '';
     return (
         <div className="flex flex-1 w-full items-center justify-between p-24">
 
@@ -26,10 +40,10 @@ function TableMainHeader(props) {
             {buttonTitle ?
                 <div className="flex items-center justify-center pr-0 pl-12 sm:px-12">
                     <FuseAnimate animation="transition.slideDownIn" delay={300}>
-                        <ThemeButton>
-                        <Button className=" sm:flex cursor-pointer" variant="contained" color="secondary" onClick={() => console.log('export data button clicked')}>
+                        <ThemeProvider theme={theme}>
+                        <Button className=" sm:flex cursor-pointer" onClick={() => console.log('export data button clicked')}>
                             {buttonTitle}</Button>
-                        </ThemeButton>
+                        </ThemeProvider>
                     </FuseAnimate>
                 </div>
             :''}

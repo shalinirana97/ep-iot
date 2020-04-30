@@ -90,22 +90,6 @@
     border-bottom: 1px solid rgba(136, 132, 132, 0.42);
 }
 
-//---------------------------override css for change sidebar menuitem color--------------"
-.makeStyles-item-573.active {
-    color: #fff!important;
-    transition: border-radius .15s cubic-bezier(0.4,0.0,0.2,1);
-    pointer-events: none;
-    background-color: #00A78D;
-}
-
-.makeStyles-item-2312.active {
-    background-color: #00A78D !important;
-}
-
-.makeStyles-item-804.active {
-    background-color: #00A78D !important;
-}
-
 
 //---------------------------------override button colors------------------------
 .MuiButton-containedSecondary{
