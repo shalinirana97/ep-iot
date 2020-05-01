@@ -7,8 +7,7 @@ import _ from '@lodash';
 import { Link } from 'react-router-dom';
 import { FuseAnimate } from '@fuse';
 import { CustomPagination } from "../../../components";
-import { IconButton,Icon, Button } from '@material-ui/core';
-import DeleteAlertDialogSlide from '../../../components/deleteAlert'
+import { Button } from '@material-ui/core';
 
 const styles = theme => ({
     layoutRoot: {}

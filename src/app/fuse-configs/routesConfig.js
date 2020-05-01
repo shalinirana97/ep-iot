@@ -52,7 +52,12 @@ const routes = [
     {
         path: '/',
         exact: true,
-        component: () => <Redirect to="/installer-agency/details" />
+        component: () => <Redirect to="/installer-agency/detail" />
+    },
+    {
+        path: '/',
+        exact: true,
+        component: () => <Redirect to="/installer-agency/detail/:id" />
     },
     {
         path: '/',

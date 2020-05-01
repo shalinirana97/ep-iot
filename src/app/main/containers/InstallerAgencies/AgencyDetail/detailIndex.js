@@ -13,6 +13,7 @@ class InstallerAgencyDetail extends Component {
 
     render() {
         const { classes } = this.props;
+        const routeId = this.props.match.params.id
         return (
             <FusePageSimple
                 classes={{
@@ -21,7 +22,7 @@ class InstallerAgencyDetail extends Component {
                 header={
                     <DetailPageHeader 
                         pageTitle='Installer Agencies'
-                        detailTitle='Agency Name'
+                        detailTitle={routeId && routeId != null ? routeId : 'Agency Name'}
                         subTitle='Installer Agency'
                         pageRoute='/installer-agencies'
                      />
@@ -31,7 +32,7 @@ class InstallerAgencyDetail extends Component {
                 //         </div>
                 // }
                 content={
-                    <AgencyDetailsPage />
+                    <AgencyDetailsPage routeMatch={this.props.match} />
                 }
                 innerScroll
             />

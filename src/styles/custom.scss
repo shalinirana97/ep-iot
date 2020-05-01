@@ -96,7 +96,7 @@
     background-color: #07af93;
 }
 
-.MuiButton-containedSecondary:hover {
+.MuiButton-containedSecondary:hover, .MuiSwitch-colorPrimary.Mui-checked + .MuiSwitch-track {
     background-color: #00A78D;
 }
 
@@ -110,6 +110,7 @@
     border: 1px solid #00A78D;
 }
 
-.MuiCheckbox-colorPrimary.Mui-checked, .MuiCheckbox-colorSecondary.Mui-checked, .MuiRadio-colorPrimary.Mui-checked{
+.MuiCheckbox-colorPrimary.Mui-checked, .MuiCheckbox-colorSecondary.Mui-checked, .MuiRadio-colorPrimary.Mui-checked,
+.MuiSwitch-colorPrimary.Mui-checked{
     color: #00A78D !important
 }

@@ -3,6 +3,7 @@ import { Typography, InputLabel, Button, InputBase } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import Paper from '@material-ui/core/Paper';
 import Divider from '@material-ui/core/Divider';
+import CreateInstallerAgencyPage from './createAgency';
 
 class AgencyDetailsPage extends Component {
     constructor(props) {
@@ -17,29 +18,12 @@ class AgencyDetailsPage extends Component {
         return (
             <div className="p-16 sm:p-24 max-w-2xl w-full">
                 <div className='deviceRoot'>
+        {/*----------------------------------------------company details--------------------------------------------------------- */}
                     <Paper className='deviceCol'>
-                        <div className='p-16'>
-                            <div className="pb-16 flex items-center">
-                                <Typography className="h2 borderBtm" color="default">Company Details</Typography>
-                            </div>
-                            <Typography className='flex w-full items-start m-16' variant='subtitle1'>
-                                <div className='w-136' >
-                                    <InputLabel >Agency Name</InputLabel>
-                                    <span>Dolore Magna</span>
-                                </div>
-                                <div className='w-192'>
-                                    <InputLabel>Email ID</InputLabel>
-                                    <span>magna123@gmail.com</span>
-                                </div>
-                                <div className='w-360'>
-                                    <InputLabel>Address</InputLabel>
-                                    <span>13th street, Brockton Avenue, New York 162001 </span>
-                                </div>
-                            </Typography>
-                        </div>
+                        <CreateInstallerAgencyPage routeMatch={this.props.routeMatch} />
                         <Divider />
 
-                        {/* ------------------------------------Device Access detail container--------------------------------------------- */}
+        {/* ------------------------------------Device Access detail container--------------------------------------------- */}
                         <div className='p-16' >
                             <div className="pb-16 flex">
                                 <Typography className="h2 borderBtm" color="default">Installer Agents</Typography>
