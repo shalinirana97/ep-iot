@@ -1,28 +1,33 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import _ from '@lodash';
-import { Typography, Switch, Checkbox, FormLabel, FormControl, FormControlLabel, FormGroup, Button, Table, TableBody, TableCell, TablePagination, Paper, Input, TableRow, Divider, Radio, } from '@material-ui/core';
+import { Typography, Switch, Icon, FormLabel, FormControl, FormControlLabel, FormGroup, Button, TableBody, TableCell, TablePagination, Paper, Input, TableRow, Divider, Radio, } from '@material-ui/core';
 import { FuseAnimate } from '@fuse';
 import { Link } from 'react-router-dom';
 import DeleteAlertDialogSlide from '../../../components/deleteAlert'
 
 class CreateInstallerAgencyPage extends Component {
+
+    fileObj = [];
+    fileArray = [];
     constructor(props) {
         super(props);
         this.state = {
             openDelete: false,
             filterTable: false,
             formData: {},
-            editable: props.routeMatch.params.id && false
+            editable: props.routeMatch.params.id && false,
+            attachments: [],
+            image1Url: [null]
         }
     }
 
     handleInputChange(text) {
-        console.log("text",text.target.checked,text.target.name)
+        console.log("text", text.target.checked, text.target.name)
         let { formData } = this.state;
-        if(text.target.checked){
-            formData[text.target.name] = text.target.checked;            
-        }else{
+        if (text.target.checked) {
+            formData[text.target.name] = text.target.checked;
+        } else {
             formData[text.target.name] = text.target.value;
         }
         this.setState({
@@ -43,9 +48,53 @@ class CreateInstallerAgencyPage extends Component {
         })
     }
 
+    handleChangeAttachments = (e) => {
+        let { attachments, image1Url } = this.state;
+        attachments.push(e.target.files)
+        for (let i = 0; i < attachments[0].length; i++) {
+            this.fileObj.push(attachments[0][i]);
+            this.fileArray.push(URL.createObjectURL(attachments[0][i]))
+        }
+        this.setState({
+            attachments: [],
+            image1Url: this.fileObj
+        })
+    }
+
+    renderImages() {
+        return (
+            this.fileArray || []).map((url, i) => {
+                return (
+                    <div style={{ cursor: 'pointer', display: 'flex', justifyContent: 'flex-start', width: '8%', height:'30%', margin: '0 15px', alignItems: 'flex-start' }}>
+                        <img src={url} alt="..." />
+                        <Icon onClick={() => this.removeImage(i)}>clear</Icon>
+                    </div>
+                )
+            })
+        // }
+    }
+    addImage() {
+        return (
+            <div >
+                <label for="file-upload" class="custom-file-upload">
+                    <i class="fa fa-cloud-upload"></i>Upload file
+                </label>
+                <input id="file-upload" type="file" onChange={(e) => this.handleChangeAttachments(e)} multiple/>
+            </div>
+        )
+    }
+
+    removeImage(key) {
+        console.log('ket', key)
+        let { image1Url } = this.state
+        this.fileArray.splice(key, 1);
+        image1Url.splice(key, 1)
+        this.setState({ image1Url })
+    }
+
     render() {
         const { agencyName, email, postcode, contactNo, country, state, city,
-            streetAddress, plotAddress, contactPerson, mobileNo, status = true, attachments=[] } = this.state.formData
+            streetAddress, plotAddress, contactPerson, mobileNo, status = true, attachments = null } = this.state.formData
         const routeId = this.props.routeMatch.params.id
         const { editable = true } = this.state
 
@@ -123,22 +172,30 @@ class CreateInstallerAgencyPage extends Component {
                         <Input className='w-sm inputBorder' name='mobileNo' value={mobileNo} disabled={editable} onChange={(e) => this.handleInputChange(e)} inputProps={{ 'aria-label': 'description' }} />
                     </div>
                     <div className='flex flex-col m-20 flex-1' >
-                            <FormLabel component="legend" className='mb-16'>Status</FormLabel>
-                            <FormGroup aria-label="position" row>
-                                <FormControlLabel
-                                    control={
-                                        <Switch
-                                            checked={status}
-                                            disabled={editable}
-                                            onChange={(e) => this.handleInputChange(e)}
-                                            name="status"
-                                            color="primary"
-                                        />
-                                    }
-                                />
-                            </FormGroup>
+                        <FormLabel component="legend" className='mb-16'>Status</FormLabel>
+                        <FormGroup aria-label="position" row>
+                            <FormControlLabel
+                                control={
+                                    <Switch
+                                        checked={status}
+                                        disabled={editable}
+                                        onChange={(e) => this.handleInputChange(e)}
+                                        name="status"
+                                        color="primary"
+                                    />
+                                }
+                            />
+                        </FormGroup>
                     </div>
                 </Typography>
+                <div className='flex flex-row m-20 flex-1' >
+                    <FormLabel className='mb-16' >Attachements </FormLabel>
+                        {this.addImage()}
+                </div>
+
+                <div className='flex mb-16'>
+                    {this.renderImages()}
+                </div>
 
                 {!editable && (
                     <Typography>

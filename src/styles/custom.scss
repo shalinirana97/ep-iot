@@ -114,3 +114,16 @@
 .MuiSwitch-colorPrimary.Mui-checked{
     color: #00A78D !important
 }
+
+
+input[type="file"] {
+    display: none;
+}
+.custom-file-upload {
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 6px 12px;
+    margin: 0 20px;
+    font-weight: 600;
+    cursor: pointer;
+}
