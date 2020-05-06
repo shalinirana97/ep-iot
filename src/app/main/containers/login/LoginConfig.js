@@ -23,7 +23,7 @@ export const LoginConfig = {
             }
         }
     },
-    auth: authRoles.superAdmin,
+    // auth: authRoles.dmin,
     routes: [
         {
             path: '/login',

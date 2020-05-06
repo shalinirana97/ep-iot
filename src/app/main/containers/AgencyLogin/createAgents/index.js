@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { FusePageSimple, FusePageCarded } from '@fuse';
 import { FuseAnimate } from '@fuse';
-import AgencyDetailsPage from './installerAgencyDetails';
+import CreateInstallerAgentPage from './agentDetails';
 import DetailPageHeader from '../../../components/common/DetailPageHeader'
 
 const styles = theme => ({
     layoutRoot: {}
 });
 
-class InstallerAgencyDetail extends Component {
+class AgentDetails extends Component {
 
     render() {
         const { classes } = this.props;
@@ -20,19 +20,21 @@ class InstallerAgencyDetail extends Component {
                     root: classes.layoutRoot
                 }}
                 header={
-                    <DetailPageHeader 
-                        pageTitle='Installer Agencies'
-                        detailTitle={routeId && routeId != null ? routeId : 'New Agency'}
-                        subTitle='Installer Agency'
-                        pageRoute='/installer-agencies'
-                     />
+                    <DetailPageHeader
+                        pageTitle='Installation Agents'
+                        detailTitle={routeId && routeId != null ? routeId : 'New Agent'}
+                        subTitle='Installer Agent'
+                        pageRoute='/installation-agents'
+                    />
                 }
                 // contentToolbar={
                 //     <div className="flex flex-1 px-24 w-full items-center justify-between">
                 //         </div>
                 // }
                 content={
-                    <AgencyDetailsPage routeMatch={this.props.match} />
+                    <div className='p-24'>
+                        <CreateInstallerAgentPage routeMatch={this.props.match} />
+                    </div>
                 }
                 innerScroll
             />
@@ -40,4 +42,4 @@ class InstallerAgencyDetail extends Component {
     }
 }
 
-export default withStyles(styles, { withTheme: true })(InstallerAgencyDetail);
+export default withStyles(styles, { withTheme: true })(AgentDetails);

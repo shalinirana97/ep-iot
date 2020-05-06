@@ -17,7 +17,7 @@ export const InstallerAgencyConfig = {
             component: InstallerAgencyList
         },
         {
-            path: '/installer-agency/detail',
+            path: '/installer-agency/create',
             exact: true,
             component: InstallerAgencyDetail
         },

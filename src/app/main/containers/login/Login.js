@@ -6,6 +6,7 @@ import { FuseAnimate } from '@fuse';
 import { useForm } from '@fuse/hooks';
 import { Link } from 'react-router-dom';
 import clsx from 'clsx';
+import { connect } from "react-redux";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -14,7 +15,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-function Login() {
+function Login(props) {
     const classes = useStyles();
 
     const { form, handleChange, resetForm } = useForm({
@@ -35,6 +36,7 @@ function Login() {
         resetForm();
     }
 
+    const { user } = props
     return (
         <div className={clsx(classes.root, "flex flex-col flex-auto flex-shrink-0 p-24 md:flex-row md:p-0")}>
 
@@ -121,7 +123,7 @@ function Login() {
                                 </Link>
                             </div>
 
-                            <Link className="font-medium" to="/devices">
+                            <Link className="font-medium" to={user.role == 'admin' ?'/installation-agents':'/devices'}>
                                 <Button
                                     variant="contained"
                                     color="primary"
@@ -151,5 +153,10 @@ function Login() {
         </div>
     );
 }
-
-export default Login;
+const mapStateToProps = (state) => {
+    console.log('state', state,state.user)
+    return {
+        user: state.auth.user
+    }
+}
+export default connect(mapStateToProps)(Login);

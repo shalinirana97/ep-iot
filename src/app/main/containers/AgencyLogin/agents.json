@@ -1,0 +1,67 @@
+{
+    "data": [
+        {
+            "name": "Dolore Magna",
+            "email": "doloremagna@gmail.com",
+            "password": "3999",
+            "mobile": "7837549801",
+            "status":true
+        },
+        {
+            "name": "Magna",
+            "email": "Magna@gmail.com",
+            "password": "3999",
+            "mobile": "8837549822",
+            "status": true
+        },
+        {
+            "name": "Appollo",
+            "email": "appollo@gmail.com",
+            "password": "3999",
+            "mobile": "7054906831",
+            "status": false
+        },
+        {
+            "name": "Atlantica",
+            "email": "Atlantica@gmail.com",
+            "password": "3999",
+            "mobile": "9637549804",
+            "status": true
+        },
+        {
+            "name": "Alberto Polis",
+            "email": "alberto@gmail.com",
+            "password": "3999",
+            "mobile": "8937549855",
+            "status": true
+        },
+        {
+            "name": "Tensile",
+            "email": "tensile@gmail.com",
+            "password": "3999",
+            "mobile": "7967549801",
+            "status": false
+        },
+        {
+            "name": "Methew Leathers",
+            "email": "leather@gmail.com",
+            "password": "3999",
+            "mobile": "8367549801",
+            "status": false
+        },
+        {
+            "name": "Albert Einstein",
+            "email": "albert@gmail.com",
+            "password": "3999",
+            "mobile": "9537549801",
+            "status": true
+        },
+        {
+            "name": "James Maron",
+            "email": "james@gmail.com",
+            "password": "3999",
+            "mobile": "9647549801",
+            "status": false
+        }
+    ]
+}

@@ -7,6 +7,7 @@ import {TariffConfig} from 'app/main/containers/tarrif/TariffConfig';
 import {LoginConfig} from 'app/main/containers/login/LoginConfig';
 import { InstallerAgencyConfig} from 'app/main/containers/InstallerAgencies/InstallerConfig';
 import { PromotionsConfig } from 'app/main/containers/promotions/PromotionsConfig';
+import { InstallerAgentsConfig} from 'app/main/containers/AgencyLogin/AgencyConfig'
 
 const routeConfigs = [
     CustomerConfig,
@@ -14,7 +15,8 @@ const routeConfigs = [
     TariffConfig,
     LoginConfig,
     InstallerAgencyConfig,
-    PromotionsConfig
+    PromotionsConfig,
+    InstallerAgentsConfig
 ];
 
 const routes = [
@@ -52,7 +54,7 @@ const routes = [
     {
         path: '/',
         exact: true,
-        component: () => <Redirect to="/installer-agency/detail" />
+        component: () => <Redirect to="/installer-agency/create" />
     },
     {
         path: '/',
@@ -78,6 +80,12 @@ const routes = [
         path: '/',
         exact: true,
         component: () => <Redirect to="/promotion/notification-details/:id" />
+    },
+
+    {
+        path: '/',
+        exact: true,
+        component: () => <Redirect to="/installation-agents" />
     },
 ];
 

@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { withRouter } from 'react-router-dom';
-import AgGridTable from "../../../agGrid/agGridTable";
+import AgGridTable from "../../../../agGrid/agGridTable";
 import { withStyles } from '@material-ui/core/styles';
 import _ from '@lodash';
 import { Link } from 'react-router-dom';
-import { CustomPagination } from "../../components";
+import { CustomPagination } from "../../../components";
 import { FuseAnimate } from '@fuse';
 import { Button } from '@material-ui/core';
+import {data} from '../agents.json';
 
 const styles = theme => ({
     layoutRoot: {}
@@ -15,7 +16,7 @@ const styles = theme => ({
 
 
 
-class InstallerTable extends Component {
+class AgentsTable extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -26,26 +27,33 @@ class InstallerTable extends Component {
 
 
     componentDidMount = () => {
-        this.createTableData();
+        this.createTableData(data);
     }
 
-    createTableData = () => {
-        const { agency_data } = this.props
+    createTableData = (data) => {
+        const agentsData  = data;
         let tableData = {
             frameworkComponents: {
                 actionButtonRender: ActionButtonRender,
+                actionStatusRender: ActionStatusRender
             },
             columnDefs: [
                 {
-                    headerName: "Agency Name", field: "name"
+                    headerName: "Agent Name", field: "name"
                 },
                 { headerName: "Email ID", field: "email" },
+                { headerName: "Mobile No.", field: "mobile" },
+                { headerName: "Password", field: "password" },
+                { headerName: "Status", field: "status", cellRenderer:'actionStatusRender' },
                 { headerName: "Actions", field: "actions", cellRenderer: 'actionButtonRender' }
             ],
-            rowData: agency_data && agency_data.length && agency_data.map((item, index) => {
+            rowData: agentsData && agentsData.length && agentsData.map((item, index) => {
                 return {
                     name: item.name,
                     email: item.email || null,
+                    mobile: item.mobile,
+                    password:item.password,
+                    status:item.status,
                     editFunction: this.editFunction
                 }
             })
@@ -63,7 +71,7 @@ class InstallerTable extends Component {
             <React.Fragment>
                 <div className="flex items-center justify-end px-12 pt-20 bg-white">
                     <FuseAnimate animation="transition.slideRightIn" delay={300}>
-                        <Button color="secondary" onClick={() => this.props.history.push('/installer-agency/create')} className="whitespace-no-wrap" variant="contained">
+                        <Button color="secondary" onClick={() => this.props.history.push('/installation-agent/create')} className="whitespace-no-wrap" variant="contained">
                             <span className="hidden sm:flex">Create</span>
                             <span className="flex sm:hidden">New</span>
                         </Button>
@@ -74,7 +82,8 @@ class InstallerTable extends Component {
                     tableData={{
                         ...tableData,
                         frameworkComponents: {
-                            actionButtonRender: ActionButtonRender
+                            actionButtonRender: ActionButtonRender,
+                            actionStatusRender: ActionStatusRender
                         }
                     }}
                     resizable={true}
@@ -82,6 +91,7 @@ class InstallerTable extends Component {
                     sortable={true}
                     rowDragManaged={true}
                     rowHeight={50}
+                    height={'650px'}
                 />
                 <div className='flex flex-1 items-center justify-end'>
                     <CustomPagination />
@@ -93,17 +103,25 @@ class InstallerTable extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        agency_data: state.installerAgency.agencyData
+        agentsData: state.installerAgency.agencyData
     }
 }
 
 
-export default withStyles(styles, { withTheme: true })(withRouter(connect(mapStateToProps)(InstallerTable)));
+export default withStyles(styles, { withTheme: true })(withRouter(connect(mapStateToProps)(AgentsTable)));
 
 function ActionButtonRender(item) {
     return <div>
-        <Link className="font-medium icon_font" to="/installer-agency/detail/25431">
-            <i className="fa fa-edit" onClick={() => console.log('installer agency edit button clicked', item.data)} />
+        <Link className="font-medium icon_font" to="/installation-agent/details/25431">
+            <i className="fa fa-edit" onClick={() => console.log('installation agent edit button clicked', item.data)} />
         </Link>
     </div>
+}
+
+function ActionStatusRender(item) {
+    return <span >
+        {
+            item.value ==true ? <span style={{ color: 'green' }}>Active</span> : <span style={{ color: 'red' }}>Inactive</span>
+        }
+    </span>
 }

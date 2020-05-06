@@ -11,7 +11,7 @@ const navigationConfig = [
                 'id': 'A1',
                 'title': 'Devices',
                 'type': 'item',
-                'auth': authRoles.admin,
+                'auth': authRoles.superAdmin,
                 'icon': 'devices',
                 'url': '/devices'
             },
@@ -27,7 +27,7 @@ const navigationConfig = [
                 'id': 'A3',
                 'title': 'Installer Agencies',
                 'type': 'item',
-                'auth': authRoles.admin,
+                'auth': authRoles.superAdmin,
                 'icon': 'settings',
                 'url': '/installer-agencies'
             },  
@@ -35,7 +35,7 @@ const navigationConfig = [
                 'id': 'A4',
                 'title': 'Tariffs',
                 'type': 'item',
-                'auth': authRoles.admin,
+                'auth': authRoles.superAdmin,
                 'icon': 'monetization_on',
                 'url': '/tariff'
             },
@@ -43,10 +43,18 @@ const navigationConfig = [
                 'id': 'A5',
                 'title': 'Promotions',
                 'type': 'item',
-                'auth': authRoles.admin,
+                'auth': authRoles.superAdmin,
                 'icon': 'speaker',
                 'url': '/promotions/notifications'
-            }
+            },
+            {
+                'id': 'A6',
+                'title': 'Installation Agents',
+                'type': 'item',
+                'auth': authRoles.admin,
+                'icon': 'settings',
+                'url': '/installation-agents'
+            },
         ]
     }
 ];
