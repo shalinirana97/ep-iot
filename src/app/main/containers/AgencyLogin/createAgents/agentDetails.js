@@ -6,21 +6,30 @@ import { FuseAnimate } from '@fuse';
 import DeleteAlertDialogSlide from '../../../components/deleteAlert'
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import TelephoneInput from '../../../components/common/TelephoneInput'
+import { validateAgent } from "../../../../Utilities";
 
 const handleMouseDownPassword = (event) => {
     event.preventDefault();
 };
 
 class CreateInstallerAgentPage extends Component {
-
-    fileObj = [];
-    fileArray = [];
     constructor(props) {
         super(props);
         this.state = {
             openDelete: false,
-            formData: {},
-            showPassword: false
+            formData: {
+                agentName: "",
+                email: "",
+                password: "",
+                mobile: "",
+                status: true,
+                phonenumberlength: 0
+            },
+            showPassword: false,
+            status: false,
+            errors: {},
+            country: null
         }
     }
 
@@ -36,6 +45,33 @@ class CreateInstallerAgentPage extends Component {
         })
     }
 
+    //Function Name : onChangePhone.
+    //Parameters Used : No Parameter.
+    //Working : Store the phone number in state.
+
+    onChangePhone = (val, countryCode) => {
+        let { formData, errors } = this.state;
+            var updatedUser = {
+                ...formData,
+                mobile: val
+            };
+            errors = { ...errors, mobile: "" };
+            this.setState({ formData: updatedUser, phonenumberlength: countryCode.format.length, errors });
+        
+    };
+
+    //Function Name : isValid.
+    //Parameters Used : No Parameter.
+    //Working : Checkt that the information in Valid or Not.
+
+    isValid = () => {
+        let { isValid, errors } = validateAgent(this.state.formData, this.state.phonenumberlength);
+
+        if (!isValid) this.setState({ errors });
+        return isValid;
+    };
+
+
     handleClickShowPassword() {
         this.setState({
             showPassword: !this.state.showPassword
@@ -44,7 +80,13 @@ class CreateInstallerAgentPage extends Component {
 
     handleDetailSubmit(e) {
         e.preventDefault();
-        console.log('formdata',this.state.formData)
+        let { status } = { ...this.state };
+        if (this.isValid()) {
+            if (!status) {
+                status = true;
+            }
+            console.log('formdata', this.state.formData)
+        }
     }
 
     handleDeleteModal(deleteFlag) {
@@ -54,7 +96,7 @@ class CreateInstallerAgentPage extends Component {
     }
 
     render() {
-        const { formData: { agentName, email, password, contactNo, status = true }, showPassword } = this.state
+        const { formData: { agentName, email, password, mobile, status = true }, showPassword, errors = {} } = this.state
         const routeId = this.props.routeMatch.params.id
 
         return (
@@ -71,11 +113,31 @@ class CreateInstallerAgentPage extends Component {
                 <Typography className='flex flex-1 justify-between w-100'>
                     <div className='flex flex-col m-20 flex-1' >
                         <FormLabel className='mb-16' >Agent Name </FormLabel>
-                        <Input className='w-sm  inputBorder' name='agentName' value={agentName} onChange={(e) => this.handleInputChange(e)} inputProps={{ 'aria-label': 'description' }} />
+                        <Input className='w-sm  inputBorder' name='agentName' value={agentName}
+                            error={errors.agentName} onChange={(e) => this.handleInputChange(e)}
+                            inputProps={{ 'aria-label': 'description' }} />
+                        {errors.agentName && (
+                            <span
+                                className="help-block error "
+                                style={{ color: "#a94442" }}
+                            >
+                                {errors.agentName}
+                            </span>
+                        )}
                     </div>
                     <div className='flex flex-col m-20 flex-1' >
                         <FormLabel className='mb-16' >Email ID </FormLabel>
-                        <Input className='w-sm inputBorder' name='email' value={email} onChange={(e) => this.handleInputChange(e)} inputProps={{ 'aria-label': 'description' }} />
+                        <Input className='w-sm inputBorder' name='email' value={email}
+                            error={errors.email} onChange={(e) => this.handleInputChange(e)}
+                            inputProps={{ 'aria-label': 'description' }} />
+                        {errors.email && (
+                            <span
+                                className="help-block error "
+                                style={{ color: "#a94442" }}
+                            >
+                                {errors.email}
+                            </span>
+                        )}
                     </div>
                 </Typography>
 
@@ -84,6 +146,8 @@ class CreateInstallerAgentPage extends Component {
                         <FormLabel className='mb-16' >Password </FormLabel>
                         <Input type={showPassword ? 'text' : 'password'} className='w-sm inputBorder' name='password' value={password} onChange={(e) => this.handleInputChange(e)}
                             inputProps={{ 'aria-label': 'description' }}
+                            id="password"
+                            error={errors.password}
                             endAdornment={
                                 <InputAdornment position="end">
                                     <IconButton
@@ -95,10 +159,40 @@ class CreateInstallerAgentPage extends Component {
                                     </IconButton>
                                 </InputAdornment>
                             } />
+                        {errors.password && (
+                            <span
+                                className="help-block error "
+                                style={{ color: "#a94442" }}
+                            >
+                                {errors.password}
+                            </span>
+                        )}
                     </div>
                     <div className='flex flex-col m-20 flex-1' >
-                        <FormLabel className='mb-16' >Contact No. </FormLabel>
-                        <Input max="10" className='w-sm inputBorder' name='contactNo' value={contactNo} onChange={(e) => this.handleInputChange(e)} inputProps={{ 'aria-label': 'description' }} />
+                        <FormGroup>
+                            <FormLabel className='mb-16' >Contact No. </FormLabel>
+                            <div className={errors.mobile ? 'has-error' : ""}>
+                                <TelephoneInput
+                                    value={mobile}
+                                    className={errors.mobile ? 'has-error cus-telphone' : "cus-telphone"}
+                                    defaultCountry="au"
+                                    flagsImagePath={require('assets/images/flag.png')}
+                                    onChange={this.onChangePhone}
+                                    error={errors.mobile}
+                                    inputProps={{ id: 'tel-input-box', className: 'w-full inputBorder',style:{height:'42px',width:'240%'} }}
+                                    preferredCountries={["au", "ca", "us"]}
+                                />
+                            </div>
+                            {errors.mobile && (
+                                <span
+                                    className="help-block error "
+                                    style={{ color: "#a94442" }}
+                                >
+                                    {errors.mobile}
+                                </span>
+                            )}
+                        </FormGroup>
+                        {/* <Input max="10" className='w-sm inputBorder' name='mobile' value={mobile} onChange={(e) => this.handleInputChange(e)} inputProps={{ 'aria-label': 'description' }} /> */}
                     </div>
                 </Typography>
 

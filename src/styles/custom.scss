@@ -128,13 +128,7 @@ input[type="file"] {
     cursor: pointer;
 }
 
-.group2>i {
-	position: absolute;
-	right: 80px;
-	bottom: 51px;
-	cursor: pointer
-}
-
-.iconPass {
+.iconPassword {
     -webkit-text-security: disc !important;
+    font-size: 14px;
 }

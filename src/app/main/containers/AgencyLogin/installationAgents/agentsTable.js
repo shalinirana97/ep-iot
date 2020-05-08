@@ -164,7 +164,7 @@ function ActionPasswordRender(item) {
                 <Icon className='cursor-pointer' onClick={() => handleClickShowPassword(item.rowIndex)} >visibility</Icon>
             </>
             :
-            <><span className='iconPass px-2'>{data.password}</span>
+            <><span className='iconPassword px-2'>{data.password}</span>
                 <Icon className='cursor-pointer' onClick={() => handleClickShowPassword(item.rowIndex)}>visibility_off</Icon>
             </>
         }
