@@ -127,7 +127,7 @@ class CreateInstallerAgentPage extends Component {
                     </div>
                     <div className='flex flex-col m-20 flex-1' >
                         <FormLabel className='mb-16' >Email ID </FormLabel>
-                        <Input className='w-sm inputBorder' name='email' value={email}
+                        <Input className='w-sm inputBorder' id='email' name='email' value={email}
                             error={errors.email} onChange={(e) => this.handleInputChange(e)}
                             inputProps={{ 'aria-label': 'description' }} />
                         {errors.email && (
@@ -178,8 +178,7 @@ class CreateInstallerAgentPage extends Component {
                                     defaultCountry="au"
                                     flagsImagePath={require('assets/images/flag.png')}
                                     onChange={this.onChangePhone}
-                                    error={errors.mobile}
-                                    inputProps={{ id: 'tel-input-box', className: 'w-full inputBorder',style:{height:'42px',width:'240%'} }}
+                                    inputProps={{ id: 'tel-input-box', className: 'inputBorder',style:{height:'42px',width:'240%'} }}
                                     preferredCountries={["au", "ca", "us"]}
                                 />
                             </div>
@@ -218,7 +217,7 @@ class CreateInstallerAgentPage extends Component {
                 <Typography>
                     <div className="flex justify-end">
                         {routeId ?
-                            <Button className="w-128 m-16 " variant="contained" color="secondary" onClick={() => this.handleDetailSubmit()} >Save</Button>
+                            <Button className="w-128 m-16 " variant="contained" color="secondary" onClick={(e) => this.handleDetailSubmit(e)} >Save</Button>
                             : <Button className="w-128 m-16 " variant="contained" color="secondary" onClick={(e) => this.handleDetailSubmit(e)} >Create</Button>
                         }
                     </div>

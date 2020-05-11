@@ -1,4 +1,5 @@
-export { default as validateAgent } from '../../app/Utilities/Validations/ValidateAgent'
+export { default as validateAgent } from './Validations/ValidateAgent';
+export { default as validateEmail } from './Validations/ValidateEmail';
 
 // export { default as validateSignUp } from 'Utilities/Validations/SignUp';
 // export { default as validateSignUp1 } from 'Utilities/Validations/SignUp1';

@@ -1,7 +1,7 @@
 import * as Actions from '../actions';
 
 const initialState = {
-    role: ["admin"],//guest
+    role: ["super-admin"],//guest
     data: {
         'displayName': 'John Doe',
         'photoURL'   : 'assets/images/avatars/Velazquez.jpg',

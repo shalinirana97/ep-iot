@@ -102,18 +102,12 @@ class DeviceTariff extends Component {
                         <div >Peak </div>
                         <div className=' flex items-center' >
                             <FormLabel className='w-88' >Rate </FormLabel>
-                            {editFlag ?
-                                <Input className='w-128' name='peak' value={weekday.peak} onChange={(e) => this.handleInputChange(e,'weekday')} inputProps={{ 'aria-label': 'description' }} />
-                                : <div className='w-auto'>{weekday.peak}</div>
-                            }
+                            <div className='w-auto'>{weekday.peak}</div>
 
                         </div>
                         <div className='flex items-center'>
                             <FormLabel className='w-88'>Time </FormLabel>
-                            {editFlag ?
-                                <Input className='w-128' name='peakTime' value={weekday.peakTime} onChange={(e) => this.handleInputChange(e,'weekday')} inputProps={{ 'aria-label': 'description' }} />
-                                : <div className='w-auto'>{weekday.peakTime}</div>
-                            }
+                            <div className='w-auto'>{weekday.peakTime}</div>
                         </div>
                     </div>
 
@@ -121,18 +115,12 @@ class DeviceTariff extends Component {
                         <div >Off Peak </div>
                         <div className=' flex items-center' >
                             <FormLabel className='w-88' >Rate </FormLabel>
-                            {editFlag ?
-                                <Input className='w-128' name='offPeak' value={weekday.offPeak} onChange={(e) => this.handleInputChange(e,'weekday')} inputProps={{ 'aria-label': 'description' }} />
-                                : <div className='w-auto'>{weekday.offPeak}</div>
-                            }
+                            <div className='w-auto'>{weekday.offPeak}</div>
 
                         </div>
                         <div className='flex items-center'>
                             <FormLabel className='w-88'>Time </FormLabel>
-                            {editFlag ?
-                                <Input className='w-128' name='offTime' value={weekday.offTime} onChange={(e) => this.handleInputChange(e,'weekday')} inputProps={{ 'aria-label': 'description' }} />
-                                : <div className='w-auto'>{weekday.offTime}</div>
-                            }
+                            <div className='w-auto'>{weekday.offTime}</div>
                         </div>
                     </div>
 
@@ -140,18 +128,12 @@ class DeviceTariff extends Component {
                         <div >Shoulder </div>
                         <div className=' flex items-center' >
                             <FormLabel className='w-88' >Rate </FormLabel>
-                            {editFlag ?
-                                <Input className='w-128' name='shoulder' value={weekday.shoulder} onChange={(e) => this.handleInputChange(e,'weekday')} inputProps={{ 'aria-label': 'description' }} />
-                                : <div className='w-auto'>{weekday.shoulder}</div>
-                            }
+                            <div className='w-auto'>{weekday.shoulder}</div>
 
                         </div>
                         <div className='flex items-center'>
                             <FormLabel className='w-88'>Time </FormLabel>
-                            {editFlag ?
-                                <Input className='w-128' name='shoulderTime' value={weekday.shoulderTime} onChange={(e) => this.handleInputChange(e,'weekday')} inputProps={{ 'aria-label': 'description' }} />
-                                : <div className='w-auto'>{weekday.shoulderTime}</div>
-                            }
+                            <div className='w-auto'>{weekday.shoulderTime}</div>
                         </div>
                     </div>
                     <div className='mx-16'>

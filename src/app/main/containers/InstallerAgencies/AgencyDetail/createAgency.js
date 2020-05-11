@@ -5,6 +5,7 @@ import { Typography, Switch, Icon, FormLabel, FormControl, FormControlLabel, For
 import { FuseAnimate } from '@fuse';
 import { Link } from 'react-router-dom';
 import DeleteAlertDialogSlide from '../../../components/deleteAlert'
+import { validateEmail } from "../../../../Utilities";
 
 class CreateInstallerAgencyPage extends Component {
 
@@ -18,7 +19,9 @@ class CreateInstallerAgencyPage extends Component {
             formData: {},
             editable: props.routeMatch.params.id && false,
             attachments: [],
-            image1Url: [null]
+            image1Url: [null],
+            errors: {},
+            status: false
         }
     }
 
@@ -33,9 +36,6 @@ class CreateInstallerAgencyPage extends Component {
         this.setState({
             formData
         })
-    }
-
-    handleDetailSubmit() {
     }
 
     scheduleData = (data) => {
@@ -65,7 +65,7 @@ class CreateInstallerAgencyPage extends Component {
         return (
             this.fileArray || []).map((url, i) => {
                 return (
-                    <div style={{ cursor: 'pointer', display: 'flex', justifyContent: 'flex-start', width: '8%', height:'30%', margin: '0 15px', alignItems: 'flex-start' }}>
+                    <div style={{ cursor: 'pointer', display: 'flex', justifyContent: 'flex-start', width: '8%', height: '30%', margin: '0 15px', alignItems: 'flex-start' }}>
                         <img src={url} alt="..." />
                         <Icon onClick={() => this.removeImage(i)}>clear</Icon>
                     </div>
@@ -79,7 +79,7 @@ class CreateInstallerAgencyPage extends Component {
                 <label for="file-upload" class="custom-file-upload">
                     <i class="fa fa-cloud-upload"></i>Upload file
                 </label>
-                <input id="file-upload" type="file" onChange={(e) => this.handleChangeAttachments(e)} multiple/>
+                <input id="file-upload" type="file" onChange={(e) => this.handleChangeAttachments(e)} multiple />
             </div>
         )
     }
@@ -92,11 +92,29 @@ class CreateInstallerAgencyPage extends Component {
         this.setState({ image1Url })
     }
 
+    isValid = () => {
+        let { isValid, errors } = validateEmail(this.state.formData);
+        if (!isValid) {
+            this.setState({ errors })
+        };
+        return isValid;
+    };
+
+    handleDetailSubmit(e) {
+        e.preventDefault();
+        let { status } = { ...this.state };
+        if (this.isValid()) {
+            if (!status) {
+                status = true;
+            }
+            console.log('formdata', this.state.formData)
+        }
+    }
     render() {
         const { agencyName, email, postcode, contactNo, country, state, city,
             streetAddress, plotAddress, contactPerson, mobileNo, status = true, attachments = null } = this.state.formData
         const routeId = this.props.routeMatch.params.id
-        const { editable = true } = this.state
+        const { editable, errors } = this.state
 
         return (
             <div className="">
@@ -119,7 +137,16 @@ class CreateInstallerAgencyPage extends Component {
                     </div>
                     <div className='flex flex-col m-20 flex-1' >
                         <FormLabel className='mb-16' >Email ID </FormLabel>
-                        <Input className='w-sm inputBorder' name='email' value={email} disabled={editable} onChange={(e) => this.handleInputChange(e)} inputProps={{ 'aria-label': 'description' }} />
+                        <Input className='w-sm inputBorder' id='email' name='email' value={email} disabled={editable} error={errors.email}
+                            onChange={(e) => this.handleInputChange(e)} inputProps={{ 'aria-label': 'description' }} />
+                        {errors.email && (
+                            <span
+                                className="help-block error "
+                                style={{ color: "#a94442" }}
+                            >
+                                {errors.email}
+                            </span>
+                        )}
                     </div>
                 </Typography>
 
@@ -190,20 +217,18 @@ class CreateInstallerAgencyPage extends Component {
                 </Typography>
                 <div className='flex flex-row m-20 flex-1' >
                     <FormLabel className='mb-16' >Attachements </FormLabel>
-                        {this.addImage()}
+                    {this.addImage()}
                 </div>
 
                 <div className='flex mb-16'>
                     {this.renderImages()}
                 </div>
 
-                {!editable && (
-                    <Typography>
-                        <div className="flex justify-end">
-                            <Button className="w-128 m-16 " variant="contained" color="secondary" onClick={() => this.handleDetailSubmit()} >Save</Button>
-                        </div>
-                    </Typography>
-                )}
+                <Typography>
+                    <div className="flex justify-end">
+                        <Button className="w-128 m-16 " variant="contained" color="secondary" onClick={(e) => this.handleDetailSubmit(e)} >Save</Button>
+                    </div>
+                </Typography>
                 <DeleteAlertDialogSlide
                     deleteText='Company'
                     handleDelete={() => this.handleDeleteModal()}

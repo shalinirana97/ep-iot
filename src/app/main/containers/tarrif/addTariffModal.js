@@ -32,7 +32,8 @@ export default class TariffModal extends Component {
             isValidTime: false, type: '',
             weekdayIncomplete: false, weekdayOverlap: false,
             isValidWeekendTime: false, weekendType: '',
-            weekendIncomplete: false, weekendOverlap:false
+            weekendIncomplete: false, weekendOverlap: false,
+            sameAsWeekday: false,
         }
     }
 
@@ -117,10 +118,24 @@ export default class TariffModal extends Component {
         })
     };
 
+    handleWeekendChecked(event) {
+        console.log('event', event.target)
+        let { tariff_data: { weekends, weekday }, sameAsWeekday } = this.state
+        sameAsWeekday = !sameAsWeekday
+        this.setState({
+            sameAsWeekday
+        })
+        if (sameAsWeekday) {
+            this.setState({
+                weekends: weekday
+            })
+        }
+    }
+
     timevalidator() {
-        let { tariff_data: { weekday, weekends }, weekdayIncomplete, weekendIncomplete, weekdayOverlap, weekendOverlap } = this.state
-        if(weekdayIncomplete || weekendIncomplete){
-            this.setState({weekdayIncomplete:false, weekendIncomplete:false})
+        let { tariff_data: { weekday, weekends }, weekdayIncomplete, weekendIncomplete, weekdayOverlap, weekendOverlap, sameAsWeekday } = this.state
+        if (weekdayIncomplete || weekendIncomplete) {
+            this.setState({ weekdayIncomplete: false, weekendIncomplete: false })
         }
 
         // -----------------------------------weekdays Total Time validation---------------------------------------------------------
@@ -170,54 +185,57 @@ export default class TariffModal extends Component {
 
 
         //--------------------------------------weekends Total Time Validation----------------------------------------------
-        let newWeekendData = []
 
-        weekends.peak.forEach((item, index) => {
-            newWeekendData.push(item);
-        })
+        if (!sameAsWeekday) {
+            let newWeekendData = []
 
-        weekends.offPeak.forEach((item, index) => {
-            newWeekendData.push(item);
-        })
+            weekends.peak.forEach((item, index) => {
+                newWeekendData.push(item);
+            })
 
-        weekends.shoulder.forEach((item, index) => {
-            newWeekendData.push(item);
-        })
+            weekends.offPeak.forEach((item, index) => {
+                newWeekendData.push(item);
+            })
 
-        newWeekendData = newWeekendData.sort((a, b) => a.startTime - b.startTime);
+            weekends.shoulder.forEach((item, index) => {
+                newWeekendData.push(item);
+            })
 
-        let totalDifference2 = 0
-        
-        newWeekendData.forEach((item, index) => {
-            const startTimeStamp = moment(item.startTime).format('x')
-            const endTimeStamp = moment(item.endTime).format('x')
-            totalDifference2 = totalDifference2 + (moment.duration(endTimeStamp - startTimeStamp).asHours());
-        })
+            newWeekendData = newWeekendData.sort((a, b) => a.startTime - b.startTime);
 
-        const totalWeekendTime = (isNaN(totalDifference2) ? 0 : totalDifference2)
+            let totalDifference2 = 0
 
-        if (totalWeekendTime < 23.9833 || totalWeekendTime > 24) {
-            var elem = document.getElementById('weekendTime');
-            elem.scrollIntoView()
-            this.setState({ weekendIncomplete: true })
-        }
+            newWeekendData.forEach((item, index) => {
+                const startTimeStamp = moment(item.startTime).format('x')
+                const endTimeStamp = moment(item.endTime).format('x')
+                totalDifference2 = totalDifference2 + (moment.duration(endTimeStamp - startTimeStamp).asHours());
+            })
 
-        if (!weekendIncomplete) {
-            for (let i = 0; i < newWeekendData.length - 1; i++) {
-                if (moment(newWeekendData[i].endTime).format('x') > moment(newWeekendData[i + 1].startTime).format('x')) {
-                    var elem = document.getElementById('weekendTime');
-                    elem.scrollIntoView()
-                    this.setState({ weekendOverlap: true })
-                    break;
-                } else {
-                    this.setState({ weekendOverlap: false })
+            const totalWeekendTime = (isNaN(totalDifference2) ? 0 : totalDifference2)
+
+            if (totalWeekendTime < 23.9833 || totalWeekendTime > 24) {
+                var elem = document.getElementById('weekendTime');
+                elem.scrollIntoView()
+                this.setState({ weekendIncomplete: true })
+            }
+
+            if (!weekendIncomplete) {
+                for (let i = 0; i < newWeekendData.length - 1; i++) {
+                    if (moment(newWeekendData[i].endTime).format('x') > moment(newWeekendData[i + 1].startTime).format('x')) {
+                        var elem = document.getElementById('weekendTime');
+                        elem.scrollIntoView()
+                        this.setState({ weekendOverlap: true })
+                        break;
+                    } else {
+                        this.setState({ weekendOverlap: false })
+                    }
                 }
             }
-        }
 
-        if (totalWeekdayTime >= 23.98333 && totalWeekendTime >= 23.98333) {
-            this.handleTariffSubmit();
-            this.setState({ weekendIncomplete: false, weekdayIncomplete: false })
+            if (totalWeekdayTime >= 23.98333 && totalWeekendTime >= 23.98333) {
+                this.handleTariffSubmit();
+                this.setState({ weekendIncomplete: false, weekdayIncomplete: false })
+            }
         }
     }
 
@@ -230,7 +248,7 @@ export default class TariffModal extends Component {
     render() {
         const { openModal, modalTitle } = this.props;
         const { tariff_data: { postCode, timing, weekday, weekends }, isValidTime, type, weekdayIncomplete, weekdayOverlap,
-            isValidWeekendTime, weekendType, weekendIncomplete, weekendOverlap } = this.state
+            isValidWeekendTime, weekendType, weekendIncomplete, weekendOverlap, sameAsWeekday } = this.state
         const scroll = 'paper'
 
         return (
@@ -454,10 +472,21 @@ export default class TariffModal extends Component {
                                     <Typography className='my-24'>
                                         <FormControl component="fieldset" className='w-full'>
                                             <FormLabel component="legend" id="weekendTime" className='subHeadingColor'>Weekends
-                                            {weekendIncomplete ?
-                                                    <ErrorLabel >*Please complete 24 hours !</ErrorLabel>
-                                                :weekendOverlap ?<ErrorLabel>*Time can't be overlap !</ErrorLabel>:''
-                                                }</FormLabel>
+                                                {!sameAsWeekday && weekendIncomplete ?
+                                                        <ErrorLabel >*Please complete 24 hours !</ErrorLabel>
+                                                        : weekendOverlap ? <ErrorLabel>*Time can't be overlap !</ErrorLabel> : ''
+                                                    }</FormLabel>
+                                                    <FormGroup aria-label="position" row>
+                                                        <FormControlLabel
+                                                            value="Flat"
+                                                            control={<Checkbox color="primary" />}
+                                                            label="Same as weekend"
+                                                            labelPlacement="end"
+                                                            checked={sameAsWeekday}
+                                                            onChange={(e) => this.handleWeekendChecked(e)}
+                                                        />
+                                                    </FormGroup>
+                                            {!sameAsWeekday && (<>
                                             <Typography aria-label="position" className='w-full flex mt-10 justify-between'>
                                                 <FormLabel className='labelWidth'>Peak</FormLabel>
                                                 <div className='w-10/12 '>
@@ -608,6 +637,7 @@ export default class TariffModal extends Component {
                                                     </Typography>
                                                 </div>
                                             </Typography>
+                                            </>)}
                                         </FormControl>
                                     </Typography>
                                 </React.Fragment>

@@ -8,7 +8,7 @@ function validateAgent(data, phonenumberlength) {
     let errors = {};
     let flag = false;
     let format = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
-    const stongRegex = /^(?=.*[a-z])()(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#(,.)};{^[:*<>?$%&*\]])(?=.{8,})/
+    const stongRegex = /^(?=.*[a-z])()(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#(,.)};{^[:*<>?$%&*\]])(?=.{6,})/
 
     if (Validator.empty(data.agentName)) {
         errors.agentName = "Agent Name is required!";
@@ -76,7 +76,7 @@ function validateAgent(data, phonenumberlength) {
     }
 
     if (!Validator.empty(data.password) && (!stongRegex.test(data.password) || (/\s/).test(data.password)) ) {
-        errors.password = 'Invalid Password, must contain atleast 1 Upper-case, 1 Lower-case, 1 symbol, 1 number !'
+        errors.password = 'Invalid Password, must contain atleast 1 Upper-case, 1 Lower-case, 1 symbol, 1 number'
         if (!flag) {
             scrollIntoView("password");
             flag = true;
