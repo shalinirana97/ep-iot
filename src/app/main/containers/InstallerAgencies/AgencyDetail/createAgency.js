@@ -16,17 +16,29 @@ class CreateInstallerAgencyPage extends Component {
         this.state = {
             openDelete: false,
             filterTable: false,
-            formData: {},
+            formData: {
+                agencyName:"", 
+                email:"", 
+                postcode:null, 
+                contactNo:"", 
+                country:"", 
+                state:"", 
+                city:"",
+                streetAddress:"", 
+                plotAddress:"", 
+                contactPerson:"", 
+                mobileNo:"", 
+                status:true, 
+                imageUrl: []
+            },
             editable: props.routeMatch.params.id && false,
             attachments: [],
-            image1Url: [null],
             errors: {},
             status: false
         }
     }
 
     handleInputChange(text) {
-        console.log("text", text.target.checked, text.target.name)
         let { formData } = this.state;
         if (text.target.checked) {
             formData[text.target.name] = text.target.checked;
@@ -38,10 +50,6 @@ class CreateInstallerAgencyPage extends Component {
         })
     }
 
-    scheduleData = (data) => {
-        console.log('datata', data)
-    }
-
     handleDeleteModal(deleteFlag) {
         this.setState({
             openDelete: deleteFlag
@@ -49,15 +57,16 @@ class CreateInstallerAgencyPage extends Component {
     }
 
     handleChangeAttachments = (e) => {
-        let { attachments, image1Url } = this.state;
+        let { attachments, formData } = this.state;
         attachments.push(e.target.files)
         for (let i = 0; i < attachments[0].length; i++) {
             this.fileObj.push(attachments[0][i]);
             this.fileArray.push(URL.createObjectURL(attachments[0][i]))
         }
+        formData.imageUrl= this.fileObj
         this.setState({
+            formData,
             attachments: [],
-            image1Url: this.fileObj
         })
     }
 
@@ -85,11 +94,10 @@ class CreateInstallerAgencyPage extends Component {
     }
 
     removeImage(key) {
-        console.log('ket', key)
-        let { image1Url } = this.state
+        let { formData:{imageUrl} } = this.state
         this.fileArray.splice(key, 1);
-        image1Url.splice(key, 1)
-        this.setState({ image1Url })
+        imageUrl.splice(key, 1)
+        this.setState({ imageUrl })
     }
 
     isValid = () => {
@@ -137,7 +145,7 @@ class CreateInstallerAgencyPage extends Component {
                     </div>
                     <div className='flex flex-col m-20 flex-1' >
                         <FormLabel className='mb-16' >Email ID </FormLabel>
-                        <Input className='w-sm inputBorder' id='email' name='email' value={email} disabled={editable} error={errors.email}
+                        <Input className='w-sm inputBorder' id='email' name='email' value={email} disabled={editable}
                             onChange={(e) => this.handleInputChange(e)} inputProps={{ 'aria-label': 'description' }} />
                         {errors.email && (
                             <span

@@ -44,6 +44,9 @@ class CreateNotificationPage extends Component {
 
     scheduleData = (data) => {
         console.log('datata', data)
+        this.setState({
+            singleFormData: { ...this.state.singleFormData, schedule:data}
+        })
     }
     
     applyFiltersToData = () => {
@@ -230,7 +233,7 @@ class CreateNotificationPage extends Component {
                             <FormControlLabel
                                 value="sendNow"
                                 control={<Radio color="primary"/>}
-                                label="Send Now"
+                                label="Send"
                                 name='send'
                                 checked={send === 'sendNow'}
                                 labelPlacement="end"

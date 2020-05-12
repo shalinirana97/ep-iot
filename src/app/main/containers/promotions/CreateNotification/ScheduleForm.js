@@ -28,7 +28,6 @@ export default class ScheduleForm extends Component {
     }
 
     handleScheduleChange(data, index, key) {
-        console.log('bcbcb', data, index, key)
         let { schedule } = this.state
         schedule[index][key] = data
         this.setState({
