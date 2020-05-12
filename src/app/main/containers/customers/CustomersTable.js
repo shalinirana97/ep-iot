@@ -92,7 +92,7 @@ export default withStyles(styles, { withTheme: true })(withRouter(connect(mapSta
 
 function ActionButtonRender(item) {
     return <div>
-        <Link className="font-medium icon_font" to="/customer/details">
+        <Link className="font-medium icon_font" to="/customer/details/107653221">
             <i className="fa fa-edit" onClick={() => console.log('customers edit button clicked',item.data)} />
         </Link>
     </div>

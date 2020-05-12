@@ -114,8 +114,8 @@ class DeviceDetailPage extends Component {
         })
     }
 
-    handleSubmitData(e){
-        console.log('formdata',this.state.formData)
+    handleSubmitData(e) {
+        console.log('formdata', this.state.formData)
     }
 
     render() {
@@ -124,7 +124,7 @@ class DeviceDetailPage extends Component {
             houseDetail: { adults, child, floors, rooms, solar, hws, ac }, distributor, retailer, weekday, weekend, sharedAccess } } = this.state
         const routeId = this.props.routeMatch.params.id
 
-            return (
+        return (
             <div className="p-16 sm:p-24 max-w-2xl w-full">
                 <div className='deviceRoot'>
                     <Paper className='deviceCol'>
@@ -223,14 +223,14 @@ class DeviceDetailPage extends Component {
                                         : <span>{premium == true ? 'Yes' : 'No'}</span>
                                     }
                                 </div>
-                                {premium &&(
-                                <div className='w-1/5 m-16'>
-                                    <InputLabel className='pb-8'>Premium Validity</InputLabel>
-                                    {editFlag ?
-                                        <Input type='date' className='inputBorder' name='premiumValidity' value={premiumValidity} onChange={(e) => this.handleInputChange(e, 'deviceData')} inputProps={{ 'aria-label': 'description' }} />
-                                        : <span>{premiumValidity}</span>
-                                    }
-                                </div>
+                                {premium && (
+                                    <div className='w-1/5 m-16'>
+                                        <InputLabel className='pb-8'>Premium Validity</InputLabel>
+                                        {editFlag ?
+                                            <Input type='date' className='inputBorder' name='premiumValidity' value={premiumValidity} onChange={(e) => this.handleInputChange(e, 'deviceData')} inputProps={{ 'aria-label': 'description' }} />
+                                            : <span>{premiumValidity}</span>
+                                        }
+                                    </div>
                                 )}
                             </Typography>
                         </div>
@@ -535,7 +535,7 @@ class DeviceDetailPage extends Component {
                                     <Button className="w-128 my-16 " variant="outlined" color="primary" >Back</Button>
                                 </Link>
 
-                                <Button className="w-128 m-16 " variant="contained" color="secondary" onClick={(e)=>this.handleSubmitData(e)} >Save</Button>
+                                <Button className="w-128 m-16 " variant="contained" color="secondary" onClick={(e) => this.handleSubmitData(e)} >Save</Button>
                             </div>
                         </Typography>
                     </Paper>

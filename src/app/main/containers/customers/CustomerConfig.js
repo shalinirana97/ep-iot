@@ -13,7 +13,7 @@ export const CustomerConfig = {
             component: CustomerList
         },
         {
-            path: '/customer/details',
+            path: '/customer/details/:id',
             exact: true,
             component: MainCustomerDetails
         }

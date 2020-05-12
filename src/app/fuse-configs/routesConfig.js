@@ -44,7 +44,7 @@ const routes = [
     {
         path: '/',
         exact: true,
-        component: () => <Redirect to="/customer/details" />
+        component: () => <Redirect to="/customer/details/:id" />
     },
     {
         path: '/',

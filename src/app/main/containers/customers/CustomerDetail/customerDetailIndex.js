@@ -12,6 +12,7 @@ class MainCustomerDetails extends Component {
 
     render() {
         const { classes } = this.props;
+        const routeId = this.props.match.params.id
         return (
             <FusePageSimple
                 classes={{
@@ -19,8 +20,8 @@ class MainCustomerDetails extends Component {
                 }}
                 header={
                     <DetailPageHeader
-                        pageTitle='Devices'
-                        detailTitle='Customer Name'
+                        pageTitle='Customers'
+                        detailTitle={routeId && routeId != null && (routeId)}
                         subTitle='Customer'
                         pageRoute='/customers'
                     />

@@ -40,7 +40,34 @@ const initialState = {
             offTime: [{ startTime: '12:00', endTime: '02:00' }],
             shoulderTime: [{ startTime: '05:00', endTime: '07:00' }]
         }
-    }],
+        },
+        {
+            id: 4, direction: 'desc', postCode: '942104', timing: 'Variable',
+            weekday: {
+                peakTime: [{ startTime: '07:00', endTime: '10:00' }],
+                offTime: [{ startTime: '11:00', endTime: '01:00' }],
+                shoulderTime: [{ startTime: '04:00', endTime: '06:00' }]
+            },
+            weekends: {
+                peakTime: [{ startTime: '09:00', endTime: '10:00' }],
+                offTime: [{ startTime: '12:00', endTime: '02:00' }],
+                shoulderTime: [{ startTime: '05:00', endTime: '07:00' }]
+            }
+        },
+        {
+            id: 5, direction: 'desc', postCode: '630104', timing: 'Variable',
+            weekday: {
+                peakTime: [{ startTime: '07:00', endTime: '10:00' }],
+                offTime: [{ startTime: '11:00', endTime: '01:00' }],
+                shoulderTime: [{ startTime: '04:00', endTime: '06:00' }]
+            },
+            weekends: {
+                peakTime: [{ startTime: '09:00', endTime: '10:00' }],
+                offTime: [{ startTime: '12:00', endTime: '02:00' }],
+                shoulderTime: [{ startTime: '05:00', endTime: '07:00' }]
+            }
+        }
+],
     options: {
         children: 'Hi'
     }
