@@ -100,7 +100,7 @@ export default withStyles(styles, { withTheme: true })(DevicesTable);
 
 function ActionButtonRender(item) {
     return <div >
-        <Link className="font-medium icon_font" to="/device/details">
+        <Link className="font-medium icon_font" to="/device/details/5643870021">
             <i className="fa fa-edit " onClick={() => item.data.editFunction(item.data)} />
         </Link>
            </div>

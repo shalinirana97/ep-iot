@@ -12,6 +12,7 @@ class MainDeviceDetails extends Component {
 
     render() {
         const { classes } = this.props;
+        const routeId = this.props.match.params.id
         return (
             <FusePageSimple
                 classes={{
@@ -20,7 +21,7 @@ class MainDeviceDetails extends Component {
                 header={
                     <DetailPageHeader
                         pageTitle='Devices'
-                        detailTitle='Device Type'
+                        detailTitle={routeId && routeId != null &&( routeId)}
                         subTitle='Device'
                         pageRoute='/devices'
                     />
@@ -29,7 +30,7 @@ class MainDeviceDetails extends Component {
                 //     <div className="px-24"><h4>Details</h4></div>
                 // }
                 content={
-                    <DeviceDetailPage />
+                    <DeviceDetailPage routeMatch={this.props.match}/>
                 }
                 innerScroll
             />

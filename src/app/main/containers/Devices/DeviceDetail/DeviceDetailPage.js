@@ -122,7 +122,9 @@ class DeviceDetailPage extends Component {
         const { editFlag, formData: { username, email, streetAddress, town_city, country, state, addressPostcode,
             deviceData: { type, deviceId, passcode, company, installationDate, agent, nmi, postcode, customer, premium, premiumValidity },
             houseDetail: { adults, child, floors, rooms, solar, hws, ac }, distributor, retailer, weekday, weekend, sharedAccess } } = this.state
-        return (
+        const routeId = this.props.routeMatch.params.id
+
+            return (
             <div className="p-16 sm:p-24 max-w-2xl w-full">
                 <div className='deviceRoot'>
                     <Paper className='deviceCol'>
